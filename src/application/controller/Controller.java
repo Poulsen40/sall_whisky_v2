@@ -1,15 +1,12 @@
 package application.controller;
 
-import application.model.Batch;
-import application.model.Fad;
-import application.model.Fadtype;
-import application.model.Træsort;
+import application.model.*;
 import storage.Storage;
 
 public class Controller {
 
-    public static Batch createBatch(String maltBach, String kornSort, String mark, double mængdeVæske, double alkoholPct, String kommentar) {
-        Batch batch = new Batch(maltBach, kornSort, mark, mængdeVæske, alkoholPct, kommentar);
+    public static Batch createBatch(String maltBach, String kornSort, String mark, double mængdeVæske, double alkoholPct, String kommentar, Rygemateriale rygemateriale) {
+        Batch batch = new Batch(maltBach, kornSort, mark, mængdeVæske, alkoholPct, kommentar, rygemateriale);
         Storage.addBatch(batch);
         return batch;
     }

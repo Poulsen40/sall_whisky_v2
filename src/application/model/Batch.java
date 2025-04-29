@@ -11,15 +11,17 @@ public class Batch {
     private double mængdeVæske;
     private double alkoholPct;
     private String kommentar;
+    private Rygemateriale rygemateriale;
 
 
-    public Batch(String maltBach, String kornSort, String mark, double mængdeVæske, double alkoholPct, String kommentar) {
+    public Batch(String maltBach, String kornSort, String mark, double mængdeVæske, double alkoholPct, String kommentar, Rygemateriale rygemateriale) {
         this.maltBach = maltBach;
         this.kornSort = kornSort;
         this.mark = mark;
         this.mængdeVæske = mængdeVæske;
         this.alkoholPct = alkoholPct;
         this.kommentar = kommentar;
+        this.rygemateriale = rygemateriale;
         startDato = LocalDate.now();
     }
 
@@ -86,5 +88,18 @@ public class Batch {
 
     public void setKommentar(String kommentar) {
         this.kommentar = kommentar;
+    }
+
+    @Override
+    public String toString() {
+        return "Batch{" +
+                "rygemateriale=" + rygemateriale +
+                ", alkoholPct=" + alkoholPct +
+                ", mark='" + mark + '\'' +
+                ", maltBach='" + maltBach + '\'' +
+                ", kornSort='" + kornSort + '\'' +
+                ", mængdeVæske=" + mængdeVæske +
+                ", kommentar='" + kommentar + '\'' +
+                '}';
     }
 }

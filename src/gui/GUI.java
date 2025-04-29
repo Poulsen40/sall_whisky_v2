@@ -42,12 +42,13 @@ public class GUI extends Application {
     }
 
     public void opretBatch(){
-
-
+        OpretBatchWindow dia = new OpretBatchWindow("Opret nyt batch");
+        dia.showAndWait();
     }
 
     public void opretFad(){
-
+        OpretFadWindow dia = new OpretFadWindow("Opret nyt fad");
+        dia.showAndWait();
     }
 
 
