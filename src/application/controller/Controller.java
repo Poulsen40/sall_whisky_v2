@@ -14,8 +14,8 @@ public class Controller {
         return batch;
     }
 
-    public static Fad createFad(int fadNr, double fadStørrelse, String levarandør, boolean erBrugt, Fadtype fadtype, Træsort træsort, int antalGangeBrugt, double literPåfyld) {
-        Fad fad = new Fad(fadNr, fadStørrelse, levarandør, erBrugt, fadtype, træsort, antalGangeBrugt, literPåfyld);
+    public static Fad createFad(double fadStørrelse, String levarandør, boolean erBrugt, Fadtype fadtype, Træsort træsort, int antalGangeBrugt, double literPåfyld) {
+        Fad fad = new Fad(fadStørrelse, levarandør, erBrugt, fadtype, træsort, antalGangeBrugt, literPåfyld);
         Storage.addFad(fad);
         return fad;
     }

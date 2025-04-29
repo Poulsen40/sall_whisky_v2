@@ -3,7 +3,7 @@ package application.model;
 import java.util.ArrayList;
 
 public class Fad {
-    private int fadNr;
+    private static int fadNr;
     private double fadStørrelse;
     private String levarandør;
     private boolean erBrugt;
@@ -15,8 +15,8 @@ public class Fad {
     private ArrayList<Batch> batches = new ArrayList<>();
 
 
-    public Fad(int fadNr, double fadStørrelse, String levarandør, boolean erBrugt, Fadtype fadtype, Træsort træsort, int antalGangeBrugt, double literPåfyld) {
-        this.fadNr = fadNr;
+    public Fad(double fadStørrelse, String levarandør, boolean erBrugt, Fadtype fadtype, Træsort træsort, int antalGangeBrugt, double literPåfyld) {
+        fadNr++;
         this.fadStørrelse = fadStørrelse;
         this.levarandør = levarandør;
         this.erBrugt = erBrugt;
