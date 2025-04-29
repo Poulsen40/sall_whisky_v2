@@ -108,4 +108,17 @@ public class Fad {
     public void setLiterPåfyld(double literPåfyld) {
         this.literPåfyld = literPåfyld;
     }
+
+    @Override
+    public String toString() {
+        return "Fad{" +
+                "fadStørrelse=" + fadStørrelse +
+                ", levarandør='" + levarandør + '\'' +
+                ", erBrugt=" + erBrugt +
+                ", fadtype=" + fadtype +
+                ", literPåfyld=" + literPåfyld +
+                ", antalGangeBrugt=" + antalGangeBrugt +
+                ", træsort=" + træsort +
+                '}';
+    }
 }

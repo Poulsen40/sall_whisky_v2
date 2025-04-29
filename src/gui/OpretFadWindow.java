@@ -1,16 +1,18 @@
 package gui;
 
 import application.controller.Controller;
+import application.model.*;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import java.awt.font.ImageGraphicAttribute;
+import java.util.Locale;
 
 public class OpretFadWindow extends Stage {
     public OpretFadWindow(String title) {
@@ -29,17 +31,112 @@ public class OpretFadWindow extends Stage {
 
     }
 
-    private static TextField txfMaltBatch;
-    private static TextField txfMængdeVæske;
-    private static TextField txfAlkoholPct;
-    private static TextField txfKommentar;
+    private static TextField txfFadStørrelse;
+    private static TextField txfLeverandør;
+    private static TextField txfErBrugt;
+    private static String fadtype;
+    private static String træsort;
+    private static TextField txfantalGangeBrugt;
+    private static TextField txfLiterPåfyldt;
+    private static CheckBox brugtJa = new CheckBox("Ja");
+    private static CheckBox brugtNej = new CheckBox("Nej");
+
+
 
     private void initContent(GridPane pane) {
         pane.setPadding(new Insets(10));
         pane.setHgap(10);
         pane.setVgap(10);
         pane.setGridLinesVisible(false);
+
+        Label lblInformationer = new Label("Fad informationer");
+        pane.add(lblInformationer, 0, 0);
+
+        Label lblFadStørrelse = new Label("Fad størrelse");
+        pane.add(lblFadStørrelse, 0, 1);
+
+        Label lblLeverandør = new Label("Leverandør");
+        pane.add(lblLeverandør, 0, 2);
+
+        Label lblBrugtFør= new Label("Har fadet været brugt før?");
+        pane.add(lblBrugtFør, 0, 3);
+
+        Label lblAntalGangeBrugt = new Label("Antal gange brugt");
+        pane.add(lblAntalGangeBrugt, 0, 4);
+
+        Label lblLiterPåfyldt = new Label("Liter påfyldt");
+        pane.add(lblLiterPåfyldt, 0, 5);
+
+
+        txfFadStørrelse = new TextField();
+        pane.add(txfFadStørrelse, 1, 1);
+
+        txfLeverandør = new TextField();
+        pane.add(txfLeverandør, 1, 2);
+
+        txfantalGangeBrugt = new TextField();
+        pane.add(txfantalGangeBrugt, 1, 4);
+
+        txfLiterPåfyldt = new TextField();
+        pane.add(txfLiterPåfyldt, 1, 5);
+
+
+        brugtJa = new CheckBox("Ja");
+        pane.add(brugtJa, 1, 3);
+        GridPane.setHalignment(brugtJa, HPos.LEFT);
+        brugtJa.setFocusTraversable(false);
+
+        brugtNej = new CheckBox("nej");
+        pane.add(brugtNej, 1, 3);
+        GridPane.setHalignment(brugtNej, HPos.CENTER);
+        brugtNej.setFocusTraversable(false);
+
+        //Drop down menu
+        Label lblFadtype = new Label("Fadtype");
+        pane.add(lblFadtype, 0, 6);
+        ComboBox<String> comboBoxFadtype= new ComboBox<>();
+        comboBoxFadtype.getItems().add("EXBOURBON");
+        comboBoxFadtype.getItems().add("EXOLOROSOSHERRY");
+        comboBoxFadtype.setValue("Vælg fadtype");
+        pane.add(comboBoxFadtype, 1, 6);
+        comboBoxFadtype.setOnAction(event -> {
+            fadtype = comboBoxFadtype.getValue();
+        });
+
+        Label lblTræsort= new Label("Træsort");
+        pane.add(lblTræsort, 0, 7);
+        ComboBox<String> comboBoxTræsort= new ComboBox<>();
+        comboBoxTræsort.getItems().add("EGETRÆ");
+        comboBoxTræsort.setValue("Vælg træsort");
+        pane.add(comboBoxTræsort, 1, 7);
+        comboBoxTræsort.setOnAction(event -> {
+            træsort = comboBoxTræsort.getValue();
+        });
+
+        Button opretBatch = new Button("Opret fad");
+        pane.add(opretBatch, 0, 8);
+        opretBatch.setOnAction(event -> opretBatch());
+
     }
 
+    public void opretBatch() {
+        int fadStørrelse = Integer.parseInt(txfFadStørrelse.getText().trim());
+        String leverandør = txfLeverandør.getText().trim();
+        int antalGangeBrugt = Integer.parseInt(txfantalGangeBrugt.getText().trim());
+        int literPåfyldt = Integer.parseInt(txfLiterPåfyldt.getText().trim());
+        boolean brugt = false;
+        if (brugtNej.isSelected()){
+             brugt = false;
+        }
+        if (brugtJa.isSelected()){
+            brugt = true;
+        }
+
+        //Opret fad
+        Fad f1 = Controller.createFad(fadStørrelse,leverandør,brugt, Fadtype.valueOf(fadtype.toUpperCase()), Træsort.valueOf(træsort.toUpperCase()),antalGangeBrugt,literPåfyldt);
+        System.out.println(f1);
+        hide();
+
+    }
 
 }
