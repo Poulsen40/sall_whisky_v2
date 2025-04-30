@@ -124,8 +124,8 @@ public class OpretBatchWindow extends Stage {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Du mangler at udfylde noget information");
             alert.showAndWait();
-            return;
         }
+
         try {
             int mængdeVæske1 = Integer.parseInt(txfMængdeVæske.getText().trim());
             int alkoholPct1 = Integer.parseInt(txfAlkoholPct.getText().trim());
@@ -142,12 +142,13 @@ public class OpretBatchWindow extends Stage {
                 alert.showAndWait();
                 System.out.println(b1);
             }
+
         } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Ingen bogstaver er tilladt i feltet 'mængde væske' eller 'alkohol procent'");
-            alert.getDialogPane().setPrefWidth(450);
-            alert.showAndWait();
+            if (!mængdeVæske.isEmpty() || !alkoholPct.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Ingen bogstaver på feltet væskemængde eller alkoholprocent");
+                alert.showAndWait();
+            }
         }
     }
-
 }
