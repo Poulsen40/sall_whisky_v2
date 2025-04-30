@@ -5,6 +5,7 @@ import application.model.Lager;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -12,6 +13,8 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import javax.swing.*;
 
 public class OpretLagerWindow extends Stage {
 
@@ -82,26 +85,38 @@ public class OpretLagerWindow extends Stage {
     }
 
     public void opretLagermetode() {
-        int rækker = Integer.parseInt(Txfrækker.getText().trim());
-        int hylder = Integer.parseInt(Txfhylder.getText().trim());
-        int pladser = Integer.parseInt(TxfPladser.getText().trim());
-        String navn = Txfnavn.getText().trim();
-        if (rækker <= 0) {
-            Txfrækker.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
-        } else if (hylder <= 0) {
-            Txfhylder.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
-        } else if (pladser <= 0) {
-            TxfPladser.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
-        }
-        if(rækker > 0 && hylder > 0 && pladser > 0){
-           Lager lager1 =  Controller.createLager(rækker,hylder,pladser,navn);
-            System.out.println(lager1);
-            Txfrækker.setStyle(""); // nulstiller til standard
-            Txfhylder.setStyle(""); // nulstiller til standard
-            TxfPladser.setStyle(""); // nulstiller til standard
+        try {
+            int rækker = Integer.parseInt(Txfrækker.getText().trim());
+            int hylder = Integer.parseInt(Txfhylder.getText().trim());
+            int pladser = Integer.parseInt(TxfPladser.getText().trim());
+            String navn = Txfnavn.getText().trim();
+            if (rækker <= 0) {
+                Txfrækker.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            } else if (hylder <= 0) {
+                Txfhylder.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            } else if (pladser <= 0) {
+                TxfPladser.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            }
 
+            if (rækker > 0 && hylder > 0 && pladser > 0) {
+                Lager lager1 = Controller.createLager(rækker, hylder, pladser, navn);
+                Txfrækker.setText("");
+                Txfhylder.setText("");
+                TxfPladser.setText("");
+                Txfnavn.setText("");
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setContentText("Lageret er nu oprettet");
+                alert.showAndWait();
+                System.out.println(lager1);
+                Txfrækker.setStyle(""); // nulstiller til standard
+                Txfhylder.setStyle(""); // nulstiller til standard
+                TxfPladser.setStyle(""); // nulstiller til standard
+            }
+        } catch (NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Ingen bogstaver er tilladt udover i navn textfeltet");
+            alert.showAndWait();
         }
-
     }
 }
 
