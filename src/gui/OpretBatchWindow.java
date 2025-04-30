@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import javax.sound.midi.Soundbank;
+import java.awt.font.ImageGraphicAttribute;
 
 public class OpretBatchWindow extends Stage {
     public OpretBatchWindow(String title) {
@@ -28,8 +29,6 @@ public class OpretBatchWindow extends Stage {
 
         Scene scene = new Scene(pane);
         this.setScene(scene);
-
-
     }
 
     private static TextField txfMaltBatch;
@@ -104,7 +103,6 @@ public class OpretBatchWindow extends Stage {
         opretBatch.setOnAction(event -> opretBatch());
         GridPane.setHalignment(opretBatch, HPos.RIGHT);
 
-
         Button afbrudBatch = new Button("Afbrud");
         pane.add(afbrudBatch, 0, 8);
         afbrudBatch.setOnAction(event -> {
@@ -115,39 +113,41 @@ public class OpretBatchWindow extends Stage {
     }
 
     public void opretBatch() {
-        try {
-            int mængdeVæske = Integer.parseInt(txfMængdeVæske.getText().trim());
-            int alkoholPct = Integer.parseInt(txfAlkoholPct.getText().trim());
-            String kommentar = txfKommentar.getText().trim();
-            String kornSort = txfKornsort.getText().trim();
-            String mark = txfMark.getText().trim();
-            String maltBatch = txfMaltBatch.getText().trim();
+        String mængdeVæske = txfMængdeVæske.getText().trim();
+        String alkoholPct = txfAlkoholPct.getText().trim();
+        String kommentar = txfKommentar.getText().trim();
+        String kornSort = txfKornsort.getText().trim();
+        String mark = txfMark.getText().trim();
+        String maltBatch = txfMaltBatch.getText().trim();
 
-            if (!maltBatch.isEmpty() && !kornSort.isEmpty() && !mark.isEmpty() && txfMængdeVæske != null && txfAlkoholPct != null && rygemateriale != null)  {
+        if (maltBatch.isEmpty() || mark.isEmpty() || kornSort.isEmpty() || mængdeVæske.isEmpty() || alkoholPct.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Du mangler at udfylde noget information");
+            alert.showAndWait();
+            return;
+        }
+        try {
+            int mængdeVæske1 = Integer.parseInt(txfMængdeVæske.getText().trim());
+            int alkoholPct1 = Integer.parseInt(txfAlkoholPct.getText().trim());
+            if (rygemateriale == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Du mangler at vælge et rygematerialle");
+                alert.showAndWait();
+            } else {
                 //Opret batch
-                Batch b1 = Controller.createBatch(maltBatch, kornSort, mark, mængdeVæske, alkoholPct, kommentar, Rygemateriale.valueOf(rygemateriale.toUpperCase()));
+                Batch b1 = Controller.createBatch(maltBatch, kornSort, mark, mængdeVæske1, alkoholPct1, kommentar, Rygemateriale.valueOf(rygemateriale.toUpperCase()));
                 hide();
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setContentText("Dit batch er nu oprettet");
                 alert.showAndWait();
                 System.out.println(b1);
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Du mangler at udfylde noget information");
-                alert.showAndWait();
             }
-
-        } catch (
-                NumberFormatException e) {
+        } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Ingen bogstaver er tilladt i felterne 'mængdevæske' og alkohol procent'");
-            alert.getDialogPane().setPrefWidth(400);
+            alert.setContentText("Ingen bogstaver er tilladt i feltet 'mængde væske' eller 'alkohol procent'");
+            alert.getDialogPane().setPrefWidth(450);
             alert.showAndWait();
         }
-
-
-
     }
-
 
 }
