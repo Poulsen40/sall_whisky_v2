@@ -3,7 +3,6 @@ package gui;
 import application.controller.Controller;
 import application.model.*;
 import javafx.application.Application;
-
 import javax.naming.ldap.Control;
 
 
