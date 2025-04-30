@@ -79,10 +79,15 @@ public class OpretFadWindow extends Stage {
         GridPane.setHalignment(brugtJa, HPos.LEFT);
         brugtJa.setFocusTraversable(false);
 
+        brugtJa.setOnMouseClicked(event -> {brugtNej.setDisable(brugtJa.isSelected());});
+
         brugtNej = new CheckBox("nej");
         pane.add(brugtNej, 1, 3);
         GridPane.setHalignment(brugtNej, HPos.CENTER);
         brugtNej.setFocusTraversable(false);
+        brugtNej.setOnMouseClicked(event -> {brugtJa.setDisable(brugtNej.isSelected());});
+
+
 
         //Drop down menu
         Label lblFadtype = new Label("Fadtype");
@@ -123,50 +128,64 @@ public class OpretFadWindow extends Stage {
     }
 
     public void opretFad() {
+        String fadstørrelse = txfFadStørrelse.getText().trim();
+        String antalGange = txfantalGangeBrugt.getText().trim();
+        String leverandør = txfLeverandør.getText().trim();
         try {
-            if (txfFadStørrelse.getText().trim().isEmpty() || txfLeverandør.getText().trim().isEmpty()
-                    || txfantalGangeBrugt.getText().trim().isEmpty() || træsort == null){
-                throw new IllegalArgumentException("Alle felter skal udfyldes");
+            if (fadstørrelse.isEmpty() || leverandør.isEmpty()
+                    || antalGange.isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Alle felter skal udfyldles");
+                alert.showAndWait();
             }
+
             int fadStørrelse = Integer.parseInt(txfFadStørrelse.getText().trim());
-            String leverandør = txfLeverandør.getText().trim();
             int antalGangeBrugt = Integer.parseInt(txfantalGangeBrugt.getText().trim());
 
             if (brugtNej.isSelected() && antalGangeBrugt != 0 || brugtJa.isSelected() && antalGangeBrugt < 1){
-                throw new IllegalArgumentException("Antal gange brugt skal være 0, hvis fadet ikke har været brugt. Hvis det har, skal det være mindst 1.");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Antal gange brugt skal være 0, hvis fadet ikke har været brugt. Hvis det har, skal det være mindst 1");
+                alert.showAndWait();
             }
 
-            if (antalGangeBrugt > 3){
-                throw new IllegalArgumentException("Et fad kan højst bruges 3 gange");
+            if (antalGangeBrugt > 2){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Et fad kan højest bruges 3 gange");
+                alert.showAndWait();
             }
 
-            System.out.println("DEBUG: Fadtype = " + fadtype + ", Træsort = " + træsort);
-
-
-            if (fadtype.equals("Vælg fadtype") || træsort.equals("Vælg træsort")) {
-                throw new IllegalArgumentException("Fadtype og træsort skal være valgt.");
+            if (fadtype == null ) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Fadtype skal være valgt");
+                alert.showAndWait();
+            }
+            if (træsort == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Træsort skal være valgt");
+                alert.showAndWait();
+            } else {
+                boolean brugt = false;
+                if (brugtNej.isSelected()) {
+                    brugt = false;
+                }
+                if (brugtJa.isSelected()) {
+                    brugt = true;}
+                //Opret fad
+                Fad f1 = Controller.createFad(fadStørrelse, leverandør, brugt, Fadtype.valueOf(fadtype.toUpperCase()), Træsort.valueOf(træsort.toUpperCase()), antalGangeBrugt);
+                System.out.println(f1);
+                hide();
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setContentText("Batch er oprettet");
+                alert.showAndWait();
             }
 
-            boolean brugt = false;
-            if (brugtNej.isSelected()) {
-                brugt = false;
-            }
-            if (brugtJa.isSelected()) {
-                brugt = true;
-            }
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("Batch er oprettet");
-            alert.showAndWait();
 
-            //Opret fad
-            Fad f1 = Controller.createFad(fadStørrelse, leverandør, brugt, Fadtype.valueOf(fadtype.toUpperCase()), Træsort.valueOf(træsort.toUpperCase()), antalGangeBrugt);
-            System.out.println(f1);
-            hide();
-
-        } catch (IllegalArgumentException e) { //kan laves flere af med nye catches
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+        } catch (NumberFormatException e) {
+            if (!fadstørrelse.isEmpty() || !antalGange.isEmpty()) {//kan laves flere af med nye catches
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Fadstørrelse og antal gange brugt skal være tal");
+                alert.showAndWait();
+            }
         }
     }
 }
