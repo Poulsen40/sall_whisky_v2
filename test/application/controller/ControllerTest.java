@@ -4,13 +4,25 @@ package application.controller;
 import application.model.Lager;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+import storage.Storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ControllerTest {
 
     @Test
-    void createLager() {
+    void createLagerTC1() {
+        Lager lager = Controller.createLager(10,5,2,"ContatinerLager");
+        Lager lager1 = null;
+        for (Lager l1 : Storage.getLager() ) {
+            if(lager.equals(l1)){
+                lager1 = l1;
+            }
+        }
+        assertEquals(lager,lager1);
+    }
+    @Test
+    void createLagerTC2() {
         Lager lager = new Lager(10,5,2,"ContatinerLager");
         assertEquals(lager.getNavn(),"ContatinerLager");
 
