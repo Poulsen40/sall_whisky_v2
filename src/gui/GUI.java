@@ -28,11 +28,11 @@ public class GUI extends Application {
 
         Button opretLager = new Button("Opret lager");
         pane.add(opretLager, 0, 0);
+        opretLager.setOnAction(event -> opretLager());
 
         Button opretFad = new Button("Opret fad");
         pane.add(opretFad, 0, 1);
         opretFad.setOnAction(event -> opretFad());
-
 
         Button opretBatch = new Button("Opret batch");
         pane.add(opretBatch, 0, 2);
@@ -50,6 +50,12 @@ public class GUI extends Application {
         OpretFadWindow dia = new OpretFadWindow("Opret nyt fad");
         dia.showAndWait();
     }
+
+    public void opretLager(){
+        OpretLagerWindow dia = new OpretLagerWindow("Opret nyt lager");
+        dia.showAndWait();
+    }
+
 
 
 }
