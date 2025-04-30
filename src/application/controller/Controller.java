@@ -17,6 +17,13 @@ public class Controller {
         return fad;
     }
 
+    /**
+     * Præbetingelse
+     * rækker >= 0
+     * hylder >= 0
+     * plads >= 0
+     */
+
     public static Lager createLager(int rækker, int hylder, int plads, String navn){
         Lager lager = new Lager(rækker, hylder, plads, navn);
         Storage.addLager(lager);
