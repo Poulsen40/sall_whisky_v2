@@ -55,7 +55,7 @@ public class OpretLagerWindow extends Stage {
         Label lblpladser = new Label("Antal pladser på hver hylde");
         pane.add(lblpladser, 0, 4);
 
-        Label lblnavn = new Label("Navnet/placering på lageret");
+        Label lblnavn = new Label("Navnet");
         pane.add(lblnavn, 0, 6);
 
         Txfrækker = new TextField();

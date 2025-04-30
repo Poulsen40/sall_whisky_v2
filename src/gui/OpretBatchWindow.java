@@ -2,14 +2,12 @@ package gui;
 
 import application.controller.Controller;
 import application.model.Batch;
+import application.model.Lager;
 import application.model.Rygemateriale;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -41,7 +39,6 @@ public class OpretBatchWindow extends Stage {
     private static TextField txfMark;
     private static TextField txfKornsort;
     private static String rygemateriale;
-
 
 
     private void initContent(GridPane pane) {
@@ -108,7 +105,7 @@ public class OpretBatchWindow extends Stage {
         GridPane.setHalignment(opretBatch, HPos.RIGHT);
 
 
-        Button afbrudBatch= new Button("Afbrud");
+        Button afbrudBatch = new Button("Afbrud");
         pane.add(afbrudBatch, 0, 8);
         afbrudBatch.setOnAction(event -> {
             Stage stage = (Stage) afbrudBatch.getScene().getWindow();
@@ -118,18 +115,39 @@ public class OpretBatchWindow extends Stage {
     }
 
     public void opretBatch() {
-        String maltBatch =  txfMaltBatch.getText().trim();
-        int mængdeVæske = Integer.parseInt(txfMængdeVæske.getText().trim());
-        int alkoholPct = Integer.parseInt(txfAlkoholPct.getText().trim());
-        String kommentar = txfKommentar.getText().trim();
-        String kornSort = txfKornsort.getText().trim();
-        String mark = txfMark.getText().trim();
+        try {
+            int mængdeVæske = Integer.parseInt(txfMængdeVæske.getText().trim());
+            int alkoholPct = Integer.parseInt(txfAlkoholPct.getText().trim());
+            String kommentar = txfKommentar.getText().trim();
+            String kornSort = txfKornsort.getText().trim();
+            String mark = txfMark.getText().trim();
+            String maltBatch = txfMaltBatch.getText().trim();
 
-        //Opret batch
-        Batch b1 = Controller.createBatch(maltBatch,kornSort,mark,mængdeVæske,alkoholPct,kommentar,Rygemateriale.valueOf(rygemateriale.toUpperCase()));
-        System.out.println(b1);
-        hide();
+            if (!maltBatch.isEmpty() && !kornSort.isEmpty() && !mark.isEmpty() && txfMængdeVæske != null && txfAlkoholPct != null && rygemateriale != null)  {
+                //Opret batch
+                Batch b1 = Controller.createBatch(maltBatch, kornSort, mark, mængdeVæske, alkoholPct, kommentar, Rygemateriale.valueOf(rygemateriale.toUpperCase()));
+                hide();
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setContentText("Dit batch er nu oprettet");
+                alert.showAndWait();
+                System.out.println(b1);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Du mangler at udfylde noget information");
+                alert.showAndWait();
+            }
+
+        } catch (
+                NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Ingen bogstaver er tilladt i felterne 'mængdevæske' og alkohol procent'");
+            alert.getDialogPane().setPrefWidth(400);
+            alert.showAndWait();
+        }
+
+
 
     }
+
 
 }
