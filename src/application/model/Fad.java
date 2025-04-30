@@ -10,12 +10,11 @@ public class Fad {
     private Fadtype fadtype;
     private Træsort træsort;
     private int antalGangeBrugt;
-    private double literPåfyld;
     // linkattribut til Batch
     private ArrayList<Batch> batches = new ArrayList<>();
 
 
-    public Fad(double fadStørrelse, String levarandør, boolean erBrugt, Fadtype fadtype, Træsort træsort, int antalGangeBrugt, double literPåfyld) {
+    public Fad(double fadStørrelse, String levarandør, boolean erBrugt, Fadtype fadtype, Træsort træsort, int antalGangeBrugt) {
         fadNr++;
         this.fadStørrelse = fadStørrelse;
         this.levarandør = levarandør;
@@ -23,7 +22,6 @@ public class Fad {
         this.fadtype = fadtype;
         this.træsort = træsort;
         this.antalGangeBrugt = antalGangeBrugt;
-        this.literPåfyld = literPåfyld;
     }
 
     //Metoder til batches
@@ -101,13 +99,7 @@ public class Fad {
         this.antalGangeBrugt = antalGangeBrugt;
     }
 
-    public double getLiterPåfyld() {
-        return literPåfyld;
-    }
 
-    public void setLiterPåfyld(double literPåfyld) {
-        this.literPåfyld = literPåfyld;
-    }
 
     @Override
     public String toString() {
@@ -116,7 +108,6 @@ public class Fad {
                 ", levarandør='" + levarandør + '\'' +
                 ", erBrugt=" + erBrugt +
                 ", fadtype=" + fadtype +
-                ", literPåfyld=" + literPåfyld +
                 ", antalGangeBrugt=" + antalGangeBrugt +
                 ", træsort=" + træsort +
                 '}';

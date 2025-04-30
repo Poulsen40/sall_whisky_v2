@@ -42,7 +42,6 @@ public class OpretFadWindow extends Stage {
     private static CheckBox brugtNej = new CheckBox("Nej");
 
 
-
     private void initContent(GridPane pane) {
         pane.setPadding(new Insets(10));
         pane.setHgap(10);
@@ -58,14 +57,11 @@ public class OpretFadWindow extends Stage {
         Label lblLeverandør = new Label("Leverandør");
         pane.add(lblLeverandør, 0, 2);
 
-        Label lblBrugtFør= new Label("Har fadet været brugt før?");
+        Label lblBrugtFør = new Label("Har fadet været brugt før?");
         pane.add(lblBrugtFør, 0, 3);
 
         Label lblAntalGangeBrugt = new Label("Antal gange brugt");
         pane.add(lblAntalGangeBrugt, 0, 4);
-
-        Label lblLiterPåfyldt = new Label("Liter påfyldt");
-        pane.add(lblLiterPåfyldt, 0, 5);
 
 
         txfFadStørrelse = new TextField();
@@ -76,9 +72,6 @@ public class OpretFadWindow extends Stage {
 
         txfantalGangeBrugt = new TextField();
         pane.add(txfantalGangeBrugt, 1, 4);
-
-        txfLiterPåfyldt = new TextField();
-        pane.add(txfLiterPåfyldt, 1, 5);
 
 
         brugtJa = new CheckBox("Ja");
@@ -94,7 +87,7 @@ public class OpretFadWindow extends Stage {
         //Drop down menu
         Label lblFadtype = new Label("Fadtype");
         pane.add(lblFadtype, 0, 6);
-        ComboBox<String> comboBoxFadtype= new ComboBox<>();
+        ComboBox<String> comboBoxFadtype = new ComboBox<>();
         comboBoxFadtype.getItems().add("EXBOURBON");
         comboBoxFadtype.getItems().add("EXOLOROSOSHERRY");
         comboBoxFadtype.setValue("Vælg fadtype");
@@ -103,9 +96,9 @@ public class OpretFadWindow extends Stage {
             fadtype = comboBoxFadtype.getValue();
         });
 
-        Label lblTræsort= new Label("Træsort");
+        Label lblTræsort = new Label("Træsort");
         pane.add(lblTræsort, 0, 7);
-        ComboBox<String> comboBoxTræsort= new ComboBox<>();
+        ComboBox<String> comboBoxTræsort = new ComboBox<>();
         comboBoxTræsort.getItems().add("EGETRÆ");
         comboBoxTræsort.setValue("Vælg træsort");
         pane.add(comboBoxTræsort, 1, 7);
@@ -113,30 +106,39 @@ public class OpretFadWindow extends Stage {
             træsort = comboBoxTræsort.getValue();
         });
 
-        Button opretBatch = new Button("Opret fad");
-        pane.add(opretBatch, 0, 8);
-        opretBatch.setOnAction(event -> opretBatch());
+        Button opretFad = new Button("Opret fad");
+        pane.add(opretFad, 1, 8);
+        opretFad.setOnAction(event -> opretFad());
+        GridPane.setHalignment(opretFad,HPos.RIGHT);
+
+
+        Button afbrudFad = new Button("Afbrud");
+        pane.add(afbrudFad, 0, 8);
+
+        afbrudFad.setOnAction(event -> {
+            Stage stage = (Stage) afbrudFad.getScene().getWindow();
+            stage.close(); // lukker dialogen
+        });
 
     }
 
-    public void opretBatch() {
+    public void opretFad() {
         int fadStørrelse = Integer.parseInt(txfFadStørrelse.getText().trim());
         String leverandør = txfLeverandør.getText().trim();
         int antalGangeBrugt = Integer.parseInt(txfantalGangeBrugt.getText().trim());
-        int literPåfyldt = Integer.parseInt(txfLiterPåfyldt.getText().trim());
         boolean brugt = false;
-        if (brugtNej.isSelected()){
-             brugt = false;
+        if (brugtNej.isSelected()) {
+            brugt = false;
         }
-        if (brugtJa.isSelected()){
+        if (brugtJa.isSelected()) {
             brugt = true;
         }
 
         //Opret fad
-        Fad f1 = Controller.createFad(fadStørrelse,leverandør,brugt, Fadtype.valueOf(fadtype.toUpperCase()), Træsort.valueOf(træsort.toUpperCase()),antalGangeBrugt,literPåfyldt);
+        Fad f1 = Controller.createFad(fadStørrelse, leverandør, brugt, Fadtype.valueOf(fadtype.toUpperCase()), Træsort.valueOf(træsort.toUpperCase()), antalGangeBrugt);
         System.out.println(f1);
         hide();
 
     }
-
 }
+

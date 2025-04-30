@@ -22,7 +22,7 @@ public class APP {
         Batch b1 = Controller.createBatch("Malt2","Sort","Sorte mark",85,63,"ingen", Rygemateriale.GLØD);
 
         //Fad
-        Fad f1 = Controller.createFad(65,"Spanien",false, Fadtype.EXBOURBON, Træsort.EGETRÆ,0,0);
+        Fad f1 = Controller.createFad(65,"Spanien",false, Fadtype.EXBOURBON, Træsort.EGETRÆ,0);
 
 
     }

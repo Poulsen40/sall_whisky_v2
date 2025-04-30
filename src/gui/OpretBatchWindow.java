@@ -3,6 +3,7 @@ package gui;
 import application.controller.Controller;
 import application.model.Batch;
 import application.model.Rygemateriale;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -102,8 +103,17 @@ public class OpretBatchWindow extends Stage {
         });
 
         Button opretBatch = new Button("Opret batch");
-        pane.add(opretBatch, 0, 8);
+        pane.add(opretBatch, 1, 8);
         opretBatch.setOnAction(event -> opretBatch());
+        GridPane.setHalignment(opretBatch, HPos.RIGHT);
+
+
+        Button afbrudBatch= new Button("Afbrud");
+        pane.add(afbrudBatch, 0, 8);
+        afbrudBatch.setOnAction(event -> {
+            Stage stage = (Stage) afbrudBatch.getScene().getWindow();
+            stage.close(); // lukker dialogen
+        });
 
     }
 
