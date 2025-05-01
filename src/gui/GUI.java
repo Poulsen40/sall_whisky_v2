@@ -1,13 +1,17 @@
 package gui;
 
 import javafx.application.Application;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.lang.management.OperatingSystemMXBean;
+import java.util.Objects;
 
 public class GUI extends Application {
     public void start(Stage stage) {
@@ -27,17 +31,26 @@ public class GUI extends Application {
         pane.setVgap(100);
 
         Button opretLager = new Button("Opret lager");
-        pane.add(opretLager, 0, 0);
+        pane.add(opretLager, 0, 1);
         opretLager.setOnAction(event -> opretLager());
 
         Button opretFad = new Button("Opret fad");
-        pane.add(opretFad, 0, 1);
+        pane.add(opretFad, 1, 1);
         opretFad.setOnAction(event -> opretFad());
+        GridPane.setHalignment(opretFad, HPos.CENTER);
 
         Button opretBatch = new Button("Opret batch");
-        pane.add(opretBatch, 0, 2);
+        pane.add(opretBatch, 2, 1);
         opretBatch.setOnAction(event -> opretBatch());
+        GridPane.setHalignment(opretBatch, HPos.RIGHT);
 
+
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/gui/billeder/img.png")));
+        ImageView imageView = new ImageView(image);
+        pane.add(imageView,0,0);
+        GridPane.setColumnSpan(imageView,3);
+        imageView.setFitHeight(300);
+        imageView.setFitWidth(500);
 
     }
 
