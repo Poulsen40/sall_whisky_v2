@@ -1,6 +1,7 @@
 package application.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Batch {
     private LocalDate startDato;
@@ -13,6 +14,9 @@ public class Batch {
     private String kommentar;
     private Rygemateriale rygemateriale;
 
+    //Linkattribut
+    private ArrayList<BatchMængde> batchMængder = new ArrayList<>();
+
 
     public Batch(String maltBach, String kornSort, String mark, double mængdeVæske, double alkoholPct, String kommentar, Rygemateriale rygemateriale) {
         this.maltBach = maltBach;
@@ -23,6 +27,22 @@ public class Batch {
         this.kommentar = kommentar;
         this.rygemateriale = rygemateriale;
         startDato = LocalDate.now();
+    }
+
+    public ArrayList<BatchMængde> getBatchMængder(){
+        return new ArrayList<>(batchMængder);
+    }
+
+    public BatchMængde createBatchMængde(double mængde, Destillat destillat){
+        BatchMængde batchMængde = new BatchMængde(mængde,destillat,this);
+        batchMængder.add(batchMængde);
+        return batchMængde;
+    }
+
+    public void removeBatchMængde(BatchMængde batchMængde){
+        if (batchMængder.contains(batchMængde)){
+            batchMængder.remove(batchMængde);
+        }
     }
 
     //Get og set
