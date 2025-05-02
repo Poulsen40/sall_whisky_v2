@@ -43,6 +43,10 @@ public class Controller {
         return Storage.getFade();
     }
 
+    public static ArrayList<Lager> getlagere(){
+        return Storage.getLager();
+    }
+
     public static ArrayList<Batch> getBatch() {
         return Storage.getBatches();
     }

@@ -9,44 +9,44 @@ import java.util.List;
 
 public class Storage {
 
-    private List<Batch> batches = new ArrayList<>();
-    private List<Fad> fade = new ArrayList<>();
-    private List<Lager> lagere = new ArrayList<>();
+    private static ArrayList<Batch> batches = new ArrayList<>();
+    private static ArrayList<Fad> fade = new ArrayList<>();
+    private static ArrayList<Lager> lagere = new ArrayList<>();
 
     //-----------------------------------------------------------------------------
 
-    public List<Batch> getBatches() {
+    public static ArrayList<Batch> getBatches() {
         return new ArrayList<Batch>(batches);
     }
-    public void addBatch(Batch batch) {
+    public static void addBatch(Batch batch) {
         batches.add(batch);
     }
-    public void removeBatch(Batch batch) {
+    public static void removeBatch(Batch batch) {
         batches.remove(batch);
     }
 
     //-----------------------------------------------------------------------------
 
-    public List<Fad> getFade() {
+    public static ArrayList<Fad> getFade() {
         return new ArrayList<Fad>(fade);
     }
-    public void addFad(Fad fad) {
+    public static void addFad(Fad fad) {
         fade.add(fad);
     }
-    public void removeFad(Fad fad) {
+    public static void removeFad(Fad fad) {
         fade.remove(fad);
     }
 
     //------------------------------------------------------------------------------
 
-    public List<Lager> getLager() {
+    public static ArrayList<Lager> getLager() {
         return new ArrayList<>(lagere);
     }
-    public void addLager(Lager lager){
+    public static void addLager(Lager lager){
         lagere.add(lager);
 
     }
-    public void removeLager(Lager lager) {
+    public static void removeLager(Lager lager) {
         lagere.remove(lager);
     }
 
