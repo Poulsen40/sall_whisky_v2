@@ -60,14 +60,14 @@ public class Fad {
         //TODO
     }
 
-    public void tilføjTilLager(Lager lager) {
+    public String tilføjTilLager(Lager lager) {
         if(lager.getErFyldt()) {
             throw new IllegalStateException("Lageret er fyldt "); // skal den være i lagers metode?(tilføjFadTilobevaringsplads)
         }
+        String placering;
         setLager(lager);
-        lager.tilføjFadTilobevaringsplads(this);
-
-
+       placering = lager.tilføjFadTilobevaringsplads(this);
+       return placering;
     }
 
     //get og set metoder
