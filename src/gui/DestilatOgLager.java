@@ -11,6 +11,7 @@ import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -244,11 +245,29 @@ public class DestilatOgLager extends Stage {
     }
 
     public void opretDestillat() {
-
-
-        FadPåLagerWindow dia = new FadPåLagerWindow("Registere distilat og lager",destillat);
-        dia.showAndWait();
-
+        try {
+            if (destillat.getSamletMængde() == 0) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Du kan IKKE oprette en distillat uden og tilføje noget væske");
+                alert.showAndWait();
+            } else {
+                FadPåLagerWindow dia = new FadPåLagerWindow("Registere distilat og lager", destillat);
+                dia.showAndWait();
+                txfBatchInfo.clear();
+                txfBatchMængdeValgt.clear();
+                txfFadMængdeTilbage.clear();
+                txfValgtFad.clear();
+                txfValgtFad.setDisable(false);
+                lwlBatch.getSelectionModel().clearSelection();
+                lwlFade.getSelectionModel().clearSelection();
+                lwlBatch.setDisable(false);
+                lwlFade.setDisable(false);
+                vælgFad.setDisable(false);
+            }
+        } catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("HUSK og udføre step 1 og step 2");
+            alert.showAndWait();
+        }
     }
-
 }
