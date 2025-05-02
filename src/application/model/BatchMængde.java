@@ -17,4 +17,11 @@ public class BatchMængde {
     public double getMængde() {
         return mængde;
     }
+
+    @Override
+    public String toString() {
+        return "BatchMængde{" +
+                "batch=" + batch +
+                '}';
+    }
 }
