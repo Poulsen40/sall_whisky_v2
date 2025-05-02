@@ -4,19 +4,26 @@ import application.model.*;
 import storage.Storage;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.List;
 
 public class Controller {
 
+    private static Storage storage;
+
+
+    public static void setStorage(Storage storage){
+        Controller.storage = storage;
+    }
+
     public static Batch createBatch(String maltBach, String kornSort, String mark, double mængdeVæske, double alkoholPct, String kommentar, Rygemateriale rygemateriale) {
         Batch batch = new Batch(maltBach, kornSort, mark, mængdeVæske, alkoholPct, kommentar, rygemateriale);
-        Storage.addBatch(batch);
+        storage.addBatch(batch);
         return batch;
     }
 
     public static Fad createFad(double fadStørrelse, String levarandør, boolean erBrugt, Fadtype fadtype, Træsort træsort, int antalGangeBrugt) {
         Fad fad = new Fad(fadStørrelse, levarandør, erBrugt, fadtype, træsort, antalGangeBrugt);
-        Storage.addFad(fad);
+        storage.addFad(fad);
         return fad;
     }
 
@@ -30,12 +37,12 @@ public class Controller {
         return destillat;
     }
 
-    public static ArrayList<Fad> getFade() {
-        return Storage.getFade();
+    public static List<Fad> getFade() {
+        return storage.getFade();
     }
 
-    public static ArrayList<Batch> getBatch() {
-        return Storage.getBatches();
+    public static List<Batch> getBatch() {
+        return storage.getBatches();
     }
 
     /**
@@ -47,7 +54,7 @@ public class Controller {
 
     public static Lager createLager(int rækker, int hylder, int plads, String navn){
         Lager lager = new Lager(rækker, hylder, plads, navn);
-        Storage.addLager(lager);
+        storage.addLager(lager);
         return lager;
     }
 }
