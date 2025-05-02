@@ -7,14 +7,18 @@ import application.model.Destillat;
 import application.model.Fad;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.text.BreakIterator;
 import java.time.LocalDateTime;
+import java.util.Locale;
 
 public class DestilatOgLager extends Stage {
     public DestilatOgLager(String title) {
@@ -37,8 +41,7 @@ public class DestilatOgLager extends Stage {
     private static TextField txfBatchInfo;
     private static TextField txfBatchMængdeValgt;
     private static TextField txfFadMængdeTilbage;
-    private static TextArea txaInfo;
-    private static Button opretLagerPlads;
+    private static Button vælgFad;
 
     private static Fad selectedFad;
     private static Destillat destillat;
@@ -50,11 +53,23 @@ public class DestilatOgLager extends Stage {
         pane.setGridLinesVisible(false);
 
         lwlFade = new ListView<>();
-        pane.add(lwlFade, 0, 0);
         lwlFade.setPrefWidth(200);
         lwlFade.setPrefHeight(150);
         lwlFade.getItems().setAll(Controller.getFade());
-        lwlFade.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        lwlFade.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        GridPane.setValignment(lwlFade, VPos.BOTTOM);
+
+
+        Label lblStep1 = new Label("Step 1 : vælg et fad");
+        lblStep1.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
+
+        VBox vBoxFade = new VBox();
+        pane.add(vBoxFade, 0, 0);
+        vBoxFade.getChildren().add(lblStep1);
+        vBoxFade.getChildren().add(lwlFade);
+
+        Label lblStep2 = new Label("Step 2: vælg en batch");
+        lblStep2.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
 
 
         Label lblValgtFad = new Label("Størrelse på det valgte fad");
@@ -81,11 +96,15 @@ public class DestilatOgLager extends Stage {
 
 
         lwlBatch = new ListView<>();
-        pane.add(lwlBatch, 1, 0);
         lwlBatch.setPrefWidth(200);
         lwlBatch.setPrefHeight(150);
         lwlBatch.getItems().setAll(Controller.getBatch());
-        lwlBatch.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        lwlBatch.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        VBox vBoxBatch = new VBox();
+        pane.add(vBoxBatch, 1, 0);
+        vBoxBatch.getChildren().add(lblStep2);
+        vBoxBatch.getChildren().add(lwlBatch);
 
         Label lblBatchInfo = new Label("Destileret væske tilbage på valgt batch");
         pane.add(lblBatchInfo, 1, 1);
@@ -106,7 +125,7 @@ public class DestilatOgLager extends Stage {
         pane.add(vælgBatch, 1, 5);
         vælgBatch.setOnAction(event -> vælgBatch());
 
-        Button vælgFad = new Button("Vælg fad");
+        vælgFad = new Button("Vælg fad");
         pane.add(vælgFad, 0, 2);
         vælgFad.setOnAction(event -> vælgFad());
         GridPane.setHalignment(vælgFad, HPos.RIGHT);
@@ -126,38 +145,95 @@ public class DestilatOgLager extends Stage {
 
     public void vælgFad() {
         selectedFad = lwlFade.getSelectionModel().getSelectedItem();
-        //Opretter destillat
-        destillat = Controller.createDestilat(LocalDateTime.now(),selectedFad);
 
-        lwlFade.setDisable(true);
-        txfValgtFad.setDisable(true);
+        if (selectedFad == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Du skal trykke på det fad du vil vælge");
+            alert.showAndWait();
+        } else {
+            //Opretter destillat
+            destillat = Controller.createDestilat(LocalDateTime.now(), selectedFad);
+
+            lwlFade.setDisable(true);
+            txfValgtFad.setDisable(true);
+            vælgFad.setDisable(true);
+            vælgFad.setFocusTraversable(false);
+
+        }
     }
 
     public void vælgBatch() {
         //Får info fra batch (hvilket batch og hvor meget der ønskes tappes fra brugergrænsefladen)
         Batch selectedBatch = lwlBatch.getSelectionModel().getSelectedItem();
-        int mængdeFraBatch = Integer.parseInt(txfBatchMængdeValgt.getText().trim());
+        String mængdeValgt = txfBatchMængdeValgt.getText().trim();
 
-        //Batchmængden bliver oprettet efter overstående info
-        BatchMængde batchMængde = Controller.createBatchMængde(mængdeFraBatch,destillat,selectedBatch);
-        //Batchmængden bliver added til det oprettede destillat
-        destillat.addBatchMængde(batchMængde);
+        if (selectedBatch == null && mængdeValgt.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeight(400);
+            alert.setWidth(400);
+            alert.setContentText("Du skal huske at vælge den batch du vil tappe fra og hvor mange liter du vil tappe");
+            alert.showAndWait();
+        }
+        if (selectedBatch == null && !mængdeValgt.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeight(400);
+            alert.setWidth(400);
+            alert.setContentText(" Du skal huske at vælge den batch du vil tappe fra");
+            alert.showAndWait();
+        }
+        if (selectedBatch != null && mængdeValgt.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeight(400);
+            alert.setWidth(400);
+            alert.setContentText("Du skal huske at skrive hvor mange liter du vil tappe");
+            alert.showAndWait();
+        }
 
-        //Udregning der ændrer tal på grænsefladen - mængdetilbage på det fad der er valgt
-        double mængdeTilbageFørTapningFraBatch = Double.parseDouble(txfFadMængdeTilbage.getText().trim());
-        double mængdeValgtTappetFraBatch = batchMængde.getMængde();
-        double nyMængde = mængdeTilbageFørTapningFraBatch - mængdeValgtTappetFraBatch;
-        //Den nye mængde tilbage på faddet settes
-        txfFadMængdeTilbage.setText(String.valueOf(nyMængde));
-        txfBatchMængdeValgt.clear();
+        if (selectedBatch != null && !mængdeValgt.isEmpty()) {
 
-        //Mængden på batchen reguleres alt efter hvor meget der tappes via en batchmængde og settes
-        double nyBatchInfo = selectedBatch.getMængdeVæske() - batchMængde.getMængde();
-        selectedBatch.setMængdeVæske(nyBatchInfo);
-        txfBatchInfo.setText(String.valueOf(nyBatchInfo));
-        lwlBatch.refresh();
+            double mængdeFraBatch = Double.parseDouble(txfBatchMængdeValgt.getText().trim());
+            double væskeTilbagePåfad = Double.parseDouble(txfFadMængdeTilbage.getText().trim());
 
-        System.out.println(destillat.getBatchMængder());
+            if (mængdeFraBatch > selectedBatch.getMængdeVæske()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeight(400);
+                alert.setWidth(400);
+                alert.setContentText("Du kan ikke tappe flere liter end der er på batchet");
+                alert.showAndWait();
+            }
+            if (mængdeFraBatch > væskeTilbagePåfad) {
+                System.out.println(mængdeFraBatch);
+                System.out.println(selectedFad.getFadStørrelse());
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeight(400);
+                alert.setWidth(400);
+                alert.setContentText("Du kan ikke tappe flere liter end der er plads til på fadet");
+                alert.showAndWait();
+            }
+            if (mængdeFraBatch <= selectedBatch.getMængdeVæske() && mængdeFraBatch <= væskeTilbagePåfad) {
+                //Batchmængden bliver oprettet efter overstående info
+                BatchMængde batchMængde = Controller.createBatchMængde(mængdeFraBatch, destillat, selectedBatch);
+                //Batchmængden bliver added til det oprettede destillat
+                destillat.addBatchMængde(batchMængde);
+
+                //Udregning der ændrer tal på grænsefladen - mængdetilbage på det fad der er valgt
+                double mængdeTilbageFørTapningFraBatch = Double.parseDouble(txfFadMængdeTilbage.getText().trim());
+                double mængdeValgtTappetFraBatch = batchMængde.getMængde();
+                double nyMængde = mængdeTilbageFørTapningFraBatch - mængdeValgtTappetFraBatch;
+                //Den nye mængde tilbage på faddet settes
+                txfFadMængdeTilbage.setText(String.valueOf(nyMængde));
+                txfBatchMængdeValgt.clear();
+
+                //Mængden på batchen reguleres alt efter hvor meget der tappes via en batchmængde og settes
+                double nyBatchInfo = selectedBatch.getMængdeVæske() - batchMængde.getMængde();
+                selectedBatch.setMængdeVæske(nyBatchInfo);
+                txfBatchInfo.setText(String.valueOf(nyBatchInfo));
+                lwlBatch.refresh();
+
+                System.out.println(destillat.getBatchMængder());
+
+            }
+        }
 
 
     }
