@@ -17,13 +17,11 @@ public class APP {
     }
 
     public static void initStorage() {
-
         //Batch
         Batch b1 = Controller.createBatch("Malt2","Sort","Sorte mark",85,63,"ingen", Rygemateriale.GLØD);
         Batch b2 = Controller.createBatch("Malt2","Sort","Sorte mark",100,63,"ingen", Rygemateriale.GLØD);
         Batch b3 = Controller.createBatch("Malt2","Sort","Sorte mark",25,63,"ingen", Rygemateriale.GLØD);
         Batch b4 = Controller.createBatch("Malt2","Sort","Sorte mark",45,63,"ingen", Rygemateriale.GLØD);
-
 
         //Fad
         Fad f1 = Controller.createFad(65,"Spanien",false, Fadtype.EXBOURBON, Træsort.EGETRÆ,0);
@@ -36,6 +34,7 @@ public class APP {
         b1.createBatchMængde(44,destillat);
         b1.createBatchMængde(33,destillat);
         b2.createBatchMængde(33,destillat);
+
 
     }
 

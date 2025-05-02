@@ -125,17 +125,6 @@ public class DestilatOgLager extends Stage {
         pane.add(opretDestillat, 0, 5);
         opretDestillat.setOnAction(event -> opretDestillat());
 
-        txaInfo = new TextArea();
-        pane.add(txaInfo,0,6);
-        txaInfo.setVisible(false);
-        txaInfo.setPrefSize(0,0);
-
-        opretLagerPlads = new Button("Registrer fad på lager");
-        pane.add(opretLagerPlads, 1, 6);
-        opretLagerPlads.setVisible(false);
-
-
-
 
     }
 
@@ -174,16 +163,8 @@ public class DestilatOgLager extends Stage {
     }
 
     public void opretDestillat() {
-        txaInfo.setPrefSize(100,100);
-        txaInfo.setVisible(true);
 
-        opretLagerPlads.setVisible(true);
-
-        txaInfo.setText("Info omkring destilat \n" +  destillat.toString());
-
-
-
-
+        //Nyt vindue skl åbnes
 
     }
 
