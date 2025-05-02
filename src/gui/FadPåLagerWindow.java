@@ -14,10 +14,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.sql.SQLOutput;
+
 public class FadPåLagerWindow extends Stage {
 
-    public FadPåLagerWindow(String title) {
+    private Destillat destillat;
+    public FadPåLagerWindow(String title, Destillat destillat) {
 
+        this.destillat = destillat;
         this.initStyle(StageStyle.UTILITY);
         this.initModality(Modality.APPLICATION_MODAL);
         this.setResizable(false);
@@ -33,7 +37,7 @@ public class FadPåLagerWindow extends Stage {
 
     private static ListView<Lager> lwlager;
     private static TextArea txadestillat;
-    private static Destillat destillat;
+
     public void initContent(GridPane pane){
 
         pane.setPadding(new Insets(10));
@@ -50,8 +54,7 @@ public class FadPåLagerWindow extends Stage {
         lwlager.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         txadestillat = new TextArea();
-
-
-
+        pane.add(txadestillat,0,1);
+        txadestillat.setText(destillat.toString());
     }
 }

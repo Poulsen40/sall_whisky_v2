@@ -18,8 +18,8 @@ public class APP {
 
     public static void initStorage() {
         //Batch
-        Batch b1 = Controller.createBatch("Malt2","Sort","Sorte mark",85,63,"ingen", Rygemateriale.GLØD);
-        Batch b2 = Controller.createBatch("Malt2","Sort","Sorte mark",100,63,"ingen", Rygemateriale.GLØD);
+        Batch b1 = Controller.createBatch("Malt2","Sort","Sorte mark",85,10,"ingen", Rygemateriale.GLØD);
+        Batch b2 = Controller.createBatch("Malt2","Sort","Sorte mark",100,20,"ingen", Rygemateriale.GLØD);
         Batch b3 = Controller.createBatch("Malt2","Sort","Sorte mark",25,63,"ingen", Rygemateriale.GLØD);
         Batch b4 = Controller.createBatch("Malt2","Sort","Sorte mark",45,63,"ingen", Rygemateriale.GLØD);
 

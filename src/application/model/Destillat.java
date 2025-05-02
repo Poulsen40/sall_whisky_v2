@@ -45,4 +45,27 @@ public class Destillat {
         }
         return samletrentalkoholprocent/ samletmængde * 100;
     }
+
+    public double getSamletMængde(){
+        double mængde = 0;
+        for (BatchMængde batchMængde : batchMængder) {
+            mængde += batchMængde.getMængde();
+        }
+        return mængde;
+    }
+
+    private StringBuilder udskrivBatches(){
+        StringBuilder h  = new StringBuilder();
+        for (BatchMængde batchMængde : batchMængder) {
+            h.append(batchMængde.getBatch().getMaltBach() + " " + batchMængde.getBatch().getKornSort() +" " + batchMængde.getBatch().getMark() + "\n");
+
+        }
+        return h;
+    }
+
+
+    @Override
+    public String toString() {
+        return  "Antal lLiter " + getSamletMængde() + "\nSamlet alkoholprocenten i Distillat " + beregnalkoholprocent() + "\nInfo omkirng indkluderet batches " + udskrivBatches();
+    }
 }

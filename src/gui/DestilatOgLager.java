@@ -167,8 +167,11 @@ public class DestilatOgLager extends Stage {
     }
 
     public void opretDestillat() {
-        FadPåLagerWindow dia = new FadPåLagerWindow("Registere distilat og lager");
+
+
+        FadPåLagerWindow dia = new FadPåLagerWindow("Registere distilat og lager",destillat);
         dia.showAndWait();
+
     }
 
 }
