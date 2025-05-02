@@ -13,6 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 
 import java.time.LocalDateTime;
 
@@ -73,9 +74,12 @@ public class DestilatOgLager extends Stage {
             if (newSelection != null) {
                 txfValgtFad.setText(String.valueOf(newSelection.getFadStørrelse()) + " liter");
                 txfFadMængdeTilbage.setText(String.valueOf(newSelection.getFadStørrelse()));
+
             } else {
                 txfValgtFad.setText("");
                 txfFadMængdeTilbage.setText("");
+
+
             }
         });
 
@@ -163,9 +167,8 @@ public class DestilatOgLager extends Stage {
     }
 
     public void opretDestillat() {
-
-        //Nyt vindue skl åbnes
-
+        FadPåLagerWindow dia = new FadPåLagerWindow("Registere distilat og lager");
+        dia.showAndWait();
     }
 
 }

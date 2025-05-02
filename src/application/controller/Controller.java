@@ -45,6 +45,12 @@ public class Controller {
         return storage.getBatches();
     }
 
+    public static ArrayList<Lager> getlagere(){
+        return Storage.getLager();
+    }
+
+
+
     /**
      * Præbetingelse
      * rækker >= 0

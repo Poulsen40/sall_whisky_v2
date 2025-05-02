@@ -44,6 +44,10 @@ public class APP {
         Fad f3 = Controller.createFad(12,"Spanien",false, Fadtype.EXBOURBON, Træsort.EGETRÆ,0);
         Fad f4 = Controller.createFad(100,"Spanien",false, Fadtype.EXBOURBON, Træsort.EGETRÆ,0);
 
+        //
+        Lager lager = Controller.createLager(10,3,2,"Container lager");
+        Lager lager1 = Controller.createLager(12,3,10,"Lars landmand");
+
         Destillat destillat = Controller.createDestilat(LocalDateTime.now(),f1);
 
         b1.createBatchMængde(44,destillat);
