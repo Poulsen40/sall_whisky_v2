@@ -5,11 +5,15 @@ import application.model.Destillat;
 import application.model.Fad;
 import application.model.Lager;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -19,6 +23,7 @@ import java.sql.SQLOutput;
 public class FadPåLagerWindow extends Stage {
 
     private Destillat destillat;
+
     public FadPåLagerWindow(String title, Destillat destillat) {
 
         this.destillat = destillat;
@@ -38,7 +43,8 @@ public class FadPåLagerWindow extends Stage {
     private static ListView<Lager> lwlager;
     private static TextArea txadestillat;
 
-    public void initContent(GridPane pane){
+
+    public void initContent(GridPane pane) {
 
         pane.setPadding(new Insets(10));
         pane.setHgap(10);
@@ -46,15 +52,25 @@ public class FadPåLagerWindow extends Stage {
         pane.setGridLinesVisible(false);
 
 
+        Label lblIntro = new Label("Info");
+
         lwlager = new ListView<>();
-        pane.add(lwlager, 0, 0);
         lwlager.setPrefWidth(200);
         lwlager.setPrefHeight(150);
         lwlager.getItems().setAll(Controller.getlagere());
         lwlager.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
+        VBox vBox = new VBox();
+        pane.add(vBox, 0, 0);
+        vBox.getChildren().add(lblIntro);
+        vBox.getChildren().add(lwlager);
+
+
         txadestillat = new TextArea();
-        pane.add(txadestillat,0,1);
+        pane.add(txadestillat, 0, 1);
         txadestillat.setText(destillat.toString());
+        txadestillat.setEditable(false);
+
+
     }
 }
