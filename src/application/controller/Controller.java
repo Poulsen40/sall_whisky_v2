@@ -8,6 +8,15 @@ import java.util.ArrayList;
 
 public class Controller {
 
+
+    //skal bruges til load og save
+//    private static Storage storage;
+//
+//
+//    public static void setStorage(Storage storage){
+//        Controller.storage = storage;
+//    }
+
     public static Batch createBatch(String maltBach, String kornSort, String mark, double mængdeVæske, double alkoholPct, String kommentar, Rygemateriale rygemateriale) {
         Batch batch = new Batch(maltBach, kornSort, mark, mængdeVæske, alkoholPct, kommentar, rygemateriale);
         Storage.addBatch(batch);
