@@ -14,4 +14,7 @@ public class BatchMængde {
         return batch;
     }
 
+    public double getMængde() {
+        return mængde;
+    }
 }

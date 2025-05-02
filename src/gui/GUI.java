@@ -44,6 +44,10 @@ public class GUI extends Application {
         opretBatch.setOnAction(event -> opretBatch());
         GridPane.setHalignment(opretBatch, HPos.RIGHT);
 
+        Button destilatOgLager = new Button("Registrer destillat på fad");
+        pane.add(destilatOgLager, 3, 1);
+        destilatOgLager.setOnAction(event -> opretDestillat());
+
 
         Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/gui/billeder/img.png")));
         ImageView imageView = new ImageView(image);
@@ -67,6 +71,13 @@ public class GUI extends Application {
     public void opretLager(){
         OpretLagerWindow dia = new OpretLagerWindow("Opret nyt lager");
         dia.showAndWait();
+    }
+
+
+    public void opretDestillat(){
+        DestilatOgLager dia = new DestilatOgLager("Registere distilat og lager");
+        dia.showAndWait();
+
     }
 
 
