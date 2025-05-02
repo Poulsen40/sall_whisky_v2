@@ -4,8 +4,10 @@ import application.controller.Controller;
 import application.model.Destillat;
 import application.model.Fad;
 import application.model.Lager;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
@@ -19,6 +21,7 @@ import java.sql.SQLOutput;
 public class FadPåLagerWindow extends Stage {
 
     private Destillat destillat;
+
     public FadPåLagerWindow(String title, Destillat destillat) {
 
         this.destillat = destillat;
@@ -32,13 +35,18 @@ public class FadPåLagerWindow extends Stage {
 
         Scene scene = new Scene(pane);
         this.setScene(scene);
+
+        this.setOnCloseRequest(event -> {
+            event.consume(); // Forhindrer vinduet i at lukke
+        });
     }
 
 
     private static ListView<Lager> lwlager;
     private static TextArea txadestillat;
+    private static Button btnCancel;
 
-    public void initContent(GridPane pane){
+    public void initContent(GridPane pane) {
 
         pane.setPadding(new Insets(10));
         pane.setHgap(10);
@@ -54,7 +62,15 @@ public class FadPåLagerWindow extends Stage {
         lwlager.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         txadestillat = new TextArea();
-        pane.add(txadestillat,0,1);
+        pane.add(txadestillat, 0, 1);
         txadestillat.setText(destillat.toString());
+
+        btnCancel = new Button("Afbryd");
+        pane.add(btnCancel, 0, 3);
+        GridPane.setHalignment(btnCancel, HPos.LEFT);
+        btnCancel.setOnAction(event -> {
+            Stage stage = (Stage) btnCancel.getScene().getWindow();
+            stage.close(); // lukker dialogen
+        });
     }
 }
