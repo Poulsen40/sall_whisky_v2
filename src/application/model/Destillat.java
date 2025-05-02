@@ -15,6 +15,7 @@ public class Destillat {
     public Destillat(LocalDateTime datoForPåfyldning, Fad fad) {
         this.datoForPåfyldning = datoForPåfyldning;
         this.fad = fad;
+        fad.setDestillat(this);
     }
 
     public ArrayList<BatchMængde> getBatchMængder() {
