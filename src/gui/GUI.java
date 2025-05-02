@@ -3,11 +3,13 @@ package gui;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.lang.management.OperatingSystemMXBean;
@@ -30,24 +32,28 @@ public class GUI extends Application {
         pane.setHgap(100);
         pane.setVgap(100);
 
+        HBox hBoxButtons = new HBox(40);
+        pane.add(hBoxButtons,0,1,3,1);
+        hBoxButtons.setAlignment(Pos.TOP_CENTER);
+
+
         Button opretLager = new Button("Opret lager");
-        pane.add(opretLager, 0, 1);
+        hBoxButtons.getChildren().add(opretLager);
         opretLager.setOnAction(event -> opretLager());
 
         Button opretFad = new Button("Opret fad");
-        pane.add(opretFad, 1, 1);
+        hBoxButtons.getChildren().add(opretFad);
         opretFad.setOnAction(event -> opretFad());
         GridPane.setHalignment(opretFad, HPos.CENTER);
 
         Button opretBatch = new Button("Opret batch");
-        pane.add(opretBatch, 2, 1);
+        hBoxButtons.getChildren().add(opretBatch);
         opretBatch.setOnAction(event -> opretBatch());
         GridPane.setHalignment(opretBatch, HPos.RIGHT);
 
         Button destilatOgLager = new Button("Registrer destillat på fad");
-        pane.add(destilatOgLager, 3, 1);
+        hBoxButtons.getChildren().add(destilatOgLager);
         destilatOgLager.setOnAction(event -> opretDestillat());
-
 
         Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/gui/billeder/img.png")));
         ImageView imageView = new ImageView(image);
