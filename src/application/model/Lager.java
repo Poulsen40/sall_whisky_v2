@@ -38,4 +38,9 @@ public class Lager {
     public void setObevaringsplads(Fad[][][] obevaringsplads) {
         this.obevaringsplads = obevaringsplads;
     }
+
+    @Override
+    public String toString() {
+        return navn  + "Ledige pladser = " + antalledigepladser;
+    }
 }
