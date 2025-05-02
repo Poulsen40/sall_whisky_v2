@@ -4,26 +4,28 @@ import application.model.*;
 import storage.Storage;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.ArrayList;
 
 public class Controller {
 
-    private static Storage storage;
 
-
-    public static void setStorage(Storage storage){
-        Controller.storage = storage;
-    }
+    //skal bruges til load og save
+//    private static Storage storage;
+//
+//
+//    public static void setStorage(Storage storage){
+//        Controller.storage = storage;
+//    }
 
     public static Batch createBatch(String maltBach, String kornSort, String mark, double mængdeVæske, double alkoholPct, String kommentar, Rygemateriale rygemateriale) {
         Batch batch = new Batch(maltBach, kornSort, mark, mængdeVæske, alkoholPct, kommentar, rygemateriale);
-        storage.addBatch(batch);
+        Storage.addBatch(batch);
         return batch;
     }
 
     public static Fad createFad(double fadStørrelse, String levarandør, boolean erBrugt, Fadtype fadtype, Træsort træsort, int antalGangeBrugt) {
         Fad fad = new Fad(fadStørrelse, levarandør, erBrugt, fadtype, træsort, antalGangeBrugt);
-        storage.addFad(fad);
+        Storage.addFad(fad);
         return fad;
     }
 
@@ -37,19 +39,13 @@ public class Controller {
         return destillat;
     }
 
-    public static List<Fad> getFade() {
-        return storage.getFade();
+    public static ArrayList<Fad> getFade() {
+        return Storage.getFade();
     }
 
-    public static List<Batch> getBatch() {
-        return storage.getBatches();
+    public static ArrayList<Batch> getBatch() {
+        return Storage.getBatches();
     }
-
-    public static ArrayList<Lager> getlagere(){
-        return Storage.getLager();
-    }
-
-
 
     /**
      * Præbetingelse
@@ -60,7 +56,7 @@ public class Controller {
 
     public static Lager createLager(int rækker, int hylder, int plads, String navn){
         Lager lager = new Lager(rækker, hylder, plads, navn);
-        storage.addLager(lager);
+        Storage.addLager(lager);
         return lager;
     }
 }
