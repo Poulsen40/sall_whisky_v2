@@ -1,6 +1,7 @@
 package application.model;
 
 import java.util.ArrayList;
+import java.util.function.ToDoubleBiFunction;
 
 public class Fad {
     private static int fadNr;
@@ -10,8 +11,11 @@ public class Fad {
     private Fadtype fadtype;
     private Træsort træsort;
     private int antalGangeBrugt;
-    // linkattribut til Batch
-    private ArrayList<Batch> batches = new ArrayList<>();
+    private double literPåfyldt;
+    // linkattribut til destilat
+    private Destillat destillat;
+    //linkattribut til lager
+    private Lager lager;
 
 
     public Fad(double fadStørrelse, String levarandør, boolean erBrugt, Fadtype fadtype, Træsort træsort, int antalGangeBrugt) {
@@ -24,24 +28,49 @@ public class Fad {
         this.antalGangeBrugt = antalGangeBrugt;
     }
 
-    //Metoder til batches
-    public  ArrayList<Batch> getBatches(){
-        return new ArrayList<>(batches);
+    //Metoder til destillat
+
+    public Destillat getDestillat() {
+        return destillat;
     }
-    public void addBatch(Batch batch){
-        if (!batches.contains(batch)){
-            batches.add(batch);
+
+    /**
+     * Sætter fadets destillat
+     * Pre: Fadet skal være tomt
+     */
+    void setDestillat(Destillat destillat) {
+        this.destillat = destillat;
+    }
+
+        /*Der skal laves en metode til at tømme et fad når Use case med at lave wiskey laves.
+        Det er nok noget med at destilatklassen har en metode som kader den der er her som så
+        fjerner destilatet på fadet. André
+         */
+
+
+    //Metoder til Lager
+
+    public void setLager(Lager lager) {
+        if (this.lager != lager) {
+            this.lager = lager;
         }
     }
 
-    public void remodeBatch(Batch batch){
-        if (batches.contains(batch)){
-            batches.remove(batch);
+    public void fjernFraLager() {
+        //TODO
+    }
+
+    public void tilføjTilLager(Lager lager) {
+        if(lager.getErFyldt()) {
+            throw new IllegalStateException("Lageret er fyldt "); // skal den være i lagers metode?(tilføjFadTilobevaringsplads)
         }
+        setLager(lager);
+        lager.tilføjFadTilobevaringsplads(this);
+
+
     }
 
     //get og set metoder
-
 
     public int getFadNr() {
         return fadNr;
@@ -99,7 +128,17 @@ public class Fad {
         this.antalGangeBrugt = antalGangeBrugt;
     }
 
+    public double getLiterPåfyldt() {
+        return literPåfyldt;
+    }
 
+    public void setLiterPåfyldt(double literPåfyldt) {
+        this.literPåfyldt = literPåfyldt;
+    }
+
+    public Lager getLager() {
+        return lager;
+    }
 
     @Override
     public String toString() {
