@@ -46,7 +46,7 @@ public class OpretBatchWindow extends Stage {
         pane.setVgap(10);
         pane.setGridLinesVisible(false);
 
-        Label lblInformationer = new Label("Fad informationer");
+        Label lblInformationer = new Label("Batch informationer");
         pane.add(lblInformationer, 0, 0);
 
         Label lblName = new Label("MaltBatch");
