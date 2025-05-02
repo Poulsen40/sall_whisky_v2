@@ -13,6 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 
 import java.time.LocalDateTime;
 
@@ -130,7 +131,7 @@ public class DestilatOgLager extends Stage {
 
     public void vælgFad() {
         selectedFad = lwlFade.getSelectionModel().getSelectedItem();
-        destillat = Controller.createDestilat(LocalDateTime.now(),selectedFad);
+        destillat = Controller.createDestilat(LocalDateTime.now(), selectedFad);
 
         lwlFade.setDisable(true);
         txfValgtFad.setDisable(true);
@@ -140,7 +141,7 @@ public class DestilatOgLager extends Stage {
         Batch selectedBatch = lwlBatch.getSelectionModel().getSelectedItem();
 
         int mængdeFraBatch = Integer.parseInt(txfBatchMængdeValgt.getText().trim());
-        BatchMængde batchMængde = Controller.createBatchMængde(mængdeFraBatch,destillat,selectedBatch);
+        BatchMængde batchMængde = Controller.createBatchMængde(mængdeFraBatch, destillat, selectedBatch);
 
         destillat.addBatchMængde(batchMængde);
 
@@ -163,9 +164,8 @@ public class DestilatOgLager extends Stage {
     }
 
     public void opretDestillat() {
-
-        //Nyt vindue skl åbnes
-
+        FadPåLagerWindow dia = new FadPåLagerWindow("Registere distilat og lager");
+        dia.showAndWait();
     }
 
 }
