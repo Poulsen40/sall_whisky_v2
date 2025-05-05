@@ -55,6 +55,10 @@ public class Destillat {
         return mængde;
     }
 
+    public Fad getFad() {
+        return fad;
+    }
+
     private StringBuilder udskrivBatches(){
         StringBuilder h  = new StringBuilder();
         for (BatchMængde batchMængde : batchMængder) {

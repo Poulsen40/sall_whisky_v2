@@ -38,7 +38,7 @@ public class Fad {
      * Sætter fadets destillat
      * Pre: Fadet skal være tomt
      */
-    void setDestillat(Destillat destillat) {
+    public void setDestillat(Destillat destillat) {
         this.destillat = destillat;
     }
 
