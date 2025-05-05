@@ -77,7 +77,7 @@ public class Lager {
     }
 
     /**
-     * pre: lagert må ikke være fyldt
+     * pre: lagert må ikke være fyldt og fad må ikke være null
      *
      * @param fad
      * @return
