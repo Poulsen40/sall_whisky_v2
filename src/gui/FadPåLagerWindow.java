@@ -145,7 +145,6 @@ public class FadPåLagerWindow extends Stage {
 
         }
         Controller.fjernDestillat(destillat);
-        System.out.println(Storage.getDestillater());
 
     }
 }

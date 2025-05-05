@@ -286,6 +286,7 @@ public class DestilatOgLager extends Stage {
             alert.setContentText("HUSK og udføre step 1 og step 2");
             alert.showAndWait();
         }
+        lwlBatch.refresh();
 
     }
 
