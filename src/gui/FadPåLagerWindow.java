@@ -75,7 +75,6 @@ public class FadPåLagerWindow extends Stage {
         vBox.getChildren().add(info);
         vBox.getChildren().add(lwlager);
 
-
         txadestillat = new TextArea();
         pane.add(txadestillat, 0, 1);
         txadestillat.setText(destillat.toString());
