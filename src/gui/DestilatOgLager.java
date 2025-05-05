@@ -19,6 +19,7 @@ import javafx.stage.Window;
 
 import java.text.BreakIterator;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class DestilatOgLager extends Stage {
@@ -56,7 +57,13 @@ public class DestilatOgLager extends Stage {
         lwlFade = new ListView<>();
         lwlFade.setPrefWidth(200);
         lwlFade.setPrefHeight(150);
-        lwlFade.getItems().setAll(Controller.getFade());
+        ArrayList<Fad> frieFade = new ArrayList<>();
+        for (Fad f : Controller.getFade()) {
+            if (f.getDestillat() == null) {
+                frieFade.add(f);
+            }
+        }
+        lwlFade.getItems().setAll(frieFade);
         lwlFade.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         GridPane.setValignment(lwlFade, VPos.BOTTOM);
 
@@ -104,7 +111,13 @@ public class DestilatOgLager extends Stage {
         lwlBatch = new ListView<>();
         lwlBatch.setPrefWidth(200);
         lwlBatch.setPrefHeight(150);
-        lwlBatch.getItems().setAll(Controller.getBatch());
+        ArrayList<Batch> batchesMedVæske = new ArrayList<>();
+        for (Batch b : Controller.getBatch()) {
+            if (b.getMængdeVæske() > 0) {
+                batchesMedVæske.add(b);
+            }
+        }
+        lwlBatch.getItems().setAll(batchesMedVæske);
         lwlBatch.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         VBox vBoxBatch = new VBox();
@@ -268,7 +281,7 @@ public class DestilatOgLager extends Stage {
                 alert.setContentText("Du kan IKKE oprette en distillat uden og tilføje noget væske");
                 alert.showAndWait();
             } else {
-                FadPåLagerWindow dia = new FadPåLagerWindow("Registere distilat og lager", destillat,selectedFad);
+                FadPåLagerWindow dia = new FadPåLagerWindow("Registere distilat og lager", destillat, selectedFad);
                 dia.showAndWait();
                 txfBatchInfo.clear();
                 txfBatchMængdeValgt.clear();
@@ -287,6 +300,15 @@ public class DestilatOgLager extends Stage {
             alert.showAndWait();
         }
         lwlBatch.refresh();
+
+        if (selectedFad.getDestillat() != null) {
+            lwlFade.getItems().remove(selectedFad);
+        }
+        for (Batch b : Controller.getBatch()){
+            if(b.getMængdeVæske() <= 0){
+                lwlBatch.getItems().remove(b);
+            }
+        }
 
     }
 

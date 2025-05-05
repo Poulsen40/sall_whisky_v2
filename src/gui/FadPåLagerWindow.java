@@ -110,6 +110,8 @@ public class FadPåLagerWindow extends Stage {
 
                 if (fad != null){
                     String placering = Controller.addFadTilLager(fad, selectedLager);
+
+
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Fad tilføjet");
                     alert.setHeaderText("Fadet er nu placeret på lageret!");
@@ -144,8 +146,8 @@ public class FadPåLagerWindow extends Stage {
             bb.setMængdeVæske(bb.getMængdeVæske() + b.getMængde());
 
         }
+        fad.setDestillat(null);
         Controller.fjernDestillat(destillat);
-
     }
 }
 
