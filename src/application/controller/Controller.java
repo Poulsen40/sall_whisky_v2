@@ -19,10 +19,6 @@ public class Controller {
 //        Controller.storage = storage;
 //    }
 
-    private static Fad valgtFad;
-    private static Lager valgtLager;
-
-
 
     public static Batch createBatch(String maltBach, String kornSort, String mark, double mængdeVæske, double alkoholPct, String kommentar, Rygemateriale rygemateriale) {
         Batch batch = new Batch(maltBach, kornSort, mark, mængdeVæske, alkoholPct, kommentar, rygemateriale);
@@ -42,12 +38,12 @@ public class Controller {
     }
 
     public static Destillat createDestilat(LocalDateTime datoForPåfyldning, Fad fad) {
-        Destillat destillat =  new Destillat(datoForPåfyldning, fad);
+        Destillat destillat = new Destillat(datoForPåfyldning, fad);
         Storage.addDestillat(destillat);
         return destillat;
     }
 
-    public static void fjernDestillat(Destillat destillat){
+    public static void fjernDestillat(Destillat destillat) {
         Storage.removeDestillat(destillat);
     }
 
@@ -55,7 +51,7 @@ public class Controller {
         return Storage.getFade();
     }
 
-    public static ArrayList<Lager> getlagere(){
+    public static ArrayList<Lager> getlagere() {
         return Storage.getLager();
     }
 
@@ -63,7 +59,9 @@ public class Controller {
         return Storage.getBatches();
     }
 
-    public static ArrayList<Destillat> getDestillater() {return Storage.getDestillater();}
+    public static ArrayList<Destillat> getDestillater() {
+        return Storage.getDestillater();
+    }
 
     /**
      * Præbetingelse
@@ -72,12 +70,11 @@ public class Controller {
      * plads >= 0
      */
 
-    public static Lager createLager(int rækker, int hylder, int plads, String navn){
+    public static Lager createLager(int rækker, int hylder, int plads, String navn) {
         Lager lager = new Lager(rækker, hylder, plads, navn);
         Storage.addLager(lager);
         return lager;
     }
-
 
 
     //addfadtillager skal vide hvilket lager og fad brugeren har valgt. Dvs i DesitllatOgLager,
@@ -85,8 +82,8 @@ public class Controller {
     //Tilsvarende skal det fastholdes hvilket lager brugeren vælger i listviewet.
     //Metoden addFadTilLager skal lave relationen mellem fad og lager, og det kan kun gøres hvis den kender det valgte fad og lager.
     //Jeg kan ikke se hvor der bliver lavet en setSelection i viewet(måske er det noget java gør for en).
-    public static String addFadTilLager(Fad fad, Lager lager){
-        if (lager.getErFyldt()){
+    public static String addFadTilLager(Fad fad, Lager lager) {
+        if (lager.getErFyldt()) {
             throw new IllegalStateException("Kan ikke lagre flere fad da lageret er fyldt.");
         }
         System.out.println("fad" + fad.getFadStørrelse());
@@ -99,12 +96,5 @@ public class Controller {
 
         return placering;
     }
-
-    public static void setValgtFad(Fad valgtFad) {
-        Controller.valgtFad = valgtFad;
-    }
-
-    public static Fad getValgtFad() {
-        return valgtFad;
-    }
 }
+

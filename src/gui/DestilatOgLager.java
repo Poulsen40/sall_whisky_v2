@@ -152,7 +152,6 @@ public class DestilatOgLager extends Stage {
 
     public void vælgFad() {
         selectedFad = lwlFade.getSelectionModel().getSelectedItem();
-        Controller.setValgtFad(selectedFad);
         if (selectedFad == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Du skal trykke på det fad du vil vælge");
@@ -269,7 +268,7 @@ public class DestilatOgLager extends Stage {
                 alert.setContentText("Du kan IKKE oprette en distillat uden og tilføje noget væske");
                 alert.showAndWait();
             } else {
-                FadPåLagerWindow dia = new FadPåLagerWindow("Registere distilat og lager", destillat);
+                FadPåLagerWindow dia = new FadPåLagerWindow("Registere distilat og lager", destillat,selectedFad);
                 dia.showAndWait();
                 txfBatchInfo.clear();
                 txfBatchMængdeValgt.clear();

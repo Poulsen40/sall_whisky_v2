@@ -23,10 +23,12 @@ import java.util.ArrayList;
 public class FadPåLagerWindow extends Stage {
 
     private Destillat destillat;
+    private Fad fad;
 
-    public FadPåLagerWindow(String title, Destillat destillat) {
+    public FadPåLagerWindow(String title, Destillat destillat, Fad fad) {
 
         this.destillat = destillat;
+        this.fad = fad;
         this.initStyle(StageStyle.UTILITY);
         this.initModality(Modality.APPLICATION_MODAL);
         this.setResizable(false);
@@ -106,24 +108,28 @@ public class FadPåLagerWindow extends Stage {
 
             if (selectedLager != null){
 
-                if (Controller.getValgtFad() != null){
-                    String placering = Controller.addFadTilLager(Controller.getValgtFad(), selectedLager);
+                if (fad != null){
+                    String placering = Controller.addFadTilLager(fad, selectedLager);
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Fad tilføjet");
                     alert.setHeaderText("Fadet er nu placeret på lageret!");
                     alert.setContentText(placering);
                     alert.showAndWait();
+                    close();
                 } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("Ingen fad tilgængelige");
                     alert.showAndWait();
                     alert.close();
+
                 }
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Du skal vælge et lager");
                 alert.showAndWait();
                 alert.close();
+
+
             }
 
 
