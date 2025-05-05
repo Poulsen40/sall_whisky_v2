@@ -78,12 +78,14 @@ public class DestilatOgLager extends Stage {
 
         txfValgtFad = new TextField();
         pane.add(txfValgtFad, 0, 2);
+        txfValgtFad.setEditable(false);
 
         Label lblMængdeTilbagePåFad = new Label("Plads tilbage på fad");
         pane.add(lblMængdeTilbagePåFad, 0, 3);
 
         txfFadMængdeTilbage = new TextField();
         pane.add(txfFadMængdeTilbage, 0, 4);
+        txfFadMængdeTilbage.setEditable(false);
 
         lwlFade.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -115,6 +117,7 @@ public class DestilatOgLager extends Stage {
 
         txfBatchInfo = new TextField();
         pane.add(txfBatchInfo, 1, 2);
+        txfBatchInfo.setEditable(false);
 
 
         lwlBatch.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {

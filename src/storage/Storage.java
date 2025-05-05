@@ -1,6 +1,7 @@
 package storage;
 
 import application.model.Batch;
+import application.model.Destillat;
 import application.model.Fad;
 import application.model.Lager;
 
@@ -12,6 +13,8 @@ public class Storage {
     private static ArrayList<Batch> batches = new ArrayList<>();
     private static ArrayList<Fad> fade = new ArrayList<>();
     private static ArrayList<Lager> lagere = new ArrayList<>();
+    private static ArrayList<Destillat> destillater = new ArrayList<>();
+
 
     //-----------------------------------------------------------------------------
 
@@ -51,6 +54,16 @@ public class Storage {
     }
 
     //----------------------------------------------------------------------------------
+    public static ArrayList<Destillat> getDestillater() {
+        return new ArrayList<Destillat>(destillater);
+    }
+    public static void addDestillat(Destillat destillat) {
+        destillater.add(destillat);
+    }
+    public static void removeDestillat(Destillat destillat) {
+        destillater.remove(destillat);
+    }
+
 
 
 

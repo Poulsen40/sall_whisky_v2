@@ -1,6 +1,7 @@
 package application.controller;
 
 import application.model.*;
+import javafx.stage.Stage;
 import storage.Storage;
 
 import java.io.File;
@@ -42,6 +43,7 @@ public class Controller {
 
     public static Destillat createDestilat(LocalDateTime datoForPåfyldning, Fad fad) {
         Destillat destillat =  new Destillat(datoForPåfyldning, fad);
+        Storage.addDestillat(destillat);
         return destillat;
     }
 
