@@ -167,6 +167,15 @@ public class DestilatOgLager extends Stage {
     }
 
     public void vælgBatch() {
+
+        if (selectedFad == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeight(400);
+            alert.setWidth(400);
+            alert.setContentText("Husk at udføre step 1 først");
+            alert.showAndWait();
+
+        }
         //Får info fra batch (hvilket batch og hvor meget der ønskes tappes fra brugergrænsefladen)
         Batch selectedBatch = lwlBatch.getSelectionModel().getSelectedItem();
         String mængdeValgt = txfBatchMængdeValgt.getText().trim();
@@ -194,7 +203,14 @@ public class DestilatOgLager extends Stage {
         }
 
         if (selectedBatch != null && !mængdeValgt.isEmpty()) {
-
+            if (!mængdeValgt.matches("\\d+")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeight(400);
+                alert.setWidth(400);
+                alert.setContentText("Mængde væske ønsket tappes skal være et tal");
+                alert.showAndWait();
+                return;
+            }
             double mængdeFraBatch = Double.parseDouble(txfBatchMængdeValgt.getText().trim());
             double væskeTilbagePåfad = Double.parseDouble(txfFadMængdeTilbage.getText().trim());
 
@@ -237,6 +253,7 @@ public class DestilatOgLager extends Stage {
                 System.out.println(destillat.getBatchMængder());
 
             }
+
         }
 
 
