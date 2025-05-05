@@ -9,8 +9,8 @@ public class Destillat {
     private double alkoholPct;
 
     //Linkattribut
-    private static ArrayList<BatchMængde> batchMængder = new ArrayList<>();
-    private static Fad fad;
+    private ArrayList<BatchMængde> batchMængder = new ArrayList<>();
+    private Fad fad;
 
     public Destillat(LocalDateTime datoForPåfyldning, Fad fad) {
         this.datoForPåfyldning = datoForPåfyldning;
