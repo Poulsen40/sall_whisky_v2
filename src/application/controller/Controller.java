@@ -47,6 +47,10 @@ public class Controller {
         return destillat;
     }
 
+    public static void fjernDestillat(Destillat destillat){
+        Storage.removeDestillat(destillat);
+    }
+
     public static ArrayList<Fad> getFade() {
         return Storage.getFade();
     }
@@ -58,6 +62,8 @@ public class Controller {
     public static ArrayList<Batch> getBatch() {
         return Storage.getBatches();
     }
+
+    public static ArrayList<Destillat> getDestillater() {return Storage.getDestillater();}
 
     /**
      * Præbetingelse

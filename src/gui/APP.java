@@ -3,6 +3,7 @@ package gui;
 import application.controller.Controller;
 import application.model.*;
 import javafx.application.Application;
+import storage.Storage;
 
 import javax.naming.ldap.Control;
 import java.io.*;
@@ -49,11 +50,6 @@ public class APP {
         Lager lager = Controller.createLager(10, 3, 2, "Container lager");
         Lager lager1 = Controller.createLager(12, 3, 10, "Lars landmand");
 
-        Destillat destillat = Controller.createDestilat(LocalDateTime.now(), f1);
-
-        b1.createBatchMængde(44, destillat);
-        b1.createBatchMængde(33, destillat);
-        b2.createBatchMængde(33, destillat);
     }
 }
 
