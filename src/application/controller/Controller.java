@@ -83,14 +83,10 @@ public class Controller {
     //Metoden addFadTilLager skal lave relationen mellem fad og lager, og det kan kun gøres hvis den kender det valgte fad og lager.
     //Jeg kan ikke se hvor der bliver lavet en setSelection i viewet(måske er det noget java gør for en).
     public static String addFadTilLager(Fad fad, Lager lager) {
-        if (lager.getErFyldt()) {
-            throw new IllegalStateException("Kan ikke lagre flere fad da lageret er fyldt.");
-        }
+
         System.out.println("fad" + fad.getFadStørrelse());
 
-        String placering = lager.tilføjFadTilobevaringsplads(fad);
-
-        fad.tilføjTilLager(lager);
+        String placering = fad.tilføjTilLager(lager);
 
         System.out.println("addFadTilLager");
 
