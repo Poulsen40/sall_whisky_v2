@@ -103,7 +103,7 @@ public class OpretBatchWindow extends Stage {
         opretBatch.setOnAction(event -> opretBatch());
         GridPane.setHalignment(opretBatch, HPos.RIGHT);
 
-        Button afbrudBatch = new Button("Afbrud");
+        Button afbrudBatch = new Button("Afbryd");
         pane.add(afbrudBatch, 0, 8);
         afbrudBatch.setOnAction(event -> {
             Stage stage = (Stage) afbrudBatch.getScene().getWindow();

@@ -75,7 +75,7 @@ public class OpretLagerWindow extends Stage {
         GridPane.setHalignment(btnOpretLager, HPos.RIGHT);
         btnOpretLager.setOnAction(event -> opretLagermetode());
 
-        btnCancel = new Button("Afbrud");
+        btnCancel = new Button("Afbryd");
         pane.add(btnCancel, 0, 8);
 
         btnCancel.setOnAction(event -> {

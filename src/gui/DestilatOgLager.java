@@ -11,6 +11,7 @@ import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -44,6 +45,9 @@ public class DestilatOgLager extends Stage {
     private static TextField txfBatchMængdeValgt;
     private static TextField txfFadMængdeTilbage;
     private static Button vælgFad;
+    private static Button afbryd;
+    private boolean isVælgFadButtonPressed; //Skal den være static?
+
 
     private static Fad selectedFad;
     private static Destillat destillat;
@@ -158,8 +162,13 @@ public class DestilatOgLager extends Stage {
         pane.add(txfBatchMængdeValgt, 1, 4);
 
         Button opretDestillat = new Button("Opret destillat på fad");
-        pane.add(opretDestillat, 0, 5);
+        pane.add(opretDestillat, 2, 5,2,5);
         opretDestillat.setOnAction(event -> opretDestillat());
+        afbryd = new Button("Afbryd");
+        afbryd.setOnAction(Event -> afbryd());
+        HBox hBox = new HBox(10);
+        hBox.getChildren().addAll(afbryd,opretDestillat);
+        pane.add(hBox,0,5);
 
     }
 
@@ -177,6 +186,8 @@ public class DestilatOgLager extends Stage {
             txfValgtFad.setDisable(true);
             vælgFad.setDisable(true);
             vælgFad.setFocusTraversable(false);
+
+            isVælgFadButtonPressed = true;
 
         }
     }
@@ -245,7 +256,7 @@ public class DestilatOgLager extends Stage {
                 alert.setContentText("Du kan ikke tappe flere liter end der er plads til på fadet");
                 alert.showAndWait();
             }
-            if (mængdeFraBatch <= selectedBatch.getMængdeVæske() && mængdeFraBatch <= væskeTilbagePåfad) {
+            if (mængdeFraBatch <= selectedBatch.getMængdeVæske() && mængdeFraBatch <= væskeTilbagePåfad) { //Fejler her men kan muligvis løses ved at tilføje "&& isVælgFadButtonPressed"
                 //Batchmængden bliver oprettet efter overstående info
                 BatchMængde batchMængde = Controller.createBatchMængde(mængdeFraBatch, destillat, selectedBatch);
                 //Batchmængden bliver added til det oprettede destillat
@@ -310,6 +321,28 @@ public class DestilatOgLager extends Stage {
             }
         }
 
+    }
+
+    public void afbryd(){
+        if(!isVælgFadButtonPressed) {
+            close();
+        }
+        else {
+            afbryd.setDisable(true);
+            close();
+            Fad fad = lwlFade.getSelectionModel().getSelectedItem();
+            ArrayList<BatchMængde> batchMængdes = new ArrayList<>(destillat.getBatchMængder());
+            for (BatchMængde b : batchMængdes) {
+                Batch bb = b.getBatch();
+                bb.setMængdeVæske(bb.getMængdeVæske() + b.getMængde());
+
+            }
+            fad.setDestillat(null);
+            Controller.fjernDestillat(destillat);
+            lwlFade.getSelectionModel().clearSelection();
+            selectedFad = null;
+
+        }
     }
 
 }

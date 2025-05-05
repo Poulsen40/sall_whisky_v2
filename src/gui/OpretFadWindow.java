@@ -117,7 +117,7 @@ public class OpretFadWindow extends Stage {
         GridPane.setHalignment(opretFad,HPos.RIGHT);
 
 
-        Button afbrudFad = new Button("Afbrud");
+        Button afbrudFad = new Button("Afbryd");
         pane.add(afbrudFad, 0, 8);
 
         afbrudFad.setOnAction(event -> {
