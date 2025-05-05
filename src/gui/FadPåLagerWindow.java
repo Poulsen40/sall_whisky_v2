@@ -78,6 +78,8 @@ public class FadPåLagerWindow extends Stage {
         txadestillat = new TextArea();
         pane.add(txadestillat, 0, 1);
         txadestillat.setText(destillat.toString());
+        txadestillat.setEditable(false);
+
 
         btnCancel = new Button("Afbryd");
         pane.add(btnCancel, 0, 3);
@@ -121,7 +123,6 @@ public class FadPåLagerWindow extends Stage {
                 alert.showAndWait();
                 alert.close();
             }
-            txadestillat.setEditable(false);
 
 
 
