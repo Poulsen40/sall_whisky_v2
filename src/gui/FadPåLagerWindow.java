@@ -4,15 +4,12 @@ import application.controller.Controller;
 import application.model.Destillat;
 import application.model.Fad;
 import application.model.Lager;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -47,8 +44,13 @@ public class FadPåLagerWindow extends Stage {
 
 
     private static ListView<Lager> lwlager;
+//    private static ListView<Fad> lwFad;
     private static TextArea txadestillat;
     private static Button btnCancel;
+    private static Button btnAdd;
+
+
+
 
 
     public void initContent(GridPane pane) {
@@ -59,17 +61,18 @@ public class FadPåLagerWindow extends Stage {
         pane.setGridLinesVisible(false);
 
 
-        Label lblIntro = new Label("Info");
+        Label info = new Label("Info");
 
         lwlager = new ListView<>();
         lwlager.setPrefWidth(200);
         lwlager.setPrefHeight(150);
         lwlager.getItems().setAll(Controller.getlagere());
-        lwlager.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        lwlager.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
 
         VBox vBox = new VBox();
         pane.add(vBox, 0, 0);
-        vBox.getChildren().add(lblIntro);
+        vBox.getChildren().add(info);
         vBox.getChildren().add(lwlager);
 
 
@@ -84,8 +87,46 @@ public class FadPåLagerWindow extends Stage {
             Stage stage = (Stage) btnCancel.getScene().getWindow();
             stage.close(); // lukker dialogen
         });
-        txadestillat.setEditable(false);
+
+//        lwFad.getSelectionModel().selectedItemProperty().addListener((obsFad, oldFadSelection, newFadSelection) -> {
+//
+//        });
+        lwlager.getSelectionModel().selectedItemProperty().addListener((obsLager, oldLagerSelection, newLagerSelection) -> {
+
+        });
+
+        btnAdd = new Button("Tilføj fad til lager");
+        pane.add(btnAdd, 0, 3);
+        GridPane.setHalignment(btnAdd, HPos.RIGHT);
+        btnAdd.setOnAction(event ->{
+            Lager selectedLager = lwlager.getSelectionModel().getSelectedItem();
+
+            if (selectedLager != null){
+
+                if (Controller.getValgtFad() != null){
+                    String placering = Controller.addFadTilLager(Controller.getValgtFad(), selectedLager);
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Fad tilføjet");
+                    alert.setHeaderText("Fadet er nu placeret på lageret!");
+                    alert.setContentText(placering);
+                    alert.showAndWait();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Ingen fad tilgængelige");
+                    alert.showAndWait();
+                    alert.close();
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Du skal vælge et lager");
+                alert.showAndWait();
+                alert.close();
+            }
+            txadestillat.setEditable(false);
 
 
+
+        });
     }
 }
+

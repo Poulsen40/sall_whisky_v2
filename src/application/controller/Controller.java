@@ -3,6 +3,7 @@ package application.controller;
 import application.model.*;
 import storage.Storage;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -16,6 +17,11 @@ public class Controller {
 //    public static void setStorage(Storage storage){
 //        Controller.storage = storage;
 //    }
+
+    private static Fad valgtFad;
+    private static Lager valgtLager;
+
+
 
     public static Batch createBatch(String maltBach, String kornSort, String mark, double mængdeVæske, double alkoholPct, String kommentar, Rygemateriale rygemateriale) {
         Batch batch = new Batch(maltBach, kornSort, mark, mængdeVæske, alkoholPct, kommentar, rygemateriale);
@@ -62,5 +68,35 @@ public class Controller {
         Lager lager = new Lager(rækker, hylder, plads, navn);
         Storage.addLager(lager);
         return lager;
+    }
+
+
+
+    //addfadtillager skal vide hvilket lager og fad brugeren har valgt. Dvs i DesitllatOgLager,
+    //skal det fastholdes hvilket fad der klikkes på i listviewet i vælgFad().
+    //Tilsvarende skal det fastholdes hvilket lager brugeren vælger i listviewet.
+    //Metoden addFadTilLager skal lave relationen mellem fad og lager, og det kan kun gøres hvis den kender det valgte fad og lager.
+    //Jeg kan ikke se hvor der bliver lavet en setSelection i viewet(måske er det noget java gør for en).
+    public static String addFadTilLager(Fad fad, Lager lager){
+        if (lager.getErFyldt()){
+            throw new IllegalStateException("Kan ikke lagre flere fad da lageret er fyldt.");
+        }
+        System.out.println("fad" + fad.getFadStørrelse());
+
+        String placering = lager.tilføjFadTilobevaringsplads(fad);
+
+        fad.tilføjTilLager(lager);
+
+        System.out.println("addFadTilLager");
+
+        return placering;
+    }
+
+    public static void setValgtFad(Fad valgtFad) {
+        Controller.valgtFad = valgtFad;
+    }
+
+    public static Fad getValgtFad() {
+        return valgtFad;
     }
 }

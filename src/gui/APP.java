@@ -54,6 +54,7 @@ public class APP {
         b1.createBatchMængde(33,destillat);
         b2.createBatchMængde(33,destillat);
     }
+}
 
 
     //loader objekter i storage

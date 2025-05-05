@@ -11,7 +11,6 @@ import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -79,14 +78,12 @@ public class DestilatOgLager extends Stage {
 
         txfValgtFad = new TextField();
         pane.add(txfValgtFad, 0, 2);
-        txfValgtFad.setEditable(false);
 
         Label lblMængdeTilbagePåFad = new Label("Plads tilbage på fad");
         pane.add(lblMængdeTilbagePåFad, 0, 3);
 
         txfFadMængdeTilbage = new TextField();
         pane.add(txfFadMængdeTilbage, 0, 4);
-        txfFadMængdeTilbage.setEditable(false);
 
         lwlFade.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -118,7 +115,6 @@ public class DestilatOgLager extends Stage {
 
         txfBatchInfo = new TextField();
         pane.add(txfBatchInfo, 1, 2);
-        txfBatchInfo.setEditable(false);
 
 
         lwlBatch.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -153,7 +149,7 @@ public class DestilatOgLager extends Stage {
 
     public void vælgFad() {
         selectedFad = lwlFade.getSelectionModel().getSelectedItem();
-
+        Controller.setValgtFad(selectedFad);
         if (selectedFad == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Du skal trykke på det fad du vil vælge");
@@ -242,32 +238,16 @@ public class DestilatOgLager extends Stage {
 
             }
         }
+
+
     }
 
     public void opretDestillat() {
-        try {
-            if (destillat.getSamletMængde() == 0) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Du kan IKKE oprette en distillat uden og tilføje noget væske");
-                alert.showAndWait();
-            } else {
-                FadPåLagerWindow dia = new FadPåLagerWindow("Registere distilat og lager", destillat);
-                dia.showAndWait();
-                txfBatchInfo.clear();
-                txfBatchMængdeValgt.clear();
-                txfFadMængdeTilbage.clear();
-                txfValgtFad.clear();
-                txfValgtFad.setDisable(false);
-                lwlBatch.getSelectionModel().clearSelection();
-                lwlFade.getSelectionModel().clearSelection();
-                lwlBatch.setDisable(false);
-                lwlFade.setDisable(false);
-                vælgFad.setDisable(false);
-            }
-        } catch (NullPointerException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("HUSK og udføre step 1 og step 2");
-            alert.showAndWait();
-        }
+
+
+        FadPåLagerWindow dia = new FadPåLagerWindow("Registere distilat og lager",destillat);
+        dia.showAndWait();
+
     }
+
 }
