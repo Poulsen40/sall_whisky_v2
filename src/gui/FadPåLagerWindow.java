@@ -110,8 +110,7 @@ public class FadPåLagerWindow extends Stage {
 
                 if (fad != null){
                     String placering = Controller.addFadTilLager(fad, selectedLager);
-
-
+                    lwlager.refresh();
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Fad tilføjet");
                     alert.setHeaderText("Fadet er nu placeret på lageret!");

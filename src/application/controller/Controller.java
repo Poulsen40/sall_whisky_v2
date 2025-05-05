@@ -76,19 +76,14 @@ public class Controller {
         return lager;
     }
 
-
     //addfadtillager skal vide hvilket lager og fad brugeren har valgt. Dvs i DesitllatOgLager,
     //skal det fastholdes hvilket fad der klikkes på i listviewet i vælgFad().
     //Tilsvarende skal det fastholdes hvilket lager brugeren vælger i listviewet.
     //Metoden addFadTilLager skal lave relationen mellem fad og lager, og det kan kun gøres hvis den kender det valgte fad og lager.
     //Jeg kan ikke se hvor der bliver lavet en setSelection i viewet(måske er det noget java gør for en).
     public static String addFadTilLager(Fad fad, Lager lager) {
-
-        System.out.println("fad" + fad.getFadStørrelse());
-
         String placering = fad.tilføjTilLager(lager);
-
-        System.out.println("addFadTilLager");
+        lager.setAntalledigepladser(lager.getAntalledigepladser() - 1);
 
         return placering;
     }
