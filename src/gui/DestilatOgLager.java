@@ -162,7 +162,6 @@ public class DestilatOgLager extends Stage {
         pane.add(txfBatchMængdeValgt, 1, 4);
 
         Button opretDestillat = new Button("Opret destillat på fad");
-        pane.add(opretDestillat, 2, 5,2,5);
         opretDestillat.setOnAction(event -> opretDestillat());
         afbryd = new Button("Afbryd");
         afbryd.setOnAction(Event -> afbryd());
@@ -256,7 +255,7 @@ public class DestilatOgLager extends Stage {
                 alert.setContentText("Du kan ikke tappe flere liter end der er plads til på fadet");
                 alert.showAndWait();
             }
-            if (mængdeFraBatch <= selectedBatch.getMængdeVæske() && mængdeFraBatch <= væskeTilbagePåfad) { //Fejler her men kan muligvis løses ved at tilføje "&& isVælgFadButtonPressed"
+            if (mængdeFraBatch <= selectedBatch.getMængdeVæske() && mængdeFraBatch <= væskeTilbagePåfad && isVælgFadButtonPressed) {
                 //Batchmængden bliver oprettet efter overstående info
                 BatchMængde batchMængde = Controller.createBatchMængde(mængdeFraBatch, destillat, selectedBatch);
                 //Batchmængden bliver added til det oprettede destillat
