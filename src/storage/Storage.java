@@ -1,9 +1,6 @@
 package storage;
 
-import application.model.Batch;
-import application.model.Destillat;
-import application.model.Fad;
-import application.model.Lager;
+import application.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +11,8 @@ public class Storage {
     private static ArrayList<Fad> fade = new ArrayList<>();
     private static ArrayList<Lager> lagere = new ArrayList<>();
     private static ArrayList<Destillat> destillater = new ArrayList<>();
+    private static ArrayList<Whiskyprodukt> whiskyprodukter = new ArrayList<>();
+
 
 
     //-----------------------------------------------------------------------------
@@ -63,6 +62,17 @@ public class Storage {
     public static void removeDestillat(Destillat destillat) {
         destillater.remove(destillat);
     }
+    //----------------------------------------------------------------------------------
+    public static ArrayList<Whiskyprodukt> getWhiskyprodukter() {
+        return new ArrayList<Whiskyprodukt>(whiskyprodukter);
+    }
+    public static void addWhiskyprodukt(Whiskyprodukt whiskyprodukt) {
+        whiskyprodukter.add(whiskyprodukt);
+    }
+    public static void removeWhiskyprodukt(Whiskyprodukt whiskyprodukt) {
+        whiskyprodukter.remove(whiskyprodukt);
+    }
+
 
 
 

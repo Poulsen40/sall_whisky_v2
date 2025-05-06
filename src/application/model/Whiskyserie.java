@@ -14,11 +14,9 @@ public class Whiskyserie {
     private LocalDate dato;
 
 
-
     private ArrayList<Whiskyprodukt> whiskyprodukter = new ArrayList<>();
 
     private ArrayList<DestillatMængde> destillatMængder = new ArrayList<>();
-
 
 
     public Whiskyserie(String serieNavn, LocalDate dato) {

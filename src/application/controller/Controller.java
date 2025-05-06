@@ -3,6 +3,7 @@ package application.controller;
 import application.model.*;
 import storage.Storage;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -40,6 +41,22 @@ public class Controller {
         Storage.addDestillat(destillat);
         return destillat;
     }
+
+    public static Whiskyserie createWhiskyserie(String serieNavn, LocalDate dato) {
+        Whiskyserie whiskyserie = new Whiskyserie(serieNavn, dato);
+        return whiskyserie;
+    }
+
+    public static DestillatMængde createDestillatMængde(double mængde, Whiskyserie whiskyserie, Destillat destillat) {
+        DestillatMængde destillatMængde = destillat.createDestillatMængde(mængde, whiskyserie);
+        return destillatMængde;
+    }
+
+    public static Whiskyprodukt createWhiskyprodukt(Whiskyserie whiskyserie) {
+        Whiskyprodukt whiskyprodukt = whiskyserie.createWhiskyprodukt();
+        return whiskyprodukt;
+    }
+
 
     public static void fjernDestillat(Destillat destillat) {
         Storage.removeDestillat(destillat);
