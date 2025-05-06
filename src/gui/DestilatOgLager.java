@@ -300,6 +300,7 @@ public class DestilatOgLager extends Stage {
                 lwlBatch.setDisable(false);
                 lwlFade.setDisable(false);
                 vælgFad.setDisable(false);
+                isVælgFadButtonPressed = false;
             }
         } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -333,7 +334,7 @@ public class DestilatOgLager extends Stage {
                 Controller.setMængdeVæske(bb,Controller.getMængdeVæske(bb) + Controller.getMængdeVæske(b));
 
             }
-            Controller.setDestillatFad(fad,null);
+            Controller.setDestillatFad(fad, null);
             Controller.fjernDestillat(destillat);
             lwlFade.getSelectionModel().clearSelection();
             selectedFad = null;
