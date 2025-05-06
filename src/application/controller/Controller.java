@@ -106,5 +106,19 @@ public class Controller {
     public static ArrayList<BatchMængde> getBatchMængder(Destillat destillat) {
         return destillat.getBatchMængder();
     }
+
+    public static Destillat getDestillat(Fad fad) { return fad.getDestillat(); }
+
+    public static double getFadStørrelse(Fad fad) { return fad.getFadStørrelse(); }
+
+    public static void addBatchMængde(BatchMængde batchMængde, Destillat destillat) {destillat.addBatchMængde(batchMængde);}
+
+    public static void setMængdeVæske(Batch batch,double nyBatchInfo) { batch.setMængdeVæske(nyBatchInfo);}
+
+    public static double getSamletMængde(Destillat destillat) { return destillat.getSamletMængde();}
+
+    public static String destillatToString(Destillat destillat) { return destillat.toString();}
+
+
 }
 

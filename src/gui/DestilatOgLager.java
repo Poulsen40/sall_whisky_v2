@@ -60,7 +60,7 @@ public class DestilatOgLager extends Stage {
         lwlFade.setPrefHeight(150);
         ArrayList<Fad> frieFade = new ArrayList<>();
         for (Fad f : Controller.getFade()) {
-            if (f.getDestillat() == null) { //TODO
+            if (Controller.getDestillat(f) == null) {
                 frieFade.add(f);
             }
         }
@@ -114,7 +114,7 @@ public class DestilatOgLager extends Stage {
         lwlBatch.setPrefHeight(150);
         ArrayList<Batch> batchesMedVæske = new ArrayList<>();
         for (Batch b : Controller.getBatch()) {
-            if (b.getMængdeVæske() > 0) { //TODO
+            if (Controller.getMængdeVæske(b) > 0) {
                 batchesMedVæske.add(b);
             }
         }
@@ -236,7 +236,7 @@ public class DestilatOgLager extends Stage {
             double mængdeFraBatch = Double.parseDouble(txfBatchMængdeValgt.getText().trim());
             double væskeTilbagePåfad = Double.parseDouble(txfFadMængdeTilbage.getText().trim());
 
-            if (mængdeFraBatch > selectedBatch.getMængdeVæske()) { //TODO
+            if (mængdeFraBatch > Controller.getMængdeVæske(selectedBatch)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setHeight(400);
                 alert.setWidth(400);
@@ -245,35 +245,35 @@ public class DestilatOgLager extends Stage {
             }
             if (mængdeFraBatch > væskeTilbagePåfad) {
                 System.out.println(mængdeFraBatch);
-                System.out.println(selectedFad.getFadStørrelse()); //TODO
+                System.out.println(Controller.getFadStørrelse(selectedFad));
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setHeight(400);
                 alert.setWidth(400);
                 alert.setContentText("Du kan ikke tappe flere liter end der er plads til på fadet");
                 alert.showAndWait();
             }
-            if (mængdeFraBatch <= selectedBatch.getMængdeVæske() && mængdeFraBatch <= væskeTilbagePåfad && isVælgFadButtonPressed) { //TODO
+            if (mængdeFraBatch <= Controller.getMængdeVæske(selectedBatch) && mængdeFraBatch <= væskeTilbagePåfad && isVælgFadButtonPressed) {
                 //Batchmængden bliver oprettet efter overstående info
                 BatchMængde batchMængde = Controller.createBatchMængde(mængdeFraBatch, destillat, selectedBatch);
                 //Batchmængden bliver added til det oprettede destillat
-                destillat.addBatchMængde(batchMængde); //TODO
+                Controller.addBatchMængde(batchMængde,destillat);
+
 
                 //Udregning der ændrer tal på grænsefladen - mængdetilbage på det fad der er valgt
                 double mængdeTilbageFørTapningFraBatch = Double.parseDouble(txfFadMængdeTilbage.getText().trim());
-                double mængdeValgtTappetFraBatch = batchMængde.getMængde(); //TODO
+                double mængdeValgtTappetFraBatch = Controller.getMængdeVæske(batchMængde);
                 double nyMængde = mængdeTilbageFørTapningFraBatch - mængdeValgtTappetFraBatch;
                 //Den nye mængde tilbage på faddet settes
                 txfFadMængdeTilbage.setText(String.valueOf(nyMængde));
                 txfBatchMængdeValgt.clear();
 
                 //Mængden på batchen reguleres alt efter hvor meget der tappes via en batchmængde og settes
-                double nyBatchInfo = selectedBatch.getMængdeVæske() - batchMængde.getMængde(); //TODO
-                selectedBatch.setMængdeVæske(nyBatchInfo); //TODO
+                double nyBatchInfo = Controller.getMængdeVæske(selectedBatch) - Controller.getMængdeVæske(batchMængde);
+                Controller.setMængdeVæske(selectedBatch,nyBatchInfo);
                 txfBatchInfo.setText(String.valueOf(nyBatchInfo));
                 lwlBatch.refresh();
 
-                System.out.println(destillat.getBatchMængder()); //TODO
-
+                System.out.println(Controller.getBatchMængder(destillat));
             }
 
         }
@@ -283,7 +283,7 @@ public class DestilatOgLager extends Stage {
 
     public void opretDestillat() {
         try {
-            if (destillat.getSamletMængde() == 0) { //TODO
+            if (Controller.getSamletMængde(destillat) == 0) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Du kan IKKE oprette en distillat uden og tilføje noget væske");
                 alert.showAndWait();
@@ -308,11 +308,11 @@ public class DestilatOgLager extends Stage {
         }
         lwlBatch.refresh();
 
-        if (selectedFad.getDestillat() != null) { //TODO
+        if (Controller.getDestillat(selectedFad) != null) {
             lwlFade.getItems().remove(selectedFad);
         }
         for (Batch b : Controller.getBatch()){
-            if(b.getMængdeVæske() <= 0){ //TODO
+            if(Controller.getMængdeVæske(b) <= 0){
                 lwlBatch.getItems().remove(b);
             }
         }
@@ -330,7 +330,7 @@ public class DestilatOgLager extends Stage {
             ArrayList<BatchMængde> batchMængdes = new ArrayList<>(Controller.getBatchMængder(destillat));
             for (BatchMængde b : batchMængdes) {
                 Batch bb = Controller.getbatch(b);
-                bb.setMængdeVæske(Controller.getMængdeVæske(bb) + Controller.getMængdeVæske(b)); //TODO
+                Controller.setMængdeVæske(bb,Controller.getMængdeVæske(bb) + Controller.getMængdeVæske(b));
 
             }
             Controller.setDestillatFad(fad,null);
