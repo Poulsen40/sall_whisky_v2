@@ -2,22 +2,16 @@ package gui;
 
 import application.controller.Controller;
 import application.model.*;
-import javafx.beans.value.ChangeListener;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import storage.Storage;
 
-import javax.sound.midi.Soundbank;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class FadPåLagerWindow extends Stage {
@@ -139,13 +133,13 @@ public class FadPåLagerWindow extends Stage {
     }
 
     public void genstartDestilatPåFad() {
-        ArrayList<BatchMængde> batchMængdes = new ArrayList<>(destillat.getBatchMængder());
+        ArrayList<BatchMængde> batchMængdes = new ArrayList<>(Controller.getBatchMængder(destillat));
         for (BatchMængde b : batchMængdes) {
-            Batch bb = b.getBatch();
-            bb.setMængdeVæske(bb.getMængdeVæske() + b.getMængde());
+            Batch bb = Controller.getbatch(b);
+            bb.setMængdeVæske(Controller.getMængdeVæske(bb) + Controller.getMængdeVæske(b));
 
         }
-        fad.setDestillat(null);
+        Controller.setDestillatFad(fad,null);
         Controller.fjernDestillat(destillat);
     }
 }

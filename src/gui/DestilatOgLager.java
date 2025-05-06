@@ -16,12 +16,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.stage.Window;
 
-import java.text.BreakIterator;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class DestilatOgLager extends Stage {
     public DestilatOgLager(String title) {
@@ -330,13 +327,13 @@ public class DestilatOgLager extends Stage {
             afbryd.setDisable(true);
             close();
             Fad fad = lwlFade.getSelectionModel().getSelectedItem();
-            ArrayList<BatchMængde> batchMængdes = new ArrayList<>(destillat.getBatchMængder());
+            ArrayList<BatchMængde> batchMængdes = new ArrayList<>(Controller.getBatchMængder(destillat));
             for (BatchMængde b : batchMængdes) {
-                Batch bb = b.getBatch();
-                bb.setMængdeVæske(bb.getMængdeVæske() + b.getMængde());
+                Batch bb = Controller.getbatch(b);
+                bb.setMængdeVæske(Controller.getMængdeVæske(bb) + Controller.getMængdeVæske(b));
 
             }
-            fad.setDestillat(null);
+            Controller.setDestillatFad(fad,null);
             Controller.fjernDestillat(destillat);
             lwlFade.getSelectionModel().clearSelection();
             selectedFad = null;

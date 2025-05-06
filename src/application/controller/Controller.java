@@ -1,10 +1,8 @@
 package application.controller;
 
 import application.model.*;
-import javafx.stage.Stage;
 import storage.Storage;
 
-import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -86,6 +84,27 @@ public class Controller {
         lager.setAntalledigepladser(lager.getAntalledigepladser() - 1);
 
         return placering;
+    }
+
+    public static Batch getbatch(BatchMængde batchMængde) {
+        return batchMængde.getBatch();
+    }
+
+    public static double getMængdeVæske(BatchMængde batchMængde) {
+        return batchMængde.getMængde();
+
+    }
+
+    public static double getMængdeVæske(Batch batch) {
+        return batch.getMængdeVæske();
+    }
+
+    public static void setDestillatFad(Fad fad, Destillat destillat){
+        fad.setDestillat(destillat);
+    }
+
+    public static ArrayList<BatchMængde> getBatchMængder(Destillat destillat) {
+        return destillat.getBatchMængder();
     }
 }
 
