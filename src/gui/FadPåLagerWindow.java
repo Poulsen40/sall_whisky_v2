@@ -74,7 +74,7 @@ public class FadPåLagerWindow extends Stage {
 
         txadestillat = new TextArea();
         pane.add(txadestillat, 0, 1);
-        txadestillat.setText(destillat.toString());
+        txadestillat.setText(destillat.toString()); //TODO??
         txadestillat.setEditable(false);
 
 
