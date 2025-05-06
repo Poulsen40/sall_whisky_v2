@@ -12,6 +12,9 @@ public class Destillat {
     private ArrayList<BatchMængde> batchMængder = new ArrayList<>();
     private Fad fad;
 
+    private ArrayList<DestillatMængde> destillatMængder = new ArrayList<>();
+
+
     public Destillat(LocalDateTime datoForPåfyldning, Fad fad) {
         this.datoForPåfyldning = datoForPåfyldning;
         this.fad = fad;
@@ -31,6 +34,22 @@ public class Destillat {
     public void removeBatchMængde(BatchMængde batchMængde) {
         if (batchMængder.contains(batchMængde)) {
             batchMængder.remove(batchMængde);
+        }
+    }
+
+    public ArrayList<DestillatMængde> getDestillatMængder(){
+        return new ArrayList<>(destillatMængder);
+    }
+
+    public DestillatMængde createDestillatMængde(double mængde,Whiskyserie whiskyserie){
+        DestillatMængde destillatMængde = new DestillatMængde(mængde,whiskyserie,this);
+        destillatMængder.add(destillatMængde);
+        return destillatMængde;
+    }
+
+    public void removeDestillatMængde(DestillatMængde destillatMængde){
+        if (destillatMængder.contains(destillatMængde)){
+            destillatMængder.remove(destillatMængde);
         }
     }
 
