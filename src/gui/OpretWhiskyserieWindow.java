@@ -173,22 +173,43 @@ public class OpretWhiskyserieWindow extends Stage {
     public void opretWhiskySerieObjekt() {
         serieNavn = txfNavn.getText().trim();
 
-        whiskyserie = Controller.createWhiskyserie(serieNavn, dato);
+        if (serieNavn.isEmpty() || dato == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Du skal udfylde både navn og dato for whiskyserien");
+            alert.showAndWait();
+        }
+        else {
+            whiskyserie = Controller.createWhiskyserie(serieNavn, dato);
+            txfNavn.setDisable(true);
+            datePicker.setDisable(true);
+            btnOpretWhiskySerieObjekt.setDisable(true);
+            System.out.println(whiskyserie);
+        }
 
-        txfNavn.setDisable(true);
-        datePicker.setDisable(true);
-        btnOpretWhiskySerieObjekt.setDisable(true);
-
-        System.out.println(whiskyserie);
     }
 
     public void tapMængdeFraDestilat() {
-
         Destillat selectedDestillat = lwlDestillat.getSelectionModel().getSelectedItem();
-        Fad fad = selectedDestillat.getFad();
+//        if (selectedDestillat == null){
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setContentText("Du skal vælge et destillat før du kan tappe");
+//            alert.showAndWait();
+//        } else {
+//
+//            if (txfTapMængde.getText().trim().isEmpty()){
+//                Alert alert = new Alert(Alert.AlertType.ERROR);
+//                alert.setContentText("Du skal indtaste mængden af væske du vil tappe");
+//                alert.showAndWait();
+//            }
+//            else if (!txfTapMængde.getText().trim().matches("\\d+(\\.\\d+)?")){
+//                Alert alert = new Alert(Alert.AlertType.ERROR);
+//                alert.setContentText("Tapmængden skal være et tal");
+//                alert.showAndWait();
+//            }
+//        }
 
         double mængde = Double.parseDouble(txfTapMængde.getText().trim());
-
+        Fad fad = selectedDestillat.getFad();
         destillatMængde = Controller.createDestillatMængde(mængde, whiskyserie, selectedDestillat);
         Controller.addDestillatMængde(destillatMængde, whiskyserie);
 
