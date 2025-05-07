@@ -116,7 +116,7 @@ public class Controller {
         return batch.getMængdeVæske();
     }
 
-    public static void setDestillatFad(Fad fad, Destillat destillat){
+    public static void setDestillatFad(Fad fad, Destillat destillat) {
         fad.setDestillat(destillat);
     }
 
@@ -124,29 +124,43 @@ public class Controller {
         return destillat.getBatchMængder();
     }
 
-    public static Destillat getDestillat(Fad fad) { return fad.getDestillat(); }
+    public static Destillat getDestillat(Fad fad) {
+        return fad.getDestillat();
+    }
 
-    public static double getFadStørrelse(Fad fad) { return fad.getFadStørrelse(); }
+    public static double getFadStørrelse(Fad fad) {
+        return fad.getFadStørrelse();
+    }
 
-    public static void addBatchMængde(BatchMængde batchMængde, Destillat destillat) {destillat.addBatchMængde(batchMængde);}
+    public static void addBatchMængde(BatchMængde batchMængde, Destillat destillat) {
+        destillat.addBatchMængde(batchMængde);
+    }
 
-    public static void setMængdeVæske(Batch batch,double nyBatchInfo) { batch.setMængdeVæske(nyBatchInfo);}
+    public static void setMængdeVæske(Batch batch, double nyBatchInfo) {
+        batch.setMængdeVæske(nyBatchInfo);
+    }
 
-    public static double getSamletMængde(Destillat destillat) { return destillat.getSamletMængde();}
+    public static double getSamletMængde(Destillat destillat) {
+        return destillat.getSamletMængde();
+    }
 
-    public static String destillatToString(Destillat destillat) { return destillat.toString();}
+    public static String destillatToString(Destillat destillat) {
+        return destillat.toString();
+    }
 
-    public static void addDestillatMængde(DestillatMængde destillatMængde, Whiskyserie whiskyserie) {whiskyserie.addDestillatMængde(destillatMængde);}
+    public static void addDestillatMængde(DestillatMængde destillatMængde, Whiskyserie whiskyserie) {
+        whiskyserie.addDestillatMængde(destillatMængde);
+    }
 
-    public static double samletMængdeWhiskySerie(Whiskyserie whiskyserie){
+    public static double samletMængdeWhiskySerie(Whiskyserie whiskyserie) {
         double samletMængde = 0;
-        for (DestillatMængde d : whiskyserie.getDestillatMængder()){
+        for (DestillatMængde d : whiskyserie.getDestillatMængder()) {
             samletMængde += d.getMængde();
         }
         return samletMængde;
     }
 
-    public static double antalForventetFlakser(Whiskyserie whiskyserie, double mængdeVæske){
+    public static double antalForventetFlakser(Whiskyserie whiskyserie, double mængdeVæske) {
         double flaskeStørrelse = 0.70;
         double forventetAntal = mængdeVæske / flaskeStørrelse;
         return Math.floor(forventetAntal);
@@ -165,6 +179,18 @@ public class Controller {
     }
 
 
+
+    public static String toStringFadOgDestillat(Fad fad) {
+        StringBuilder h = new StringBuilder();
+
+        h.append("Fad nr: " + fad.getFadNr() + ", fadstørrelse: " + fad.getFadStørrelse() + ", fadtype: " + fad.getFadtype() + ", leverandør: " + fad.getLevarandør() + ", gange brugt: " + fad.getAntalGangeBrugt());
+        h.append("\nDestilat alkoholpct: " + fad.getDestillat().beregnalkoholprocent() + ", samlet mængde væske: " + Controller.getSamletMængde(fad.getDestillat()));
+        h.append("\nBatches brugt i destillat:");
+        for (BatchMængde batchMængde : fad.getDestillat().getBatchMængder()) {
+            h.append(" id: " + batchMængde.getBatch().getBatchID() + " mængde: " + batchMængde.getMængde());
+        }
+        return h.toString();
+    }
 
 
 }
