@@ -171,13 +171,15 @@ public class DestilatOgLager extends Stage {
     public void vælgFad() {
         selectedFad = lwlFade.getSelectionModel().getSelectedItem();
         if (selectedFad == null) {
-            Controller.tælAntalGangeBrugt(selectedFad);
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Du skal trykke på det fad du vil vælge");
             alert.showAndWait();
         } else {
             //Opretter destillat
             destillat = Controller.createDestilat(LocalDateTime.now(), selectedFad);
+            Controller.tælAntalGangeBrugt(selectedFad);
+
+
 
             lwlFade.setDisable(true);
             txfValgtFad.setDisable(true);

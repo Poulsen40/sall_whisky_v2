@@ -72,6 +72,11 @@ public class Destillat {
         for (BatchMængde batchMængde : batchMængder) {
             mængde += batchMængde.getMængde();
         }
+
+        for (DestillatMængde destillatMængde : destillatMængder) {
+            mængde -= destillatMængde.getMængde();
+
+        }
         return mængde;
     }
 

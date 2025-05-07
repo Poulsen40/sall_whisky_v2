@@ -182,6 +182,7 @@ public class Controller {
     }
 
 
+
     public static String toStringFadOgDestillat(Destillat destillat) {
         StringBuilder h = new StringBuilder();
         Fad fad = destillat.getFad();
