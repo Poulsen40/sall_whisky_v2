@@ -1,6 +1,7 @@
 package application.controller;
 
 import application.model.*;
+import javafx.scene.control.DatePicker;
 import storage.Storage;
 
 import java.time.LocalDate;
@@ -158,12 +159,12 @@ public class Controller {
         whiskyserie.addDestillatMængde(destillatMængde);
     }
 
-    public static double samletMængdeWhiskySerie(Whiskyserie whiskyserie) {
+    public static double samletMængdeWhiskySerie(Whiskyserie whiskyserie, double vandmængde) {
         double samletMængde = 0;
         for (DestillatMængde d : whiskyserie.getDestillatMængder()) {
             samletMængde += d.getMængde();
         }
-        return samletMængde;
+        return samletMængde + vandmængde;
     }
 
     public static double antalForventetFlakser(Whiskyserie whiskyserie, double mængdeVæske) {
@@ -242,11 +243,11 @@ public class Controller {
                 .collect(Collectors.toList());
     }
 
-    public static String toStringInfoBoxWhiskyserie(Destillat destillat, Whiskyserie whiskyserie) {
+    public static String toStringInfoBoxWhiskyserie(Destillat destillat, Whiskyserie whiskyserie, double vandmængde) {
         StringBuilder h = new StringBuilder();
         Fad fad = destillat.getFad();
-        h.append("Whisky serie navn: " + whiskyserie.getSerieNavn() + "\nDato oprettet: " + whiskyserie.getDato() + "\nSamlet mængde væske: " + Controller.samletMængdeWhiskySerie(whiskyserie)
-                + "\nForventet antal flasker: " + Controller.antalForventetFlakser(whiskyserie, Controller.samletMængdeWhiskySerie(whiskyserie)) + "\nBatches brug i whisky: \n");
+        h.append("Whisky serie navn: " + whiskyserie.getSerieNavn() + "\nDato oprettet: " + whiskyserie.getDato() + "\nSamlet mængde væske: " + Controller.samletMængdeWhiskySerie(whiskyserie,vandmængde)
+                + "\nForventet antal flasker: " + Controller.antalForventetFlakser(whiskyserie, Controller.samletMængdeWhiskySerie(whiskyserie,vandmængde)) + "\nBatches brug i whisky: \n");
         for (BatchMængde batchMængde : destillat.getBatchMængder()) {
             h.append("Batch id: " + batchMængde.getBatch().getBatchID());
         }
@@ -259,6 +260,21 @@ public class Controller {
             destillat = destillat;
         }
         return destillat;
+    }
+
+    public static double beregnAlkoholProcentPåWhiskyserie(ArrayList<DestillatMængde> destillatMængder, double mængdeVand) {
+        double samletrentalkoholprocent = 0;
+        double alkoholPct = 0;
+        double mængdeAlkoholVæske = 0;
+
+        for (DestillatMængde destillatMængde : destillatMængder) {
+            Destillat destillat = destillatMængde.getDestillat();
+            alkoholPct = destillat.beregnalkoholprocent();
+            mængdeAlkoholVæske += destillatMængde.getMængde();samletrentalkoholprocent += destillatMængde.getMængde() * alkoholPct / 100;
+
+        }
+        mængdeAlkoholVæske += mængdeVand;
+        return (samletrentalkoholprocent / mængdeAlkoholVæske) * 100;
     }
 }
 
