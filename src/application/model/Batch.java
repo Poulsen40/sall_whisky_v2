@@ -13,6 +13,8 @@ public class Batch {
     private double alkoholPct;
     private String kommentar;
     private Rygemateriale rygemateriale;
+    private int batchID;
+    private static int batchNr = 1;
 
     //Linkattribut
     private ArrayList<BatchMængde> batchMængder = new ArrayList<>();
@@ -27,6 +29,7 @@ public class Batch {
         this.kommentar = kommentar;
         this.rygemateriale = rygemateriale;
         startDato = LocalDate.now();
+        batchID = batchNr++;
     }
 
     public ArrayList<BatchMængde> getBatchMængder(){
@@ -110,6 +113,10 @@ public class Batch {
         this.kommentar = kommentar;
     }
 
+    public int getBatchID() {
+        return batchID;
+    }
+
     @Override
     public String toString() {
         return "Batch{" +
@@ -119,7 +126,7 @@ public class Batch {
                 ", maltBach='" + maltBach + '\'' +
                 ", kornSort='" + kornSort + '\'' +
                 ", mængdeVæske=" + mængdeVæske +
-                ", kommentar='" + kommentar + '\'' +
+                ", kommentar='" + kommentar + ", batchID= " + batchID+
                 '}';
     }
 }

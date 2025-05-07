@@ -67,8 +67,8 @@ public class GUI extends Application {
         ImageView imageView = new ImageView(image);
         pane.add(imageView,0,0);
         GridPane.setColumnSpan(imageView,3);
-        imageView.setFitHeight(300);
-        imageView.setFitWidth(500);
+        imageView.setFitHeight(450);
+        imageView.setFitWidth(660);
 
     }
 

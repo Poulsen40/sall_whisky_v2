@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.*;
 
 public class OpretWhiskyserieWindow extends Stage {
     public OpretWhiskyserieWindow(String title) {
@@ -43,13 +43,17 @@ public class OpretWhiskyserieWindow extends Stage {
     private static TextField txfVand;
     private static Whiskyserie whiskyserie;
     private static TextArea txaInfo;
+    private static TextArea txaDestilatInfo;
+    private static DatePicker datePicker;
+    private static Button btnOpretWhiskySerieObjekt;
 
     private static String serieNavn;
 
     private static DestillatMængde destillatMængde;
 
     private static LocalDate dato;
-    private static ListView<Fad> lwlFade;
+    private static ListView<Destillat> lwlDestillat;
+    private static ArrayList<Destillat> frieDestilat = new ArrayList<>();
 
 
     private void initContent(GridPane pane) {
@@ -65,14 +69,14 @@ public class OpretWhiskyserieWindow extends Stage {
 
         txfNavn = new TextField();
 
-        DatePicker datePicker = new DatePicker();
+        datePicker = new DatePicker();
         datePicker.setPromptText("Vælg datoen for oprettelsen af whiskyserien");
         datePicker.setOnAction(event -> {
             dato = datePicker.getValue();
         });
 
 
-        Button btnOpretWhiskySerieObjekt = new Button("Opret whisky serie");
+        btnOpretWhiskySerieObjekt = new Button("Opret whisky serie");
         btnOpretWhiskySerieObjekt.setOnAction(event -> opretWhiskySerieObjekt());
 
         VBox step1 = new VBox();
@@ -85,18 +89,31 @@ public class OpretWhiskyserieWindow extends Stage {
         step1.getChildren().add(btnOpretWhiskySerieObjekt);
         pane.add(step1, 0, 0);
 
-        lwlFade = new ListView<>();
-        lwlFade.setPrefWidth(200);
-        lwlFade.setPrefHeight(150);
-        ArrayList<Fad> frieFade = new ArrayList<>();
-        for (Fad f : Controller.getFade()) {
-            if (Controller.getDestillat(f) != null) {
-                frieFade.add(f);
+        lwlDestillat = new ListView<>();
+        lwlDestillat.setPrefWidth(200);
+        lwlDestillat.setPrefHeight(150);
+        for (Destillat d : Controller.getDestillater()) {
+            if (d.getFad() != null) {
+                frieDestilat.add(d);
             }
         }
-        lwlFade.getItems().setAll(frieFade);
-        lwlFade.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        GridPane.setValignment(lwlFade, VPos.BOTTOM);
+        lwlDestillat.getItems().setAll(frieDestilat);
+        lwlDestillat.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        GridPane.setValignment(lwlDestillat, VPos.BOTTOM);
+
+        txaDestilatInfo = new TextArea();
+        txaDestilatInfo.setPrefHeight(75);
+
+        lwlDestillat.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection == null) {
+                txaDestilatInfo.setText("");
+            } else {
+                txaDestilatInfo.setText(Controller.toStringFadOgDestillat(lwlDestillat.getSelectionModel().getSelectedItem()));
+
+
+            }
+        });
+
 
         Label lblStep2 = new Label("Step 2 : vælg det fad du vil tappe destilat fra og mængden. Gentag hvis ønskes");
         lblStep2.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
@@ -107,7 +124,9 @@ public class OpretWhiskyserieWindow extends Stage {
         step2.setSpacing(15);
         step2.getChildren().add(lblStep2);
         step2.getChildren().add(lblTap);
-        step2.getChildren().add(lwlFade);
+        step2.getChildren().add(lwlDestillat);
+        step2.getChildren().add(txaDestilatInfo);
+
 
         txfTapMængde = new TextField();
 
@@ -116,7 +135,6 @@ public class OpretWhiskyserieWindow extends Stage {
         Button btnTap = new Button("Tap");
         btnTap.setOnAction(event -> {
             tapMængdeFraDestilat();
-            setInfoBox();
         });
 
         VBox step2_2 = new VBox();
@@ -170,26 +188,54 @@ public class OpretWhiskyserieWindow extends Stage {
     public void opretWhiskySerieObjekt() {
         serieNavn = txfNavn.getText().trim();
 
-        whiskyserie = Controller.createWhiskyserie(serieNavn, dato);
+        if (serieNavn.isEmpty() || dato == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Du skal udfylde både navn og dato for whiskyserien");
+            alert.showAndWait();
+        } else {
+            whiskyserie = Controller.createWhiskyserie(serieNavn, dato);
+            txfNavn.setDisable(true);
+            datePicker.setDisable(true);
+            btnOpretWhiskySerieObjekt.setDisable(true);
+            System.out.println(whiskyserie);
+        }
 
-        System.out.println(whiskyserie);
     }
 
     public void tapMængdeFraDestilat() {
-        Fad selectedFad = lwlFade.getSelectionModel().getSelectedItem();
-        Destillat valgtDestillat = selectedFad.getDestillat();
-        double mængde = Double.parseDouble(txfTapMængde.getText().trim());
+        Destillat selectedDestillat = lwlDestillat.getSelectionModel().getSelectedItem();
+        if (selectedDestillat == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Du skal vælge et destillat før du kan tappe");
+            alert.showAndWait();
+        } else {
 
-        destillatMængde = Controller.createDestillatMængde(mængde, whiskyserie, valgtDestillat);
-        Controller.addDestillatMængde(destillatMængde, whiskyserie);
-        System.out.println("Deestilat mængder på whiskeyserien" + whiskyserie.getDestillatMængder());
+            if (txfTapMængde.getText().trim().isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Du skal indtaste mængden af væske du vil tappe");
+                alert.showAndWait();
+            } else if (!txfTapMængde.getText().trim().matches("\\d+(\\.\\d+)?")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Tapmængden skal være et tal");
+                alert.showAndWait();
+            }
+        }
+        if (selectedDestillat != null && !txfTapMængde.getText().isEmpty() && txfTapMængde.getText().trim().matches("\\d+")) {
+
+            double mængde = Double.parseDouble(txfTapMængde.getText().trim());
+            Fad fad = selectedDestillat.getFad();
+            destillatMængde = Controller.createDestillatMængde(mængde, whiskyserie, selectedDestillat);
+            Controller.addDestillatMængde(destillatMængde, whiskyserie);
+
+            txfTapMængde.clear();
+            setInfoBox();
+
+        }
+
     }
 
     public void setInfoBox() {
-        txaInfo.setText("Whisky serie navn: " + serieNavn + "\nDato oprettet: " + dato + "\nSamlet mængde væske: " + Controller.samletMængdeWhiskySerie(whiskyserie)
-                + "\nForventet antal flasker: " + Controller.antalForventetFlakser(whiskyserie, Controller.samletMængdeWhiskySerie(whiskyserie)));
-
-
+        txaInfo.setText(Controller.toStringInfoBoxWhiskyserie(destillatMængde.getDestillat(), whiskyserie));
     }
 
 }
