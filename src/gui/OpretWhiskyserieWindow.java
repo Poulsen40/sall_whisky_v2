@@ -220,18 +220,28 @@ public class OpretWhiskyserieWindow extends Stage {
                 alert.showAndWait();
             }
         }
-        if (selectedDestillat != null && !txfTapMængde.getText().isEmpty() && txfTapMængde.getText().trim().matches("\\d+")) {
-
+        if (selectedDestillat != null && !txfTapMængde.getText().isEmpty() && txfTapMængde.getText().trim().matches("\\d+(\\.\\d+)?")){
             double mængde = Double.parseDouble(txfTapMængde.getText().trim());
-            Fad fad = selectedDestillat.getFad();
-            destillatMængde = Controller.createDestillatMængde(mængde, whiskyserie, selectedDestillat);
-            Controller.addDestillatMængde(destillatMængde, whiskyserie);
 
-            txfTapMængde.clear();
-            setInfoBox();
+            if (mængde > selectedDestillat.getSamletMængde()){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Du kan ikke tappe mere væske end der er plads til");
+                alert.showAndWait();
+            }
+            else {
+                Fad fad = selectedDestillat.getFad();
+                destillatMængde = Controller.createDestillatMængde(mængde, whiskyserie, selectedDestillat);
 
+                Controller.addDestillatMængde(destillatMængde, whiskyserie);
+
+                selectedDestillat.setSamletMængde(selectedDestillat.getSamletMængde() - mængde);
+                txaDestilatInfo.setText(Controller.toStringFadOgDestillat(selectedDestillat));
+
+                txfTapMængde.clear();
+                setInfoBox();
+                lwlDestillat.getItems().setAll(Controller.getDestillater());
+            }
         }
-
     }
 
     public void setInfoBox() {
