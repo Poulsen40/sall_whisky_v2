@@ -182,7 +182,6 @@ public class Controller {
     }
 
 
-
     public static String toStringFadOgDestillat(Destillat destillat) {
         StringBuilder h = new StringBuilder();
         Fad fad = destillat.getFad();
@@ -195,7 +194,6 @@ public class Controller {
         }
         return h.toString();
     }
-
 
 
     public static List<Fad> fadsøgning(double minfadstørrelse, double maxfadstørrelse, int minAlder, int maxAlder,
@@ -237,6 +235,7 @@ public class Controller {
                 .filter(f -> !skalVæreFyldt || f.getDestillat() != null)
                 .collect(Collectors.toList());
     }
+
     public static String toStringInfoBoxWhiskyserie(Destillat destillat, Whiskyserie whiskyserie) {
         StringBuilder h = new StringBuilder();
         Fad fad = destillat.getFad();
@@ -247,6 +246,13 @@ public class Controller {
         }
 
         return h.toString();
+    }
+
+    public static Destillat destilatMedFad(Destillat destillat) {
+        if (destillat.getFad() != null) {
+            destillat = destillat;
+        }
+        return destillat;
     }
 }
 

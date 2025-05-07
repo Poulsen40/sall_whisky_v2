@@ -53,7 +53,6 @@ public class OpretWhiskyserieWindow extends Stage {
 
     private static LocalDate dato;
     private static ListView<Destillat> lwlDestillat;
-    private static ArrayList<Destillat> frieDestilat = new ArrayList<>();
 
 
     private void initContent(GridPane pane) {
@@ -92,8 +91,9 @@ public class OpretWhiskyserieWindow extends Stage {
         lwlDestillat = new ListView<>();
         lwlDestillat.setPrefWidth(200);
         lwlDestillat.setPrefHeight(150);
+        ArrayList<Destillat> frieDestilat = new ArrayList<>();
         for (Destillat d : Controller.getDestillater()) {
-            if (d.getFad() != null) {
+            if (Controller.getDestillat(d.getFad()) != null) {
                 frieDestilat.add(d);
             }
         }
@@ -204,6 +204,11 @@ public class OpretWhiskyserieWindow extends Stage {
 
     public void tapMængdeFraDestilat() {
         Destillat selectedDestillat = lwlDestillat.getSelectionModel().getSelectedItem();
+        if (whiskyserie == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Du skal udføre step 1 først");
+            alert.showAndWait();
+        }
         if (selectedDestillat == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Du skal vælge et destillat før du kan tappe");
@@ -225,11 +230,10 @@ public class OpretWhiskyserieWindow extends Stage {
 
             if (mængde > selectedDestillat.getSamletMængde()){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Du kan ikke tappe mere væske end der er plads til");
+                alert.setContentText("Du kan ikke tappe mere væske end der er tilbage på destillatet");
                 alert.showAndWait();
             }
             else {
-                Fad fad = selectedDestillat.getFad();
                 destillatMængde = Controller.createDestillatMængde(mængde, whiskyserie, selectedDestillat);
 
                 Controller.addDestillatMængde(destillatMængde, whiskyserie);
@@ -238,8 +242,8 @@ public class OpretWhiskyserieWindow extends Stage {
                 txaDestilatInfo.setText(Controller.toStringFadOgDestillat(selectedDestillat));
 
                 txfTapMængde.clear();
+                lwlDestillat.refresh();
                 setInfoBox();
-                lwlDestillat.getItems().setAll(Controller.getDestillater());
             }
         }
     }
