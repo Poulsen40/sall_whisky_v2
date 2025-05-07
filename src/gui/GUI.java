@@ -59,6 +59,10 @@ public class GUI extends Application {
         hBoxButtons.getChildren().add(whiskeyserie);
         whiskeyserie.setOnAction(event -> opretWhiskyserie());
 
+        Button oversigt = new Button("Oversigt");
+        hBoxButtons.getChildren().add(oversigt);
+        oversigt.setOnAction(Event -> opretOversigt());
+
         Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/gui/billeder/img.png")));
         ImageView imageView = new ImageView(image);
         pane.add(imageView,0,0);
@@ -94,6 +98,11 @@ public class GUI extends Application {
         OpretWhiskyserieWindow dia = new OpretWhiskyserieWindow("Opret whiskyserie");
         dia.showAndWait();
 
+    }
+
+    public void opretOversigt(){
+        OpretOversigtWindow dia = new OpretOversigtWindow("Oversigt");
+        dia.showAndWait();
     }
 
 
