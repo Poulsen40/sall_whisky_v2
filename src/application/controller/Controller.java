@@ -5,7 +5,10 @@ import storage.Storage;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Controller {
 
@@ -193,5 +196,45 @@ public class Controller {
     }
 
 
+
+    public static List<Fad> fadsøgning(double minfadstørrelse, double maxfadstørrelse, int minAlder, int maxAlder,
+                                       List<Fadtype> fadTyper, List<String> leverandør, int minBrugt, int maxBrugt,
+                                       List<Træsort> træsortList, List<Lager> lagerList, boolean skalVæreFyldt) {
+        List<Fad> fade = Storage.getFade();
+
+        // Den her bruger jeg senere til og tjekke for alderen på væsken på fadet
+        LocalDateTime nu = LocalDateTime.now();
+
+        return fade.stream()
+                // Filtrerer efter fadtype, hvis angivet
+                .filter(f -> fadTyper == null || fadTyper.isEmpty() || fadTyper.contains(f.getFadtype()))
+                // Filtrerer efter fadstørrelse
+                .filter(f -> f.getFadStørrelse() >= minfadstørrelse && f.getFadStørrelse() <= maxfadstørrelse)
+                // Filtrerer efter alder, men tjekker først om der er destillat på fadet
+                .filter(f -> {
+                    // Hvis vi ikke kræver fyldte fade og fadet er tomt, så skal det inkluderes uanset alder
+                    if (!skalVæreFyldt && f.getDestillat() == null) {
+                        return true;
+                    }
+                    // Hvis fadet har destillat, tjek alderen
+                    if (f.getDestillat() != null) {
+                        long alder = ChronoUnit.YEARS.between(f.getDestillat().getDatoForPåfyldning(), nu);
+                        return alder >= minAlder && alder <= maxAlder;
+                    }
+                    // Hvis vi kræver fyldte fade og fadet er tomt, så skal det ikke inkluderes
+                    return false;
+                })
+                // Filtrerer efter leverandør, hvis angivet
+                .filter(f -> leverandør == null || leverandør.isEmpty() || leverandør.contains(f.getLevarandør()))
+                // Filtrerer efter træsort, hvis angivet
+                .filter(f -> træsortList == null || træsortList.isEmpty() || træsortList.contains(f.getTræsort()))
+                // Filtrerer efter lager, hvis angivet
+                .filter(f -> lagerList == null || lagerList.isEmpty() || lagerList.contains(f.getLager()))
+                // Filtrerer efter antal gange brugt
+                .filter(f -> f.getAntalGangeBrugt() >= minBrugt && f.getAntalGangeBrugt() <= maxBrugt)
+                // Filtrerer efter om fadet skal være fyldt
+                .filter(f -> !skalVæreFyldt || f.getDestillat() != null)
+                .collect(Collectors.toList());
+    }
 }
 

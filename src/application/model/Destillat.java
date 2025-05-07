@@ -79,6 +79,10 @@ public class Destillat {
         this.samletMængde = samletMængde;
     }
 
+    public LocalDateTime getDatoForPåfyldning() {
+        return datoForPåfyldning;
+    }
+
     public Fad getFad() {
         return fad;
     }
@@ -96,9 +100,5 @@ public class Destillat {
     @Override
     public String toString() {
         return  "Antal liter " + getSamletMængde() + "\nSamlet alkoholprocenten i Distillat " + beregnalkoholprocent() + "\nInfo omkirng indkluderet batches " + udskrivBatches();
-    }
-
-    public LocalDateTime getDatoForPåfyldning() {
-        return datoForPåfyldning;
     }
 }
