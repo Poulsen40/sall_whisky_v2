@@ -93,4 +93,8 @@ public class Destillat {
     public String toString() {
         return  "Antal liter " + getSamletMængde() + "\nSamlet alkoholprocenten i Distillat " + beregnalkoholprocent() + "\nInfo omkirng indkluderet batches " + udskrivBatches();
     }
+
+    public LocalDateTime getDatoForPåfyldning() {
+        return datoForPåfyldning;
+    }
 }

@@ -5,7 +5,10 @@ import storage.Storage;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Controller {
 
@@ -116,7 +119,7 @@ public class Controller {
         return batch.getMængdeVæske();
     }
 
-    public static void setDestillatFad(Fad fad, Destillat destillat){
+    public static void setDestillatFad(Fad fad, Destillat destillat) {
         fad.setDestillat(destillat);
     }
 
@@ -124,18 +127,64 @@ public class Controller {
         return destillat.getBatchMængder();
     }
 
-    public static Destillat getDestillat(Fad fad) { return fad.getDestillat(); }
+    public static Destillat getDestillat(Fad fad) {
+        return fad.getDestillat();
+    }
 
-    public static double getFadStørrelse(Fad fad) { return fad.getFadStørrelse(); }
+    public static double getFadStørrelse(Fad fad) {
+        return fad.getFadStørrelse();
+    }
 
-    public static void addBatchMængde(BatchMængde batchMængde, Destillat destillat) {destillat.addBatchMængde(batchMængde);}
+    public static void addBatchMængde(BatchMængde batchMængde, Destillat destillat) {
+        destillat.addBatchMængde(batchMængde);
+    }
 
-    public static void setMængdeVæske(Batch batch,double nyBatchInfo) { batch.setMængdeVæske(nyBatchInfo);}
+    public static void setMængdeVæske(Batch batch, double nyBatchInfo) {
+        batch.setMængdeVæske(nyBatchInfo);
+    }
 
-    public static double getSamletMængde(Destillat destillat) { return destillat.getSamletMængde();}
+    public static double getSamletMængde(Destillat destillat) {
+        return destillat.getSamletMængde();
+    }
 
-    public static String destillatToString(Destillat destillat) { return destillat.toString();}
+    public static String destillatToString(Destillat destillat) {
+        return destillat.toString();
+    }
 
+    public static List<Fad> fadsøgning(double minfadstørrelse, double maxfadstørrelse, int minAlder, int maxAlder,
+                                       List<Fadtype> fadTyper, List<String> leverandør, int minBrugt, int maxBrugt,
+                                       List<Træsort> træsortList, List<Lager> lagerList, boolean skalVæreFyldt) {
+        List<Fad> fade = Storage.getFade();
 
+        // Den her bruger jeg senere til og tjekke for alderen på væsken på fadet
+        LocalDateTime nu = LocalDateTime.now();
+
+        return fade.stream().filter(f -> fadTyper == null || fadTyper.isEmpty() || fadTyper.contains(f.getFadtype()))
+                .filter(f -> f.getFadStørrelse() >= minfadstørrelse && f.getFadStørrelse() <= maxfadstørrelse)
+                .filter(
+                        f -> {
+                            // Hvis vi ikke kræver fyldte fade og fadet er tomt, så skal det inkluderes uanset alder
+                            if (!skalVæreFyldt && f.getDestillat() == null) {
+                                return true;
+                            }
+                            // Hvis fadet har destillat, tjek alderen
+                            if (f.getDestillat() != null) {
+                                long alder = ChronoUnit.YEARS.between(f.getDestillat().getDatoForPåfyldning(), nu);
+                                return alder >= minAlder && alder <= maxAlder;  // Inkluder kun hvis alderen matcher
+                            }
+                            // Hvis vi kræver fyldte fade og fadet er tomt, så skal det ikke inkluderes
+                            return false;  // Dette tomme fad skal ekskluderes
+
+                        }).filter(f -> leverandør == null || leverandør.isEmpty() || leverandør.contains(f.getLevarandør()))
+                .filter(f -> træsortList == null || træsortList.isEmpty() || træsortList.contains(f.getTræsort()))
+                .filter(f -> lagerList == null || lagerList.isEmpty() || lagerList.contains(f.getLager()))
+                .filter(f -> f.getAntalGangeBrugt() >= minBrugt && f.getAntalGangeBrugt() <= maxBrugt)
+
+                // Filtrerer efter om fadet skal være fyldt
+                .filter(f -> !skalVæreFyldt || f.getDestillat() != null)
+                .collect(Collectors.toList());
+    }
 }
+}
+
 
