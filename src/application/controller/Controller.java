@@ -1,6 +1,7 @@
 package application.controller;
 
 import application.model.*;
+import com.sun.source.tree.NewClassTree;
 import javafx.scene.control.DatePicker;
 import storage.Storage;
 
@@ -9,6 +10,8 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.FormatFlagsConversionMismatchException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -245,13 +248,23 @@ public class Controller {
                 .collect(Collectors.toList());
     }
 
-    public static String toStringInfoBoxWhiskyserie(Destillat destillat, Whiskyserie whiskyserie, double vandmængde) {
+    public static String toStringInfoBoxWhiskyserie(ArrayList<DestillatMængde> destillatMængder, Whiskyserie whiskyserie, double vandmængde) {
         StringBuilder h = new StringBuilder();
-        Fad fad = destillat.getFad();
-        h.append("Whisky serie navn: " + whiskyserie.getSerieNavn() + "\nDato oprettet: " + whiskyserie.getDato() + "\nSamlet mængde væske: " + Controller.samletMængdeWhiskySerie(whiskyserie,vandmængde)
-                + "\nForventet antal flasker: " + Controller.antalForventetFlakser(whiskyserie, Controller.samletMængdeWhiskySerie(whiskyserie,vandmængde)) + "\nBatches brug i whisky: \n");
-        for (BatchMængde batchMængde : destillat.getBatchMængder()) {
-            h.append("Batch id: " + batchMængde.getBatch().getBatchID() + " ");
+
+        h.append("Whisky serie navn: " + whiskyserie.getSerieNavn() + "\nDato oprettet: " + whiskyserie.getDato() + "\nSamlet mængde væske: " + Controller.samletMængdeWhiskySerie(whiskyserie, vandmængde)
+                + "\nForventet antal flasker: " + Controller.antalForventetFlakser(whiskyserie, Controller.samletMængdeWhiskySerie(whiskyserie, vandmængde)) + "\nBatches brug i whisky: \n");
+
+        HashSet<Integer> batchIds = new HashSet<>();
+        for (DestillatMængde destillatMængde : destillatMængder) {
+            Destillat destillat = destillatMængde.getDestillat();
+            for (BatchMængde batchMængde : destillat.getBatchMængder()) {
+                int batchId = batchMængde.getBatch().getBatchID();
+                if (batchIds.add(batchId)) {
+                    //Bruger append så den ikke overskriver ID'et der stod før
+                    h.append("Batch id: " + batchId+ " ");
+                }
+            }
+
         }
 
         return h.toString();
@@ -272,18 +285,19 @@ public class Controller {
         for (DestillatMængde destillatMængde : destillatMængder) {
             Destillat destillat = destillatMængde.getDestillat();
             alkoholPct = destillat.beregnalkoholprocent();
-            mængdeAlkoholVæske += destillatMængde.getMængde();samletrentalkoholprocent += destillatMængde.getMængde() * alkoholPct / 100;
+            mængdeAlkoholVæske += destillatMængde.getMængde();
+            samletrentalkoholprocent += destillatMængde.getMængde() * alkoholPct / 100;
 
         }
         mængdeAlkoholVæske += mængdeVand;
         return (samletrentalkoholprocent / mængdeAlkoholVæske) * 100;
     }
 
-    public static ArrayList<Destillat> destilatWhiskySerieUdenFilter(ArrayList<Destillat> destillater){
+    public static ArrayList<Destillat> destilatWhiskySerieUdenFilter(ArrayList<Destillat> destillater) {
         ArrayList<Destillat> alleklarDestillater = new ArrayList<>();
 
-        for (Destillat d : Controller.getDestillater()){
-            if (Controller.getDestillat(d.getFad()) != null && ChronoUnit.YEARS.between(d.getDatoForPåfyldning(), LocalDateTime.now()) >= 3){
+        for (Destillat d : Controller.getDestillater()) {
+            if (Controller.getDestillat(d.getFad()) != null && ChronoUnit.YEARS.between(d.getDatoForPåfyldning(), LocalDateTime.now()) >= 3) {
                 alleklarDestillater.add(d);
             }
         }
@@ -291,17 +305,17 @@ public class Controller {
         return alleklarDestillater;
     }
 
-    public static ArrayList<Destillat> destilatWhiskySerieFilter(ArrayList<Destillat> destillater, double år){
+    public static ArrayList<Destillat> destilatWhiskySerieFilter(ArrayList<Destillat> destillater, double år) {
         ArrayList<Destillat> alleklarDestillater = new ArrayList<>();
 
-        for (Destillat d : Controller.getDestillater()){
-            if (Controller.getDestillat(d.getFad()) != null && ChronoUnit.YEARS.between(d.getDatoForPåfyldning(), LocalDateTime.now()) >= 3){
+        for (Destillat d : Controller.getDestillater()) {
+            if (Controller.getDestillat(d.getFad()) != null && ChronoUnit.YEARS.between(d.getDatoForPåfyldning(), LocalDateTime.now()) >= 3) {
                 alleklarDestillater.add(d);
             }
         }
         ArrayList<Destillat> destillaterEfterFiltrering = new ArrayList<>();
-        for (Destillat destillat1 : alleklarDestillater){
-            if (ChronoUnit.YEARS.between(destillat1.getDatoForPåfyldning(), LocalDateTime.now()) >= år){
+        for (Destillat destillat1 : alleklarDestillater) {
+            if (ChronoUnit.YEARS.between(destillat1.getDatoForPåfyldning(), LocalDateTime.now()) >= år) {
                 destillaterEfterFiltrering.add(destillat1);
 
             }

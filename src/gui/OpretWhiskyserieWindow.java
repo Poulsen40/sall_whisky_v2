@@ -309,7 +309,7 @@ public class OpretWhiskyserieWindow extends Stage {
             mængdeVand += Double.parseDouble(txfVand.getText().trim());
             txfVand.clear();
         }
-        txaInfo.setText(Controller.toStringInfoBoxWhiskyserie(destillatMængde.getDestillat(), whiskyserie, mængdeVand));
+        txaInfo.setText(Controller.toStringInfoBoxWhiskyserie(whiskyserie.getDestillatMængder(), whiskyserie, mængdeVand));
         txaInfo.appendText("\nMængde vand tilføjer whiskyserien " + mængdeVand);
 
 

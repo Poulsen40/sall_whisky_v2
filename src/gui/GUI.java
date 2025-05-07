@@ -55,7 +55,7 @@ public class GUI extends Application {
         hBoxButtons.getChildren().add(destilatOgLager);
         destilatOgLager.setOnAction(event -> opretDestillat());
 
-        Button whiskeyserie = new Button("Opret whiskyserie");
+        Button whiskeyserie = new Button("Opret whisky serie");
         hBoxButtons.getChildren().add(whiskeyserie);
         whiskeyserie.setOnAction(event -> opretWhiskyserie());
 
