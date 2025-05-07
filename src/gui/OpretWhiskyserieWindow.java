@@ -46,6 +46,7 @@ public class OpretWhiskyserieWindow extends Stage {
     private static TextArea txaDestilatInfo;
     private static DatePicker datePicker;
     private static Button btnOpretWhiskySerieObjekt;
+    private static double mængdeVand;
 
     private static String serieNavn;
 
@@ -159,6 +160,7 @@ public class OpretWhiskyserieWindow extends Stage {
 
         Button btnFortynd = new Button("Fortynd");
         GridPane.setHalignment(btnFortynd, HPos.RIGHT);
+        btnFortynd.setOnAction(event -> setInfoBox());
 
         VBox step3 = new VBox();
         step3.setSpacing(15);
@@ -204,7 +206,7 @@ public class OpretWhiskyserieWindow extends Stage {
 
     public void tapMængdeFraDestilat() {
         Destillat selectedDestillat = lwlDestillat.getSelectionModel().getSelectedItem();
-        if (whiskyserie == null){
+        if (whiskyserie == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Du skal udføre step 1 først");
             alert.showAndWait();
@@ -225,15 +227,14 @@ public class OpretWhiskyserieWindow extends Stage {
                 alert.showAndWait();
             }
         }
-        if (selectedDestillat != null && !txfTapMængde.getText().isEmpty() && txfTapMængde.getText().trim().matches("\\d+(\\.\\d+)?")){
+        if (selectedDestillat != null && !txfTapMængde.getText().isEmpty() && txfTapMængde.getText().trim().matches("\\d+(\\.\\d+)?")) {
             double mængde = Double.parseDouble(txfTapMængde.getText().trim());
 
-            if (mængde > selectedDestillat.getSamletMængde()){
+            if (mængde > selectedDestillat.getSamletMængde()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Du kan ikke tappe mere væske end der er tilbage på destillatet");
                 alert.showAndWait();
-            }
-            else {
+            } else {
                 destillatMængde = Controller.createDestillatMængde(mængde, whiskyserie, selectedDestillat);
 
                 Controller.addDestillatMængde(destillatMængde, whiskyserie);
@@ -248,8 +249,17 @@ public class OpretWhiskyserieWindow extends Stage {
         }
     }
 
-    public void setInfoBox() {
-        txaInfo.setText(Controller.toStringInfoBoxWhiskyserie(destillatMængde.getDestillat(), whiskyserie));
-    }
 
+    public void setInfoBox() {
+
+        if (!txfVand.getText().trim().isEmpty()) {
+            mængdeVand += Double.parseDouble(txfVand.getText().trim());
+            txfVand.clear();
+        }
+        txaInfo.setText(Controller.toStringInfoBoxWhiskyserie(destillatMængde.getDestillat(), whiskyserie,mængdeVand));
+        txaInfo.appendText("\nMængde vand tilføjer whiskyserien " + mængdeVand);
+
+
+        txaInfo.appendText("\nAlkohol procent: " + Controller.beregnAlkoholProcentPåWhiskyserie(whiskyserie.getDestillatMængder(),mængdeVand));
+    }
 }
