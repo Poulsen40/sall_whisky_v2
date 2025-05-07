@@ -90,6 +90,7 @@ public class Controller {
 
         return placering;
     }
+
     public static List<Fad> fadsøgning(double minfadstørrelse, double maxfadstørrelse, int minAlder, int maxAlder,
                                        List<Fadtype> fadTyper, List<String> leverandør, int minBrugt, int maxBrugt,
                                        List<Træsort> træsortList, List<Lager> lagerList, boolean skalVæreFyldt) {
@@ -129,6 +130,5 @@ public class Controller {
                 .filter(f -> !skalVæreFyldt || f.getDestillat() != null)
                 .collect(Collectors.toList());
     }
-
 }
 
