@@ -55,12 +55,16 @@ public class GUI extends Application {
         hBoxButtons.getChildren().add(destilatOgLager);
         destilatOgLager.setOnAction(event -> opretDestillat());
 
+        Button whiskeyserie = new Button("Opret whiskyserie");
+        hBoxButtons.getChildren().add(whiskeyserie);
+        whiskeyserie.setOnAction(event -> opretWhiskyserie());
+
         Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/gui/billeder/img.png")));
         ImageView imageView = new ImageView(image);
         pane.add(imageView,0,0);
         GridPane.setColumnSpan(imageView,3);
-        imageView.setFitHeight(300);
-        imageView.setFitWidth(500);
+        imageView.setFitHeight(450);
+        imageView.setFitWidth(660);
 
     }
 
@@ -82,6 +86,12 @@ public class GUI extends Application {
 
     public void opretDestillat(){
         DestilatOgLager dia = new DestilatOgLager("Registere distilat og lager");
+        dia.showAndWait();
+
+    }
+
+    public void opretWhiskyserie(){
+        OpretWhiskyserieWindow dia = new OpretWhiskyserieWindow("Opret whiskyserie");
         dia.showAndWait();
 
     }

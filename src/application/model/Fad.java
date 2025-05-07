@@ -1,8 +1,5 @@
 package application.model;
 
-import java.util.ArrayList;
-import java.util.function.ToDoubleBiFunction;
-
 public class Fad {
     private static int fadNr;
     private double fadStørrelse;
@@ -61,13 +58,13 @@ public class Fad {
     }
 
     public String tilføjTilLager(Lager lager) {
-        if(lager.getErFyldt()) {
+        if (lager.getErFyldt()) {
             throw new IllegalStateException("Lageret er fyldt "); // skal den være i lagers metode?(tilføjFadTilobevaringsplads)
         }
         String placering;
         setLager(lager);
-       placering = lager.tilføjFadTilobevaringsplads(this);
-       return placering;
+        placering = lager.tilføjFadTilobevaringsplads(this);
+        return placering;
     }
 
     //get og set metoder
@@ -151,4 +148,5 @@ public class Fad {
                 ", træsort=" + træsort +
                 '}';
     }
+
 }

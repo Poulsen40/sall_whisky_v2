@@ -5,10 +5,7 @@ import storage.Storage;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class Controller {
 
@@ -151,40 +148,50 @@ public class Controller {
         return destillat.toString();
     }
 
-    public static List<Fad> fadsøgning(double minfadstørrelse, double maxfadstørrelse, int minAlder, int maxAlder,
-                                       List<Fadtype> fadTyper, List<String> leverandør, int minBrugt, int maxBrugt,
-                                       List<Træsort> træsortList, List<Lager> lagerList, boolean skalVæreFyldt) {
-        List<Fad> fade = Storage.getFade();
-
-        // Den her bruger jeg senere til og tjekke for alderen på væsken på fadet
-        LocalDateTime nu = LocalDateTime.now();
-
-        return fade.stream().filter(f -> fadTyper == null || fadTyper.isEmpty() || fadTyper.contains(f.getFadtype()))
-                .filter(f -> f.getFadStørrelse() >= minfadstørrelse && f.getFadStørrelse() <= maxfadstørrelse)
-                .filter(
-                        f -> {
-                            // Hvis vi ikke kræver fyldte fade og fadet er tomt, så skal det inkluderes uanset alder
-                            if (!skalVæreFyldt && f.getDestillat() == null) {
-                                return true;
-                            }
-                            // Hvis fadet har destillat, tjek alderen
-                            if (f.getDestillat() != null) {
-                                long alder = ChronoUnit.YEARS.between(f.getDestillat().getDatoForPåfyldning(), nu);
-                                return alder >= minAlder && alder <= maxAlder;  // Inkluder kun hvis alderen matcher
-                            }
-                            // Hvis vi kræver fyldte fade og fadet er tomt, så skal det ikke inkluderes
-                            return false;  // Dette tomme fad skal ekskluderes
-
-                        }).filter(f -> leverandør == null || leverandør.isEmpty() || leverandør.contains(f.getLevarandør()))
-                .filter(f -> træsortList == null || træsortList.isEmpty() || træsortList.contains(f.getTræsort()))
-                .filter(f -> lagerList == null || lagerList.isEmpty() || lagerList.contains(f.getLager()))
-                .filter(f -> f.getAntalGangeBrugt() >= minBrugt && f.getAntalGangeBrugt() <= maxBrugt)
-
-                // Filtrerer efter om fadet skal være fyldt
-                .filter(f -> !skalVæreFyldt || f.getDestillat() != null)
-                .collect(Collectors.toList());
+    public static void addDestillatMængde(DestillatMængde destillatMængde, Whiskyserie whiskyserie) {
+        whiskyserie.addDestillatMængde(destillatMængde);
     }
-}
-}
 
+    public static double samletMængdeWhiskySerie(Whiskyserie whiskyserie) {
+        double samletMængde = 0;
+        for (DestillatMængde d : whiskyserie.getDestillatMængder()) {
+            samletMængde += d.getMængde();
+        }
+        return samletMængde;
+    }
+
+    public static double antalForventetFlakser(Whiskyserie whiskyserie, double mængdeVæske) {
+        double flaskeStørrelse = 0.70;
+        double forventetAntal = mængdeVæske / flaskeStørrelse;
+        return Math.floor(forventetAntal);
+    }
+
+    public static void tælAntalGangeBrugt(Fad fad){
+        if (fad != null){
+            fad.setAntalGangeBrugt(fad.getAntalGangeBrugt() + 1);
+        }
+    }
+
+    public static void nulstilAntalgangeBrugt(Fad fad, int oprindeligVærdi){
+        if (fad != null){
+            fad.setAntalGangeBrugt(oprindeligVærdi);
+        }
+    }
+
+
+
+    public static String toStringFadOgDestillat(Fad fad) {
+        StringBuilder h = new StringBuilder();
+
+        h.append("Fad nr: " + fad.getFadNr() + ", fadstørrelse: " + fad.getFadStørrelse() + ", fadtype: " + fad.getFadtype() + ", leverandør: " + fad.getLevarandør() + ", gange brugt: " + fad.getAntalGangeBrugt());
+        h.append("\nDestilat alkoholpct: " + fad.getDestillat().beregnalkoholprocent() + ", samlet mængde væske: " + Controller.getSamletMængde(fad.getDestillat()));
+        h.append("\nBatches brugt i destillat:");
+        for (BatchMængde batchMængde : fad.getDestillat().getBatchMængder()) {
+            h.append(" id: " + batchMængde.getBatch().getBatchID() + " mængde: " + batchMængde.getMængde());
+        }
+        return h.toString();
+    }
+
+
+}
 

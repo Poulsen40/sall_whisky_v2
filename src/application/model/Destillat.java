@@ -75,6 +75,10 @@ public class Destillat {
         return mængde;
     }
 
+    public void setSamletMængde(double samletMængde) {
+        this.samletMængde = samletMængde;
+    }
+
     public Fad getFad() {
         return fad;
     }
