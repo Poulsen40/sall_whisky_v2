@@ -9,4 +9,19 @@ public class DestillatMængde {
         this.destillat = destillat;
         whiskyserie.addDestillatMængde(this);
     }
+
+    public double getMængde() {
+        return mængde;
+    }
+
+    public Destillat getDestillat() {
+        return destillat;
+    }
+
+    @Override
+    public String toString() {
+        return mængde + "";
+    }
+
+
 }

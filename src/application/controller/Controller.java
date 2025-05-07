@@ -136,6 +136,22 @@ public class Controller {
 
     public static String destillatToString(Destillat destillat) { return destillat.toString();}
 
+    public static void addDestillatMængde(DestillatMængde destillatMængde, Whiskyserie whiskyserie) {whiskyserie.addDestillatMængde(destillatMængde);}
+
+    public static double samletMængdeWhiskySerie(Whiskyserie whiskyserie){
+        double samletMængde = 0;
+        for (DestillatMængde d : whiskyserie.getDestillatMængder()){
+            samletMængde += d.getMængde();
+        }
+        return samletMængde;
+    }
+
+    public static double antalForventetFlakser(Whiskyserie whiskyserie, double mængdeVæske){
+        double flaskeStørrelse = 0.70;
+        double forventetAntal = mængdeVæske / flaskeStørrelse;
+        return Math.floor(forventetAntal);
+    }
+
 
 }
 
