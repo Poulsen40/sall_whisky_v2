@@ -49,17 +49,20 @@ public class APP {
         Fad f5 = Controller.createFad(78, "Spanien", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 1);
 
 
-        Destillat d1 = Controller.createDestilat(LocalDateTime.of(2022,1,1,2,2),f1);
-        BatchMængde bb = b1.createBatchMængde(200,d1);
-        BatchMængde bbb = b2.createBatchMængde(200,d1);
-        BatchMængde bbbb = b3.createBatchMængde(200,d1);
+        Destillat d1 = Controller.createDestilat(LocalDateTime.of(2022, 1, 1, 2, 2), f1);
+        BatchMængde bb = b1.createBatchMængde(200, d1);
+        BatchMængde bbb = b2.createBatchMængde(200, d1);
+        BatchMængde bbbb = b3.createBatchMængde(200, d1);
+
+        Destillat d2 = Controller.createDestilat(LocalDateTime.of(2020, 1, 1, 2, 2), f2);
+
+        Destillat d3 = Controller.createDestilat(LocalDateTime.of(2018, 1, 1, 2, 2), f2);
+
+
 
         //
         Lager lager = Controller.createLager(10, 3, 2, "Container lager");
         Lager lager1 = Controller.createLager(12, 3, 10, "Lars landmand");
-
-        System.out.println(d1.getSamletMængde());
-
 
 
 

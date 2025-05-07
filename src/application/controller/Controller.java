@@ -6,6 +6,7 @@ import storage.Storage;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +59,7 @@ public class Controller {
 
     public static Whiskyprodukt createWhiskyprodukt(Whiskyserie whiskyserie) {
         Whiskyprodukt whiskyprodukt = whiskyserie.createWhiskyprodukt();
+        Storage.addWhiskyprodukt(whiskyprodukt);
         return whiskyprodukt;
     }
 
@@ -249,7 +251,7 @@ public class Controller {
         h.append("Whisky serie navn: " + whiskyserie.getSerieNavn() + "\nDato oprettet: " + whiskyserie.getDato() + "\nSamlet mængde væske: " + Controller.samletMængdeWhiskySerie(whiskyserie,vandmængde)
                 + "\nForventet antal flasker: " + Controller.antalForventetFlakser(whiskyserie, Controller.samletMængdeWhiskySerie(whiskyserie,vandmængde)) + "\nBatches brug i whisky: \n");
         for (BatchMængde batchMængde : destillat.getBatchMængder()) {
-            h.append("Batch id: " + batchMængde.getBatch().getBatchID());
+            h.append("Batch id: " + batchMængde.getBatch().getBatchID() + " ");
         }
 
         return h.toString();
@@ -275,6 +277,37 @@ public class Controller {
         }
         mængdeAlkoholVæske += mængdeVand;
         return (samletrentalkoholprocent / mængdeAlkoholVæske) * 100;
+    }
+
+    public static ArrayList<Destillat> destilatWhiskySerieUdenFilter(ArrayList<Destillat> destillater){
+        ArrayList<Destillat> alleklarDestillater = new ArrayList<>();
+
+        for (Destillat d : Controller.getDestillater()){
+            if (Controller.getDestillat(d.getFad()) != null && ChronoUnit.YEARS.between(d.getDatoForPåfyldning(), LocalDateTime.now()) >= 3){
+                alleklarDestillater.add(d);
+            }
+        }
+
+        return alleklarDestillater;
+    }
+
+    public static ArrayList<Destillat> destilatWhiskySerieFilter(ArrayList<Destillat> destillater, double år){
+        ArrayList<Destillat> alleklarDestillater = new ArrayList<>();
+
+        for (Destillat d : Controller.getDestillater()){
+            if (Controller.getDestillat(d.getFad()) != null && ChronoUnit.YEARS.between(d.getDatoForPåfyldning(), LocalDateTime.now()) >= 3){
+                alleklarDestillater.add(d);
+            }
+        }
+        ArrayList<Destillat> destillaterEfterFiltrering = new ArrayList<>();
+        for (Destillat destillat1 : alleklarDestillater){
+            if (ChronoUnit.YEARS.between(destillat1.getDatoForPåfyldning(), LocalDateTime.now()) >= år){
+                destillaterEfterFiltrering.add(destillat1);
+
+            }
+        }
+
+        return destillaterEfterFiltrering;
     }
 }
 

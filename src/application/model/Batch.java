@@ -49,6 +49,11 @@ public class Batch {
     }
 
     //Get og set
+
+    public Rygemateriale getRygemateriale() {
+        return rygemateriale;
+    }
+
     public LocalDate getStartDato() {
         return startDato;
     }

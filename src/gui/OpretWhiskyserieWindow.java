@@ -13,12 +13,18 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import jdk.jfr.TransitionFrom;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class OpretWhiskyserieWindow extends Stage {
@@ -49,6 +55,7 @@ public class OpretWhiskyserieWindow extends Stage {
     private static double mængdeVand;
 
     private static String serieNavn;
+    private static double selectedButtonAlder;
 
     private static DestillatMængde destillatMængde;
 
@@ -89,16 +96,46 @@ public class OpretWhiskyserieWindow extends Stage {
         step1.getChildren().add(btnOpretWhiskySerieObjekt);
         pane.add(step1, 0, 0);
 
+        ToggleGroup group = new ToggleGroup();
+        RadioButton rb1 = new RadioButton("3 år");
+        rb1.setToggleGroup(group);
+        RadioButton rb2 = new RadioButton("4 år");
+        rb2.setToggleGroup(group);
+        RadioButton rb3 = new RadioButton("5+ år");
+        rb3.setToggleGroup(group);
+        HBox hboxButtons = new HBox(10, rb1, rb2, rb3);
+
         lwlDestillat = new ListView<>();
         lwlDestillat.setPrefWidth(200);
         lwlDestillat.setPrefHeight(150);
-        ArrayList<Destillat> frieDestilat = new ArrayList<>();
-        for (Destillat d : Controller.getDestillater()) {
-            if (Controller.getDestillat(d.getFad()) != null) {
-                frieDestilat.add(d);
+        lwlDestillat.getItems().setAll();
+        lwlDestillat.getItems().setAll(Controller.destilatWhiskySerieUdenFilter(Controller.getDestillater()));
+
+        group.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
+            if (newToggle != null) {
+                RadioButton selectedButton = (RadioButton) group.getSelectedToggle();
+                String færdigString = selectedButton.getText().substring(0,1);
+                selectedButtonAlder = Double.parseDouble(færdigString);
+                lwlDestillat.getItems().setAll(Controller.destilatWhiskySerieFilter(Controller.getDestillater(),selectedButtonAlder));
             }
-        }
-        lwlDestillat.getItems().setAll(frieDestilat);
+        });
+
+
+        //Bruges til at lave destillater i listview mere overskuelige at læse
+        lwlDestillat.setCellFactory(listView -> new ListCell<Destillat>() {
+            @Override
+            protected void updateItem(Destillat destillat, boolean empty) {
+                super.updateItem(destillat, empty);
+                if (empty || destillat == null) {
+                    setText(null);
+                } else {
+                    long år = ChronoUnit.YEARS.between(destillat.getDatoForPåfyldning(), LocalDateTime.now());
+                    long måneder = ChronoUnit.MONTHS.between(destillat.getDatoForPåfyldning().plusYears(år), LocalDateTime.now());
+                    long dage = ChronoUnit.DAYS.between(destillat.getDatoForPåfyldning().plusYears(år).plusMonths(måneder), LocalDateTime.now());
+                    setText("Dato for påfyldning: " + destillat.getDatoForPåfyldning().toLocalDate() + "\nAlder på destillat: " + år + " år " + måneder + " måneder " + dage + " dage");
+                }
+            }
+        });
         lwlDestillat.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         GridPane.setValignment(lwlDestillat, VPos.BOTTOM);
 
@@ -121,6 +158,7 @@ public class OpretWhiskyserieWindow extends Stage {
 
         Label lblTap = new Label("Fade med destillat klar til tapning");
 
+
         VBox step2 = new VBox();
         step2.setSpacing(15);
         step2.getChildren().add(lblStep2);
@@ -133,17 +171,32 @@ public class OpretWhiskyserieWindow extends Stage {
 
         Label lblTapMængde = new Label("Mængden du vil tappe");
 
+        Label lblFilter = new Label("Filtrer efter alder på fad");
+
+
+
+
         Button btnTap = new Button("Tap");
         btnTap.setOnAction(event -> {
             tapMængdeFraDestilat();
         });
 
+        Region tom = new Region();
+        tom.setMinHeight(20);
+        Region tom1 = new Region();
+
+
         VBox step2_2 = new VBox();
         step2_2.setSpacing(15);
+        step2_2.getChildren().add(tom1);
+        step2_2.getChildren().add(lblFilter);
+        step2_2.getChildren().add(hboxButtons);
+        step2_2.getChildren().add(tom);
         step2_2.getChildren().add(lblTapMængde);
         step2_2.getChildren().add(txfTapMængde);
         step2_2.getChildren().add(btnTap);
         step2_2.setAlignment(Pos.CENTER);
+
 
         HBox hBoxStep2 = new HBox();
         hBoxStep2.setSpacing(15);
@@ -256,10 +309,10 @@ public class OpretWhiskyserieWindow extends Stage {
             mængdeVand += Double.parseDouble(txfVand.getText().trim());
             txfVand.clear();
         }
-        txaInfo.setText(Controller.toStringInfoBoxWhiskyserie(destillatMængde.getDestillat(), whiskyserie,mængdeVand));
+        txaInfo.setText(Controller.toStringInfoBoxWhiskyserie(destillatMængde.getDestillat(), whiskyserie, mængdeVand));
         txaInfo.appendText("\nMængde vand tilføjer whiskyserien " + mængdeVand);
 
 
-        txaInfo.appendText("\nAlkohol procent: " + Controller.beregnAlkoholProcentPåWhiskyserie(whiskyserie.getDestillatMængder(),mængdeVand));
+        txaInfo.appendText("\nAlkohol procent: " + Controller.beregnAlkoholProcentPåWhiskyserie(whiskyserie.getDestillatMængder(), mængdeVand));
     }
 }
