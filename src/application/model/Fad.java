@@ -1,7 +1,8 @@
 package application.model;
 
 public class Fad {
-    private static int fadNr;
+    private int fadNr;
+    private static int fadID = 1;
     private double fadStørrelse;
     private String levarandør;
     private boolean erBrugt;
@@ -23,6 +24,7 @@ public class Fad {
         this.fadtype = fadtype;
         this.træsort = træsort;
         this.antalGangeBrugt = antalGangeBrugt;
+        fadNr = fadID++;
     }
 
     //Metoder til destillat
