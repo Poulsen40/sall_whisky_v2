@@ -45,7 +45,7 @@ public class DestilatOgLager extends Stage {
     private static Button afbryd;
     private boolean isVælgFadButtonPressed; //Skal den være static?
 
-
+    private static int originalAntalgangeBrugt;
     private static Fad selectedFad;
     private static Destillat destillat;
 
@@ -171,6 +171,7 @@ public class DestilatOgLager extends Stage {
     public void vælgFad() {
         selectedFad = lwlFade.getSelectionModel().getSelectedItem();
         if (selectedFad == null) {
+            Controller.tælAntalGangeBrugt(selectedFad);
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Du skal trykke på det fad du vil vælge");
             alert.showAndWait();
@@ -290,6 +291,10 @@ public class DestilatOgLager extends Stage {
             } else {
                 FadPåLagerWindow dia = new FadPåLagerWindow("Registere distilat og lager", destillat, selectedFad);
                 dia.showAndWait();
+
+                Controller.tælAntalGangeBrugt(selectedFad);
+                System.out.println("Fadet er nu brugt " + selectedFad.getAntalGangeBrugt() + " gange.");
+
                 txfBatchInfo.clear();
                 txfBatchMængdeValgt.clear();
                 txfFadMængdeTilbage.clear();
@@ -327,17 +332,22 @@ public class DestilatOgLager extends Stage {
         else {
             afbryd.setDisable(true);
             close();
+
             Fad fad = lwlFade.getSelectionModel().getSelectedItem();
             ArrayList<BatchMængde> batchMængdes = new ArrayList<>(Controller.getBatchMængder(destillat));
+
             for (BatchMængde b : batchMængdes) {
                 Batch bb = Controller.getbatch(b);
                 Controller.setMængdeVæske(bb,Controller.getMængdeVæske(bb) + Controller.getMængdeVæske(b));
-
             }
+            Controller.nulstilAntalgangeBrugt(selectedFad, originalAntalgangeBrugt);
+
+            System.out.println("Fortryd! Fadet beholder sin oprindelige værdi: " + selectedFad.getAntalGangeBrugt());
+
             Controller.setDestillatFad(fad, null);
             Controller.fjernDestillat(destillat);
+
             lwlFade.getSelectionModel().clearSelection();
-            selectedFad = null;
 
         }
     }

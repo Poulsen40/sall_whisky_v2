@@ -152,6 +152,20 @@ public class Controller {
         return Math.floor(forventetAntal);
     }
 
+    public static void tælAntalGangeBrugt(Fad fad){
+        if (fad != null){
+            fad.setAntalGangeBrugt(fad.getAntalGangeBrugt() + 1);
+        }
+    }
+
+    public static void nulstilAntalgangeBrugt(Fad fad, int oprindeligVærdi){
+        if (fad != null){
+            fad.setAntalGangeBrugt(oprindeligVærdi);
+        }
+    }
+
+
+
 
 }
 

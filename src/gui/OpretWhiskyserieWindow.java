@@ -43,6 +43,8 @@ public class OpretWhiskyserieWindow extends Stage {
     private static TextField txfVand;
     private static Whiskyserie whiskyserie;
     private static TextArea txaInfo;
+    private static DatePicker datePicker;
+    private static Button btnOpretWhiskySerieObjekt;
 
     private static String serieNavn;
 
@@ -65,14 +67,14 @@ public class OpretWhiskyserieWindow extends Stage {
 
         txfNavn = new TextField();
 
-        DatePicker datePicker = new DatePicker();
+        datePicker = new DatePicker();
         datePicker.setPromptText("Vælg datoen for oprettelsen af whiskyserien");
         datePicker.setOnAction(event -> {
             dato = datePicker.getValue();
         });
 
 
-        Button btnOpretWhiskySerieObjekt = new Button("Opret whisky serie");
+        btnOpretWhiskySerieObjekt = new Button("Opret whisky serie");
         btnOpretWhiskySerieObjekt.setOnAction(event -> opretWhiskySerieObjekt());
 
         VBox step1 = new VBox();
@@ -171,6 +173,10 @@ public class OpretWhiskyserieWindow extends Stage {
         serieNavn = txfNavn.getText().trim();
 
         whiskyserie = Controller.createWhiskyserie(serieNavn, dato);
+
+        txfNavn.setDisable(true);
+        datePicker.setDisable(true);
+        btnOpretWhiskySerieObjekt.setDisable(true);
 
         System.out.println(whiskyserie);
     }
