@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.*;
 
 public class OpretWhiskyserieWindow extends Stage {
     public OpretWhiskyserieWindow(String title) {
@@ -45,11 +45,13 @@ public class OpretWhiskyserieWindow extends Stage {
     private static TextArea txaInfo;
 
     private static String serieNavn;
+    private static String fadtekst;
 
     private static DestillatMængde destillatMængde;
 
     private static LocalDate dato;
-    private static ListView<Fad> lwlFade;
+    private static ListView<Destillat> lwlDestillat;
+    private static ArrayList<Destillat> frieDestilat = new ArrayList<>();
 
 
     private void initContent(GridPane pane) {
@@ -85,18 +87,17 @@ public class OpretWhiskyserieWindow extends Stage {
         step1.getChildren().add(btnOpretWhiskySerieObjekt);
         pane.add(step1, 0, 0);
 
-        lwlFade = new ListView<>();
-        lwlFade.setPrefWidth(200);
-        lwlFade.setPrefHeight(150);
-        ArrayList<Fad> frieFade = new ArrayList<>();
-        for (Fad f : Controller.getFade()) {
-            if (Controller.getDestillat(f) != null) {
-                frieFade.add(f);
+        lwlDestillat = new ListView<>();
+        lwlDestillat.setPrefWidth(200);
+        lwlDestillat.setPrefHeight(150);
+        for (Destillat d: Controller.getDestillater()){
+            if (d.getFad() != null){
+                frieDestilat.add(d);
             }
         }
-        lwlFade.getItems().setAll(frieFade);
-        lwlFade.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        GridPane.setValignment(lwlFade, VPos.BOTTOM);
+        lwlDestillat.getItems().setAll(frieDestilat);
+        lwlDestillat.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        GridPane.setValignment(lwlDestillat, VPos.BOTTOM);
 
         Label lblStep2 = new Label("Step 2 : vælg det fad du vil tappe destilat fra og mængden. Gentag hvis ønskes");
         lblStep2.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
@@ -107,7 +108,7 @@ public class OpretWhiskyserieWindow extends Stage {
         step2.setSpacing(15);
         step2.getChildren().add(lblStep2);
         step2.getChildren().add(lblTap);
-        step2.getChildren().add(lwlFade);
+        step2.getChildren().add(lwlDestillat);
 
         txfTapMængde = new TextField();
 
@@ -176,13 +177,25 @@ public class OpretWhiskyserieWindow extends Stage {
     }
 
     public void tapMængdeFraDestilat() {
-        Fad selectedFad = lwlFade.getSelectionModel().getSelectedItem();
-        Destillat valgtDestillat = selectedFad.getDestillat();
+
+        Destillat selectedDestillat = lwlDestillat.getSelectionModel().getSelectedItem();
+        Fad fad = selectedDestillat.getFad();
+
         double mængde = Double.parseDouble(txfTapMængde.getText().trim());
 
-        destillatMængde = Controller.createDestillatMængde(mængde, whiskyserie, valgtDestillat);
+        destillatMængde = Controller.createDestillatMængde(mængde, whiskyserie, selectedDestillat);
         Controller.addDestillatMængde(destillatMængde, whiskyserie);
-        System.out.println("Deestilat mængder på whiskeyserien" + whiskyserie.getDestillatMængder());
+
+        System.out.println("samæet mængde føst " + selectedDestillat.getSamletMængde());
+
+        System.out.println("tap mængde " + mængde);
+
+        selectedDestillat.setSamletMængde(selectedDestillat.getSamletMængde() - mængde);
+
+        System.out.println("Mængde " + selectedDestillat.getSamletMængde());
+        lwlDestillat.refresh();
+
+
     }
 
     public void setInfoBox() {
