@@ -43,11 +43,11 @@ public class OpretWhiskyserieWindow extends Stage {
     private static TextField txfVand;
     private static Whiskyserie whiskyserie;
     private static TextArea txaInfo;
+    private static TextArea txaDestilatInfo;
     private static DatePicker datePicker;
     private static Button btnOpretWhiskySerieObjekt;
 
     private static String serieNavn;
-    private static String fadtekst;
 
     private static DestillatMængde destillatMængde;
 
@@ -92,14 +92,28 @@ public class OpretWhiskyserieWindow extends Stage {
         lwlDestillat = new ListView<>();
         lwlDestillat.setPrefWidth(200);
         lwlDestillat.setPrefHeight(150);
-        for (Destillat d: Controller.getDestillater()){
-            if (d.getFad() != null){
+        for (Destillat d : Controller.getDestillater()) {
+            if (d.getFad() != null) {
                 frieDestilat.add(d);
             }
         }
         lwlDestillat.getItems().setAll(frieDestilat);
         lwlDestillat.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         GridPane.setValignment(lwlDestillat, VPos.BOTTOM);
+
+        txaDestilatInfo = new TextArea();
+        txaDestilatInfo.setPrefHeight(75);
+
+        lwlDestillat.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection == null) {
+                txaDestilatInfo.setText("");
+            } else {
+                txaDestilatInfo.setText(Controller.toStringFadOgDestillat(lwlDestillat.getSelectionModel().getSelectedItem()));
+
+
+            }
+        });
+
 
         Label lblStep2 = new Label("Step 2 : vælg det fad du vil tappe destilat fra og mængden. Gentag hvis ønskes");
         lblStep2.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
@@ -111,6 +125,8 @@ public class OpretWhiskyserieWindow extends Stage {
         step2.getChildren().add(lblStep2);
         step2.getChildren().add(lblTap);
         step2.getChildren().add(lwlDestillat);
+        step2.getChildren().add(txaDestilatInfo);
+
 
         txfTapMængde = new TextField();
 
@@ -213,21 +229,12 @@ public class OpretWhiskyserieWindow extends Stage {
         destillatMængde = Controller.createDestillatMængde(mængde, whiskyserie, selectedDestillat);
         Controller.addDestillatMængde(destillatMængde, whiskyserie);
 
-        System.out.println("samæet mængde føst " + selectedDestillat.getSamletMængde());
-
-        System.out.println("tap mængde " + mængde);
-
-        selectedDestillat.setSamletMængde(selectedDestillat.getSamletMængde() - mængde);
-
-        System.out.println("Mængde " + selectedDestillat.getSamletMængde());
-        lwlDestillat.refresh();
-
+        txfTapMængde.clear();
 
     }
 
     public void setInfoBox() {
-        txaInfo.setText("Whisky serie navn: " + serieNavn + "\nDato oprettet: " + dato + "\nSamlet mængde væske: " + Controller.samletMængdeWhiskySerie(whiskyserie)
-                + "\nForventet antal flasker: " + Controller.antalForventetFlakser(whiskyserie, Controller.samletMængdeWhiskySerie(whiskyserie)));
+        txaInfo.setText(Controller.toStringInfoBoxWhiskyserie(destillatMængde.getDestillat(),whiskyserie));
 
 
     }

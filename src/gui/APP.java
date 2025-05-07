@@ -56,6 +56,12 @@ public class APP {
         Lager lager = Controller.createLager(10, 3, 2, "Container lager");
         Lager lager1 = Controller.createLager(12, 3, 10, "Lars landmand");
 
+        System.out.println(d1.getSamletMængde());
+
+
+
+
+
     }
 }
 
