@@ -2,6 +2,7 @@ package application.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Destillat {
     private LocalDateTime datoForPåfyldning;
@@ -9,7 +10,7 @@ public class Destillat {
     private double alkoholPct;
 
     //Linkattribut
-    private ArrayList<BatchMængde> batchMængder = new ArrayList<>();
+    private List<BatchMængde> batchMængder = new ArrayList<>();
     private Fad fad;
 
     public Destillat(LocalDateTime datoForPåfyldning, Fad fad) {
@@ -60,17 +61,17 @@ public class Destillat {
     }
 
     private StringBuilder udskrivBatches(){
-        StringBuilder h  = new StringBuilder();
+        StringBuilder sb  = new StringBuilder();
         for (BatchMængde batchMængde : batchMængder) {
-            h.append(batchMængde.getBatch().getMaltBach() + " " + batchMængde.getBatch().getKornSort() +" " + batchMængde.getBatch().getMark() + "\n");
+            sb.append("\nMaltbatch: " + batchMængde.getBatch().getMaltBach() + "\nKornsort: " + batchMængde.getBatch().getKornSort() + "\nMark: " + batchMængde.getBatch().getMark());
 
         }
-        return h;
+        return sb;
     }
 
 
     @Override
     public String toString() {
-        return  "Antal lLiter " + getSamletMængde() + "\nSamlet alkoholprocenten i Distillat " + beregnalkoholprocent() + "\nInfo omkirng indkluderet batches " + udskrivBatches();
+        return  "Antal liter " + getSamletMængde() + "\nSamlet alkoholprocenten i Distillat " + beregnalkoholprocent() + "\nInfo omkirng indkluderet batches " + udskrivBatches();
     }
 }
