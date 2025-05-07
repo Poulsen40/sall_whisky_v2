@@ -41,7 +41,7 @@ public class Fad {
 
         /*Der skal laves en metode til at tømme et fad når Use case med at lave wiskey laves.
         Det er nok noget med at destilatklassen har en metode som kader den der er her som så
-        fjerner destilatet på fadet. André
+        fjerner destilatet på fadet. -André
          */
 
 

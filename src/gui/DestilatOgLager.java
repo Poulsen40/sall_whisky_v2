@@ -177,9 +177,6 @@ public class DestilatOgLager extends Stage {
         } else {
             //Opretter destillat
             destillat = Controller.createDestilat(LocalDateTime.now(), selectedFad);
-            Controller.tælAntalGangeBrugt(selectedFad);
-
-
 
             lwlFade.setDisable(true);
             txfValgtFad.setDisable(true);
@@ -294,9 +291,6 @@ public class DestilatOgLager extends Stage {
                 FadPåLagerWindow dia = new FadPåLagerWindow("Registere distilat og lager", destillat, selectedFad);
                 dia.showAndWait();
 
-                Controller.tælAntalGangeBrugt(selectedFad);
-                System.out.println("Fadet er nu brugt " + selectedFad.getAntalGangeBrugt() + " gange.");
-
                 txfBatchInfo.clear();
                 txfBatchMængdeValgt.clear();
                 txfFadMængdeTilbage.clear();
@@ -342,9 +336,6 @@ public class DestilatOgLager extends Stage {
                 Batch bb = Controller.getbatch(b);
                 Controller.setMængdeVæske(bb,Controller.getMængdeVæske(bb) + Controller.getMængdeVæske(b));
             }
-            Controller.nulstilAntalgangeBrugt(selectedFad, originalAntalgangeBrugt);
-
-            System.out.println("Fortryd! Fadet beholder sin oprindelige værdi: " + selectedFad.getAntalGangeBrugt());
 
             Controller.setDestillatFad(fad, null);
             Controller.fjernDestillat(destillat);

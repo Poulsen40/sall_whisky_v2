@@ -57,7 +57,6 @@ public class FadPåLagerWindow extends Stage {
         pane.setVgap(10);
         pane.setGridLinesVisible(false);
 
-
         Label info = new Label("Info");
 
         lwlager = new ListView<>();
@@ -87,12 +86,7 @@ public class FadPåLagerWindow extends Stage {
             genstartDestilatPåFad();
         });
 
-//        lwFad.getSelectionModel().selectedItemProperty().addListener((obsFad, oldFadSelection, newFadSelection) -> {
-//
-//        });
-        lwlager.getSelectionModel().selectedItemProperty().addListener((obsLager, oldLagerSelection, newLagerSelection) -> {
-
-        });
+        lwlager.getSelectionModel().selectedItemProperty().addListener((obsLager, oldLagerSelection, newLagerSelection) -> {});
 
         btnAdd = new Button("Tilføj fad til lager");
         pane.add(btnAdd, 0, 3);
@@ -101,8 +95,8 @@ public class FadPåLagerWindow extends Stage {
             Lager selectedLager = lwlager.getSelectionModel().getSelectedItem();
 
             if (selectedLager != null){
-
                 if (fad != null){
+
                     String placering = Controller.addFadTilLager(fad, selectedLager);
                     lwlager.refresh();
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -116,19 +110,13 @@ public class FadPåLagerWindow extends Stage {
                     alert.setContentText("Ingen fad tilgængelige");
                     alert.showAndWait();
                     alert.close();
-
                 }
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Du skal vælge et lager");
                 alert.showAndWait();
                 alert.close();
-
-
             }
-
-
-
         });
     }
 
@@ -139,8 +127,10 @@ public class FadPåLagerWindow extends Stage {
             bb.setMængdeVæske(Controller.getMængdeVæske(bb) + Controller.getMængdeVæske(b));
 
         }
+        System.out.println("Før fjernelse af destillat: " + fad.getAntalGangeBrugt());
         Controller.setDestillatFad(fad,null);
         Controller.fjernDestillat(destillat);
+        System.out.println("Efter fjernelse af destillat: " + fad.getAntalGangeBrugt());
     }
 }
 

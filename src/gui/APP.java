@@ -46,6 +46,8 @@ public class APP {
         Fad f2 = Controller.createFad(30, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
         Fad f3 = Controller.createFad(12, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
         Fad f4 = Controller.createFad(100, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
+        Fad f5 = Controller.createFad(78, "Spanien", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 1);
+
 
         Destillat d1 = Controller.createDestilat(LocalDateTime.of(2022,1,1,2,2),f1);
         BatchMængde bb = b1.createBatchMængde(200,d1);

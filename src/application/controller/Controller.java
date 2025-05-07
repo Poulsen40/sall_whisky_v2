@@ -103,6 +103,7 @@ public class Controller {
         String placering = fad.tilføjTilLager(lager);
         lager.setAntalledigepladser(lager.getAntalledigepladser() - 1);
 
+        tælAntalGangeBrugt(fad);
         return placering;
     }
 
@@ -120,7 +121,9 @@ public class Controller {
     }
 
     public static void setDestillatFad(Fad fad, Destillat destillat) {
+        System.out.println("antal gange før opdatering: " + fad.getAntalGangeBrugt());
         fad.setDestillat(destillat);
+        System.out.println("antal gange før opdatering: " + fad.getAntalGangeBrugt());
     }
 
     public static ArrayList<BatchMængde> getBatchMængder(Destillat destillat) {
@@ -171,7 +174,10 @@ public class Controller {
 
     public static void tælAntalGangeBrugt(Fad fad) {
         if (fad != null) {
+            System.out.println("antal gange før opdatering: " + fad.getAntalGangeBrugt());
             fad.setAntalGangeBrugt(fad.getAntalGangeBrugt() + 1);
+            System.out.println("antal gange før opdatering: " + fad.getAntalGangeBrugt());
+
         }
     }
 
