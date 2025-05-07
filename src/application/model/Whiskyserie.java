@@ -57,5 +57,27 @@ public class Whiskyserie {
         }
     }
 
+    public String getSerieNavn() {
+        return serieNavn;
+    }
 
+    public double getAlkoholPct() {
+        return alkoholPct;
+    }
+
+    public double getStørrelse() {
+        return størrelse;
+    }
+
+    public double getVandMængde() {
+        return vandMængde;
+    }
+
+    public application.model.Fad getFad() {
+        return Fad;
+    }
+
+    public LocalDate getDato() {
+        return dato;
+    }
 }

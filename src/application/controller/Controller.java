@@ -166,32 +166,42 @@ public class Controller {
         return Math.floor(forventetAntal);
     }
 
-    public static void tælAntalGangeBrugt(Fad fad){
-        if (fad != null){
+    public static void tælAntalGangeBrugt(Fad fad) {
+        if (fad != null) {
             fad.setAntalGangeBrugt(fad.getAntalGangeBrugt() + 1);
         }
     }
 
-    public static void nulstilAntalgangeBrugt(Fad fad, int oprindeligVærdi){
-        if (fad != null){
+    public static void nulstilAntalgangeBrugt(Fad fad, int oprindeligVærdi) {
+        if (fad != null) {
             fad.setAntalGangeBrugt(oprindeligVærdi);
         }
     }
 
 
-
-    public static String toStringFadOgDestillat(Fad fad) {
+    public static String toStringFadOgDestillat(Destillat destillat) {
         StringBuilder h = new StringBuilder();
+        Fad fad = destillat.getFad();
 
         h.append("Fad nr: " + fad.getFadNr() + ", fadstørrelse: " + fad.getFadStørrelse() + ", fadtype: " + fad.getFadtype() + ", leverandør: " + fad.getLevarandør() + ", gange brugt: " + fad.getAntalGangeBrugt());
         h.append("\nDestilat alkoholpct: " + fad.getDestillat().beregnalkoholprocent() + ", samlet mængde væske: " + Controller.getSamletMængde(fad.getDestillat()));
         h.append("\nBatches brugt i destillat:");
-        for (BatchMængde batchMængde : fad.getDestillat().getBatchMængder()) {
+        for (BatchMængde batchMængde : destillat.getBatchMængder()) {
             h.append(" id: " + batchMængde.getBatch().getBatchID() + " mængde: " + batchMængde.getMængde());
         }
         return h.toString();
     }
 
+    public static String toStringInfoBoxWhiskyserie(Destillat destillat, Whiskyserie whiskyserie) {
+        StringBuilder h = new StringBuilder();
+        Fad fad = destillat.getFad();
+        h.append("Whisky serie navn: " + whiskyserie.getSerieNavn() + "\nDato oprettet: " + whiskyserie.getDato() + "\nSamlet mængde væske: " + Controller.samletMængdeWhiskySerie(whiskyserie)
+                + "\nForventet antal flasker: " + Controller.antalForventetFlakser(whiskyserie, Controller.samletMængdeWhiskySerie(whiskyserie)) + "\nBatches brug i whisky: \n");
+        for (BatchMængde batchMængde : destillat.getBatchMængder()) {
+            h.append("Batch id: " + batchMængde.getBatch().getBatchID());
+        }
 
+        return h.toString();
+    }
 }
 
