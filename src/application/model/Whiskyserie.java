@@ -12,6 +12,7 @@ public class Whiskyserie {
     private double vandMængde;
     private Fad Fad;
     private LocalDate dato;
+    private double antalFlasker;
 
 
     private ArrayList<Whiskyprodukt> whiskyprodukter = new ArrayList<>();
@@ -73,8 +74,36 @@ public class Whiskyserie {
         return vandMængde;
     }
 
+    public void setAntalFlasker(double antalFlasker) {
+        this.antalFlasker = antalFlasker;
+    }
+
     public application.model.Fad getFad() {
         return Fad;
+    }
+
+    public void setSerieNavn(String serieNavn) {
+        this.serieNavn = serieNavn;
+    }
+
+    public void setAlkoholPct(double alkoholPct) {
+        this.alkoholPct = alkoholPct;
+    }
+
+    public void setStørrelse(double størrelse) {
+        this.størrelse = størrelse;
+    }
+
+    public void setVandMængde(double vandMængde) {
+        this.vandMængde = vandMængde;
+    }
+
+    public void setFad(application.model.Fad fad) {
+        Fad = fad;
+    }
+
+    public void setDato(LocalDate dato) {
+        this.dato = dato;
     }
 
     public LocalDate getDato() {
@@ -87,7 +116,7 @@ public class Whiskyserie {
                 "serieNavn='" + serieNavn + '\'' +
                 ", alkoholPct=" + alkoholPct +
                 ", størrelse=" + størrelse +
-                ", dato=" + dato +
+                ", dato=" + dato + ", antal flasker=" + antalFlasker +
                 '}';
     }
 }

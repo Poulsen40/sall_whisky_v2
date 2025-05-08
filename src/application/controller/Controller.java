@@ -276,6 +276,13 @@ public class Controller {
                 .collect(Collectors.toList());
     }
 
+    public static void setWhiskyInfo(ArrayList<DestillatMængde> destillatMængder, Whiskyserie whiskyserie, double vandmængde, double antalFlasker){
+        whiskyserie.setAlkoholPct(Controller.beregnAlkoholProcentPåWhiskyserie(destillatMængder,vandmængde));
+        whiskyserie.setStørrelse(Controller.samletMængdeWhiskySerie(whiskyserie,vandmængde));
+        whiskyserie.setVandMængde(vandmængde);
+        whiskyserie.setAntalFlasker(antalFlasker);
+    }
+
     public static String toStringInfoBoxWhiskyserie(ArrayList<DestillatMængde> destillatMængder, Whiskyserie whiskyserie, double vandmængde) {
         StringBuilder h = new StringBuilder();
 
@@ -308,13 +315,6 @@ public class Controller {
         }
 
         return h.toString();
-    }
-
-    public static Destillat destilatMedFad(Destillat destillat) {
-        if (destillat.getFad() != null) {
-            destillat = destillat;
-        }
-        return destillat;
     }
 
     public static double beregnAlkoholProcentPåWhiskyserie(ArrayList<DestillatMængde> destillatMængder, double mængdeVand) {

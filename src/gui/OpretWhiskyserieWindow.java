@@ -332,6 +332,10 @@ public class OpretWhiskyserieWindow extends Stage {
             alert.setContentText("Whisky tappet på " + antalFlasker + " flasker af " + mængdePrFlaske + " cl pr flaske");
             alert.showAndWait();
             close();
+
+            Controller.setWhiskyInfo(whiskyserie.getDestillatMængder(),whiskyserie,mængdeVand,antalFlasker);
+
+
         }
     }
 
