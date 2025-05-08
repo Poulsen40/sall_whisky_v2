@@ -287,7 +287,7 @@ public class OpretWhiskyserieWindow extends Stage {
                 alert.showAndWait();
             }
         }
-        if (selectedDestillat != null && !txfTapMængde.getText().isEmpty() && txfTapMængde.getText().trim().matches("\\d+(\\.\\d+)?")) {
+        if (whiskyserie != null && selectedDestillat != null && !txfTapMængde.getText().isEmpty() && txfTapMængde.getText().trim().matches("\\d+(\\.\\d+)?")) {
             double mængde = Double.parseDouble(txfTapMængde.getText().trim());
 
             if (mængde > selectedDestillat.getSamletMængde()) {
@@ -331,6 +331,7 @@ public class OpretWhiskyserieWindow extends Stage {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText("Whisky tappet på " + antalFlasker + " flasker af " + mængdePrFlaske + " cl pr flaske");
             alert.showAndWait();
+            close();
         }
     }
 

@@ -55,6 +55,9 @@ public class APP {
         BatchMængde bbb = b2.createBatchMængde(200, d1);
         BatchMængde bbbb = b3.createBatchMængde(200, d1);
 
+
+        System.out.println("d1 alkohol: " + d1.beregnalkoholprocent());
+
         System.out.println("samlet mængde d1" +d1.getSamletMængde());
         System.out.println("efter tjek d1 " + d1.getSamletMængde());
 
@@ -62,9 +65,10 @@ public class APP {
 
         Destillat d2 = Controller.createDestilat(LocalDateTime.of(2020, 1, 1, 2, 2), f2);
         BatchMængde bbbbb= b1.createBatchMængde(200, d2);
+        System.out.println("d2 alko" + d2.beregnalkoholprocent());
 
 
-        Destillat d3 = Controller.createDestilat(LocalDateTime.of(2018, 1, 1, 2, 2), f2);
+        Destillat d3 = Controller.createDestilat(LocalDateTime.of(2018, 1, 1, 2, 2), f3);
         BatchMængde bhnbbb = b3.createBatchMængde(200, d3);
 
 //        Whiskyserie whiskyserie = Controller.createWhiskyserie("Hej", LocalDate.now());
