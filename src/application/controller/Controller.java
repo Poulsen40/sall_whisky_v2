@@ -1,16 +1,12 @@
 package application.controller;
 
 import application.model.*;
-import com.sun.source.tree.NewClassTree;
-import javafx.scene.control.DatePicker;
 import storage.Storage;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.FormatFlagsConversionMismatchException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -100,11 +96,6 @@ public class Controller {
         return lager;
     }
 
-    //addfadtillager skal vide hvilket lager og fad brugeren har valgt. Dvs i DesitllatOgLager,
-    //skal det fastholdes hvilket fad der klikkes på i listviewet i vælgFad().
-    //Tilsvarende skal det fastholdes hvilket lager brugeren vælger i listviewet.
-    //Metoden addFadTilLager skal lave relationen mellem fad og lager, og det kan kun gøres hvis den kender det valgte fad og lager.
-    //Jeg kan ikke se hvor der bliver lavet en setSelection i viewet(måske er det noget java gør for en).
     public static String addFadTilLager(Fad fad, Lager lager) {
         String placering = fad.tilføjTilLager(lager);
         lager.setAntalledigepladser(lager.getAntalledigepladser() - 1);
@@ -186,13 +177,17 @@ public class Controller {
 
         }
     }
-
     public static void nulstilAntalgangeBrugt(Fad fad, int oprindeligVærdi) {
         if (fad != null) {
             fad.setAntalGangeBrugt(oprindeligVærdi);
         }
     }
 
+    public static ArrayList<Whiskyprodukt> getWhiskyprodukter(){
+        return Storage.getWhiskyprodukter();
+
+
+    }
 
     public static String toStringFadOgDestillat(Destillat destillat) {
         StringBuilder h = new StringBuilder();
