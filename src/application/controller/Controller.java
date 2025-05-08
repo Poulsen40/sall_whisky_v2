@@ -235,9 +235,10 @@ public class Controller {
     }
 
 
-    public static List<Fad> fadsøgning(double minfadstørrelse, double maxfadstørrelse, int minAlder, int maxAlder,
-                                       List<Fadtype> fadTyper, List<String> leverandør, int minBrugt, int maxBrugt,
-                                       List<Træsort> træsortList, List<Lager> lagerList, boolean skalVæreFyldt) {
+
+    public static List<Fad> fadsøgning(double minfadstørrelse, double maxfadstørrelse, int minAlder, int maxAlder, int minBrugt, int maxBrugt,
+                                       List<Fadtype> fadTyper, List<String> leverandør,
+                                       List<Træsort> træsortList, boolean skalVæreFyldt) {
         List<Fad> fade = Storage.getFade();
 
         // Den her bruger jeg senere til og tjekke for alderen på væsken på fadet
@@ -266,8 +267,6 @@ public class Controller {
                 .filter(f -> leverandør == null || leverandør.isEmpty() || leverandør.contains(f.getLevarandør()))
                 // Filtrerer efter træsort, hvis angivet
                 .filter(f -> træsortList == null || træsortList.isEmpty() || træsortList.contains(f.getTræsort()))
-                // Filtrerer efter lager, hvis angivet
-                .filter(f -> lagerList == null || lagerList.isEmpty() || lagerList.contains(f.getLager()))
                 // Filtrerer efter antal gange brugt
                 .filter(f -> f.getAntalGangeBrugt() >= minBrugt && f.getAntalGangeBrugt() <= maxBrugt)
                 // Filtrerer efter om fadet skal være fyldt
