@@ -48,6 +48,7 @@ public class Controller {
 
     public static Whiskyserie createWhiskyserie(String serieNavn, LocalDate dato) {
         Whiskyserie whiskyserie = new Whiskyserie(serieNavn, dato);
+        Storage.addWhiskyserie(whiskyserie);
         return whiskyserie;
     }
 
@@ -62,10 +63,21 @@ public class Controller {
         return whiskyprodukt;
     }
 
+    public static void removeDestilatMængderFraWhiskyserie(Whiskyserie whiskyserie, ArrayList<DestillatMængde> destillatMængder){
+        for (DestillatMængde d : destillatMængder) {
+            whiskyserie.removeDestillatMængde(d);
+        }
+    }
+
 
     public static void fjernDestillat(Destillat destillat) {
         Storage.removeDestillat(destillat);
     }
+
+    public static void fjernWhiskyserie(Whiskyserie whiskyserie) {
+        Storage.removeWhiskyserie(whiskyserie);
+    }
+
 
     public static ArrayList<Fad> getFade() {
         return Storage.getFade();
@@ -82,6 +94,8 @@ public class Controller {
     public static ArrayList<Destillat> getDestillater() {
         return Storage.getDestillater();
     }
+
+    public static ArrayList<Whiskyserie> getWhiskyserie(){return Storage.getWhiskyserier();}
 
     /**
      * Præbetingelse
@@ -108,6 +122,10 @@ public class Controller {
         return batchMængde.getBatch();
     }
 
+    public static Destillat getDestillat(DestillatMængde destillatMængde) {
+        return destillatMængde.getDestillat();
+    }
+
     public static double getMængdeVæske(BatchMængde batchMængde) {
         return batchMængde.getMængde();
 
@@ -117,15 +135,29 @@ public class Controller {
         return batch.getMængdeVæske();
     }
 
+    public static double getMængdeVæskePåDestillatMængde(DestillatMængde destillatMængde) {
+        return destillatMængde.getMængde();
+    }
+
+
     public static void setDestillatFad(Fad fad, Destillat destillat) {
         System.out.println("antal gange før opdatering: " + fad.getAntalGangeBrugt());
         fad.setDestillat(destillat);
         System.out.println("antal gange før opdatering: " + fad.getAntalGangeBrugt());
     }
 
+    public static void setDestillatVæskeMængde(Destillat destillat, double mængde){
+        destillat.setSamletMængde(mængde);
+    }
+
     public static ArrayList<BatchMængde> getBatchMængder(Destillat destillat) {
         return destillat.getBatchMængder();
     }
+
+    public static ArrayList<DestillatMængde> getDestillatmængder(Whiskyserie whiskyserie) {
+        return whiskyserie.getDestillatMængder();
+    }
+
 
     public static Destillat getDestillat(Fad fad) {
         return fad.getDestillat();

@@ -12,6 +12,8 @@ public class Storage {
     private static ArrayList<Lager> lagere = new ArrayList<>();
     private static ArrayList<Destillat> destillater = new ArrayList<>();
     private static ArrayList<Whiskyprodukt> whiskyprodukter = new ArrayList<>();
+    private static ArrayList<Whiskyserie> whiskyserier = new ArrayList<>();
+
 
 
 
@@ -73,8 +75,17 @@ public class Storage {
         whiskyprodukter.remove(whiskyprodukt);
     }
 
+    //-----------------------------------------------------------------------------
 
-
+    public static ArrayList<Whiskyserie> getWhiskyserier() {
+        return new ArrayList<Whiskyserie>(whiskyserier);
+    }
+    public static void addWhiskyserie(Whiskyserie whiskyserie) {
+        whiskyserier.add(whiskyserie);
+    }
+    public static void removeWhiskyserie(Whiskyserie whiskyserie) {
+        whiskyserier.remove(whiskyserie);
+    }
 
 
 }

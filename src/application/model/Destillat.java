@@ -68,6 +68,7 @@ public class Destillat {
     }
 
     public double getSamletMængde(){
+        if (this.samletMængde != 0) return this.samletMængde;
         double mængde = 0;
         for (BatchMængde batchMængde : batchMængder) {
             mængde += batchMængde.getMængde();
@@ -77,6 +78,7 @@ public class Destillat {
             mængde -= destillatMængde.getMængde();
 
         }
+
         return mængde;
     }
 

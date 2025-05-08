@@ -80,4 +80,14 @@ public class Whiskyserie {
     public LocalDate getDato() {
         return dato;
     }
+
+    @Override
+    public String toString() {
+        return "Whiskyserie{" +
+                "serieNavn='" + serieNavn + '\'' +
+                ", alkoholPct=" + alkoholPct +
+                ", størrelse=" + størrelse +
+                ", dato=" + dato +
+                '}';
+    }
 }
