@@ -114,9 +114,9 @@ public class OpretWhiskyserieWindow extends Stage {
         group.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
             if (newToggle != null) {
                 RadioButton selectedButton = (RadioButton) group.getSelectedToggle();
-                String færdigString = selectedButton.getText().substring(0,1);
+                String færdigString = selectedButton.getText().substring(0, 1);
                 selectedButtonAlder = Double.parseDouble(færdigString);
-                lwlDestillat.getItems().setAll(Controller.destilatWhiskySerieFilter(Controller.getDestillater(),selectedButtonAlder));
+                lwlDestillat.getItems().setAll(Controller.destilatWhiskySerieFilter(Controller.getDestillater(), selectedButtonAlder));
             }
         });
 
@@ -173,8 +173,6 @@ public class OpretWhiskyserieWindow extends Stage {
         Label lblTapMængde = new Label("Mængden du vil tappe");
 
         Label lblFilter = new Label("Filtrer efter alder på fad");
-
-
 
 
         Button btnTap = new Button("Tap");
@@ -241,11 +239,11 @@ public class OpretWhiskyserieWindow extends Stage {
         GridPane.setColumnSpan(hBoxStep3_3, 2);
 
         Button btnAfbryd = new Button("Afbryd");
-       btnAfbryd.setOnAction(event -> afbryd());
+        btnAfbryd.setOnAction(event -> afbryd());
 
         HBox hboxAfbryd = new HBox();
         hboxAfbryd.getChildren().add(btnAfbryd);
-        pane.add(hboxAfbryd,0,2);
+        pane.add(hboxAfbryd, 0, 2);
 
 
     }
@@ -300,12 +298,10 @@ public class OpretWhiskyserieWindow extends Stage {
                 destillatMængde = Controller.createDestillatMængde(mængde, whiskyserie, selectedDestillat);
 
                 Controller.addDestillatMængde(destillatMængde, whiskyserie);
-
-                selectedDestillat.setSamletMængde(selectedDestillat.getSamletMængde() - mængde);
                 txaDestilatInfo.setText(Controller.toStringFadOgDestillat(selectedDestillat));
 
                 txfTapMængde.clear();
-                if (selectedDestillat.getSamletMængde() <= 0){
+                if (selectedDestillat.getSamletMængde() <= 0) {
                     lwlDestillat.getItems().remove(selectedDestillat);
                 }
                 setInfoBox();
@@ -313,9 +309,9 @@ public class OpretWhiskyserieWindow extends Stage {
         }
     }
 
-    public void tapPåFlaske(){
+    public void tapPåFlaske() {
 
-        if (whiskyserie == null){
+        if (whiskyserie == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Du skal have valgt eller oprettet en whiskyserie før du kan tappe");
             alert.showAndWait();
@@ -330,8 +326,8 @@ public class OpretWhiskyserieWindow extends Stage {
             double mængdePrFlaske = samletMængdeWhisky / antalFlasker;
 
             //Laver antal flasker
-            for (int i = 0; i <antalFlasker; i++) {
-                Controller.createWhiskyprodukt(whiskyserie,70);
+            for (int i = 0; i < antalFlasker; i++) {
+                Controller.createWhiskyprodukt(whiskyserie, 70);
             }
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -358,28 +354,17 @@ public class OpretWhiskyserieWindow extends Stage {
         txaInfo.appendText("\nAlkohol procent: " + Controller.beregnAlkoholProcentPåWhiskyserie(whiskyserie.getDestillatMængder(), mængdeVand));
     }
 
-    public void afbryd(){
+    public void afbryd() {
         ArrayList<DestillatMængde> destillatMængder = new ArrayList<>(Controller.getDestillatmængder(whiskyserie));
+        Controller.removeDestilatMængderFraWhiskyserie(whiskyserie,whiskyserie.getDestillatMængder());
 
-        for (DestillatMængde d : destillatMængder){
-           Destillat destillat = d.getDestillat();
-           double mængdeefterTap = destillat.getSamletMængde();
-            double tapMængder = 0;
-
-            for (DestillatMængde destillatMængde1 : destillat.getDestillatMængder()){
-                tapMængder += destillatMængde1.getMængde();
-                System.out.println("tapmænde i loop" + tapMængder);
-            }
-            double originalMængde = mængdeefterTap + tapMængder;
-            destillat.setSamletMængde(originalMængde);
-            System.out.println("nymængde/orgiginalmængde" + originalMængde);
+        for (DestillatMængde d : destillatMængder) {
+            Destillat destillat = d.getDestillat();
+            Controller.removeDestillatMængdeFraDestillat(destillat, d);
         }
 
-
-        Controller.removeDestilatMængderFraWhiskyserie(whiskyserie,Controller.getDestillatmængder(whiskyserie));
         Controller.fjernWhiskyserie(whiskyserie);
         lwlDestillat.refresh();
-
 
         close();
 

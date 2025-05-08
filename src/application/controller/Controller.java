@@ -146,9 +146,11 @@ public class Controller {
         System.out.println("antal gange før opdatering: " + fad.getAntalGangeBrugt());
     }
 
-    public static void setDestillatVæskeMængde(Destillat destillat, double mængde){
-        destillat.setSamletMængde(mængde);
+    public static void removeDestillatMængdeFraDestillat(Destillat destillat, DestillatMængde destillatMængde){
+        destillat.removeDestillatMængde(destillatMængde);
     }
+
+
 
     public static ArrayList<BatchMængde> getBatchMængder(Destillat destillat) {
         return destillat.getBatchMængder();
