@@ -1,10 +1,7 @@
 package gui;
 
 import application.controller.Controller;
-import application.model.Destillat;
-import application.model.DestillatMængde;
-import application.model.Fad;
-import application.model.Whiskyserie;
+import application.model.*;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,6 +17,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import jdk.jfr.TransitionFrom;
 
+import java.nio.channels.Pipe;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -53,6 +51,8 @@ public class OpretWhiskyserieWindow extends Stage {
     private static DatePicker datePicker;
     private static Button btnOpretWhiskySerieObjekt;
     private static double mængdeVand;
+
+    private static Destillat selectedDestillat;
 
     private static String serieNavn;
     private static double selectedButtonAlder;
@@ -238,6 +238,13 @@ public class OpretWhiskyserieWindow extends Stage {
         pane.add(hBoxStep3_3, 0, 1);
         GridPane.setColumnSpan(hBoxStep3_3, 2);
 
+        Button btnAfbryd = new Button("Afbryd");
+       btnAfbryd.setOnAction(event -> afbryd());
+
+        HBox hboxAfbryd = new HBox();
+        hboxAfbryd.getChildren().add(btnAfbryd);
+        pane.add(hboxAfbryd,0,2);
+
 
     }
 
@@ -259,7 +266,7 @@ public class OpretWhiskyserieWindow extends Stage {
     }
 
     public void tapMængdeFraDestilat() {
-        Destillat selectedDestillat = lwlDestillat.getSelectionModel().getSelectedItem();
+        selectedDestillat = lwlDestillat.getSelectionModel().getSelectedItem();
         if (whiskyserie == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Du skal udføre step 1 først");
@@ -324,5 +331,27 @@ public class OpretWhiskyserieWindow extends Stage {
 
 
         txaInfo.appendText("\nAlkohol procent: " + Controller.beregnAlkoholProcentPåWhiskyserie(whiskyserie.getDestillatMængder(), mængdeVand));
+    }
+
+    public void afbryd(){
+        ArrayList<DestillatMængde> destillatMængder = new ArrayList<>(Controller.getDestillatmængder(whiskyserie));
+
+        for (DestillatMængde d : destillatMængder){
+           Destillat destillat = d.getDestillat();
+            System.out.println(d.getDestillat().getSamletMængde());
+            for (DestillatMængde destillatMængde1 : destillat.getDestillatMængder()){
+                System.out.println(destillatMængde1.getMængde());
+            }
+
+
+        }
+
+        Controller.removeDestilatMængderFraWhiskyserie(whiskyserie,Controller.getDestillatmængder(whiskyserie));
+        Controller.fjernWhiskyserie(whiskyserie);
+        lwlDestillat.refresh();
+
+
+        close();
+
     }
 }

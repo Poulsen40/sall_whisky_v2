@@ -7,6 +7,7 @@ import storage.Storage;
 
 import javax.naming.ldap.Control;
 import java.io.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -54,14 +55,20 @@ public class APP {
         BatchMængde bbb = b2.createBatchMængde(200, d1);
         BatchMængde bbbb = b3.createBatchMængde(200, d1);
 
-        Destillat d2 = Controller.createDestilat(LocalDateTime.of(2020, 1, 1, 2, 2), f5);
+        Destillat d2 = Controller.createDestilat(LocalDateTime.of(2020, 1, 1, 2, 2), f2);
         BatchMængde bbbbb= b1.createBatchMængde(200, d2);
 
 
-        Destillat d3 = Controller.createDestilat(LocalDateTime.of(2018, 1, 1, 2, 2), f4);
+        Destillat d3 = Controller.createDestilat(LocalDateTime.of(2018, 1, 1, 2, 2), f2);
         BatchMængde bhnbbb = b3.createBatchMængde(200, d3);
 
-
+//        Whiskyserie whiskyserie = Controller.createWhiskyserie("Hej", LocalDate.now());
+//        DestillatMængde destillatMængde = d1.createDestillatMængde(100,whiskyserie);
+//        DestillatMængde destillatMængde1 = d2.createDestillatMængde(100,whiskyserie);
+//        DestillatMængde destillatMængde2 = d3.createDestillatMængde(100,whiskyserie);
+//        whiskyserie.addDestillatMængde(destillatMængde);
+//        whiskyserie.addDestillatMængde(destillatMængde1);
+//        whiskyserie.addDestillatMængde(destillatMængde1);
 
 
         //

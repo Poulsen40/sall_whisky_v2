@@ -60,7 +60,7 @@ public class DestilatOgLager extends Stage {
         lwlFade.setPrefHeight(150);
         ArrayList<Fad> frieFade = new ArrayList<>();
         for (Fad f : Controller.getFade()) {
-            if (Controller.getDestillat(f) == null) {
+            if (Controller.getDestillat(f) == null && f.getAntalGangeBrugt() < 3) {
                 frieFade.add(f);
             }
         }
