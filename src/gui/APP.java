@@ -55,6 +55,10 @@ public class APP {
         BatchMængde bbb = b2.createBatchMængde(200, d1);
         BatchMængde bbbb = b3.createBatchMængde(200, d1);
 
+        System.out.println("samlet mængde d1" +d1.getSamletMængde());
+        System.out.println("efter tjek d1 " + d1.getSamletMængde());
+
+
 
         Destillat d2 = Controller.createDestilat(LocalDateTime.of(2020, 1, 1, 2, 2), f2);
         BatchMængde bbbbb= b1.createBatchMængde(200, d2);

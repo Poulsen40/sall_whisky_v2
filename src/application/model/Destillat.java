@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Destillat {
     private LocalDateTime datoForPåfyldning;
-    private double samletMængde;
     private double alkoholPct;
 
     //Linkattribut
@@ -81,9 +80,6 @@ public class Destillat {
         return mængde;
     }
 
-    public void setSamletMængde(double samletMængde) {
-        this.samletMængde = samletMængde;
-    }
 
     public LocalDateTime getDatoForPåfyldning() {
         return datoForPåfyldning;
