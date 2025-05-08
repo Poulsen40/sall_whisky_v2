@@ -310,20 +310,18 @@ public class OpretWhiskyserieWindow extends Stage {
     }
 
     public void tapPåFlaske() {
-
         if (whiskyserie == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Du skal have valgt eller oprettet en whiskyserie før du kan tappe");
             alert.showAndWait();
         } else {
-
             //Beregner samlet mængde whisky med vand inkluderet
             double samletMængdeWhisky = Controller.samletMængdeWhiskySerie(whiskyserie, mængdeVand);
 
             //beregning af antalflasker der skal tappes
             int antalFlasker = (int) Controller.antalForventetFlakser(whiskyserie, samletMængdeWhisky);
 
-            double mængdePrFlaske = samletMængdeWhisky / antalFlasker;
+            double mængdePrFlaske = 0.7;
 
             //Laver antal flasker
             for (int i = 0; i < antalFlasker; i++) {
@@ -333,11 +331,7 @@ public class OpretWhiskyserieWindow extends Stage {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText("Whisky tappet på " + antalFlasker + " flasker af " + mængdePrFlaske + " cl pr flaske");
             alert.showAndWait();
-
-            System.out.println("whisky produkter " + Controller.getWhiskyprodukter());
-
         }
-
     }
 
 
