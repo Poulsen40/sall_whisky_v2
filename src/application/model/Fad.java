@@ -17,7 +17,6 @@ public class Fad {
 
 
     public Fad(double fadStørrelse, String levarandør, boolean erBrugt, Fadtype fadtype, Træsort træsort, int antalGangeBrugt) {
-        fadNr++;
         this.fadStørrelse = fadStørrelse;
         this.levarandør = levarandør;
         this.erBrugt = erBrugt;
