@@ -114,7 +114,7 @@ public class Whiskyserie {
     public String toString() {
         return "Whiskyserie{" +
                 "serieNavn='" + serieNavn + '\'' +
-                ", alkoholPct=" + alkoholPct +
+                ", alkoholPct=" + alkoholPct + ", vandmængde= " + vandMængde +
                 ", størrelse=" + størrelse +
                 ", dato=" + dato + ", antal flasker=" + antalFlasker +
                 '}';
