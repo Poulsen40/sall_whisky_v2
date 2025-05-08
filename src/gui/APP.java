@@ -56,7 +56,6 @@ public class APP {
         BatchMængde bbbb = b3.createBatchMængde(200, d1);
 
 
-        System.out.println("d1 alkohol: " + d1.beregnalkoholprocent());
 
         System.out.println("samlet mængde d1" +d1.getSamletMængde());
         System.out.println("efter tjek d1 " + d1.getSamletMængde());

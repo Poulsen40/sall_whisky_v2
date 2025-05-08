@@ -58,13 +58,7 @@ public class DestilatOgLager extends Stage {
         lwlFade = new ListView<>();
         lwlFade.setPrefWidth(200);
         lwlFade.setPrefHeight(150);
-        ArrayList<Fad> frieFade = new ArrayList<>();
-        for (Fad f : Controller.getFade()) {
-            if (Controller.getDestillat(f) == null && f.getAntalGangeBrugt() < 3) {
-                frieFade.add(f);
-            }
-        }
-        lwlFade.getItems().setAll(frieFade);
+        lwlFade.getItems().setAll(Controller.frieFadeTilDestillat(Controller.getFade()));
         lwlFade.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         GridPane.setValignment(lwlFade, VPos.BOTTOM);
 
@@ -112,13 +106,7 @@ public class DestilatOgLager extends Stage {
         lwlBatch = new ListView<>();
         lwlBatch.setPrefWidth(200);
         lwlBatch.setPrefHeight(150);
-        ArrayList<Batch> batchesMedVæske = new ArrayList<>();
-        for (Batch b : Controller.getBatch()) {
-            if (Controller.getMængdeVæske(b) > 0) {
-                batchesMedVæske.add(b);
-            }
-        }
-        lwlBatch.getItems().setAll(batchesMedVæske);
+        lwlBatch.getItems().setAll(Controller.batchKlarTilDestillat(Controller.getBatches()));
         lwlBatch.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         VBox vBoxBatch = new VBox();
@@ -313,7 +301,7 @@ public class DestilatOgLager extends Stage {
         if (Controller.getDestillat(selectedFad) != null) {
             lwlFade.getItems().remove(selectedFad);
         }
-        for (Batch b : Controller.getBatch()){
+        for (Batch b : Controller.getBatches()){
             if(Controller.getMængdeVæske(b) <= 0){
                 lwlBatch.getItems().remove(b);
             }

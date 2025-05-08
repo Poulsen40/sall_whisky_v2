@@ -141,6 +141,7 @@ public class OpretWhiskyserieWindow extends Stage {
 
         txaDestilatInfo = new TextArea();
         txaDestilatInfo.setPrefHeight(75);
+        txaDestilatInfo.setEditable(false);
 
         lwlDestillat.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection == null) {
@@ -221,6 +222,7 @@ public class OpretWhiskyserieWindow extends Stage {
 
         txaInfo = new TextArea("Whisky serie information: \n");
         txaInfo.setPrefWidth(450);
+        txaInfo.setEditable(false);
 
         Button btnTapPåFlaske = new Button("Tap flasker");
         btnTapPåFlaske.setOnAction(event -> tapPåFlaske());
