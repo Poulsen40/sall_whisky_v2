@@ -1,9 +1,7 @@
 package gui;
 
 import application.controller.Controller;
-import application.model.Batch;
-import application.model.Fad;
-import application.model.Whiskyserie;
+import application.model.*;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -61,7 +59,10 @@ public class OpretOversigtWindow extends Stage {
     private static Button btnTilføjLeverandør;
     private static Button btnFiltrerMedValg;
     private static CheckBox fyldtJa = new CheckBox("Ja");
-    private static CheckBox fyldtNej = new CheckBox("Nej");
+    private static Slider sliderMinAlder,sliderMaxAlder, sliderMinFadstørelse, sliderMaxFadstørelse, sliderMinGangeBrugt,
+            sliderMaxGangeBrugt;
+    private  static CheckBox cbExBourbon,cbExLorososherry,cbTræsortEgetræ;
+
 
 
     private void initContent(GridPane pane) {
@@ -78,8 +79,8 @@ public class OpretOversigtWindow extends Stage {
         Sidebar.setTranslateX(1000);
         Sidebar.setSpacing(10);
 
-        Label lblMinAlder = new Label("Min alder");
-        Slider sliderMinAlder = new Slider(0, 50, 0);
+        Label lblMinAlder = new Label("Min destillat alder");
+        sliderMinAlder = new Slider(0, 50, 0);
         sliderMinAlder.setShowTickLabels(true);
 //        sliderMinAlder.setShowTickMarks(true);
         sliderMinAlder.setMajorTickUnit(5);
@@ -87,8 +88,8 @@ public class OpretOversigtWindow extends Stage {
         sliderMinAlder.setSnapToTicks(true);
         sliderMinAlder.setBlockIncrement(1);
 
-        Label lblMaxAlder = new Label("Max alder");
-        Slider sliderMaxAlder = new Slider(0, 50, 0);
+        Label lblMaxAlder = new Label("Max destillat alder");
+        sliderMaxAlder = new Slider(0, 50, 50);
         sliderMaxAlder.setShowTickLabels(true);
 //        sliderMaxAlder.setShowTickMarks(true);
         sliderMaxAlder.setMajorTickUnit(5);
@@ -97,7 +98,7 @@ public class OpretOversigtWindow extends Stage {
         sliderMaxAlder.setBlockIncrement(1);
 
         Label lblMinFadStørelse = new Label("Min fadstørelse");
-        Slider sliderMinFadstørelse = new Slider(0, 650, 0);
+        sliderMinFadstørelse = new Slider(0, 650, 0);
 
         sliderMinFadstørelse.setShowTickLabels(true);
         sliderMinFadstørelse.setMajorTickUnit(50);
@@ -106,7 +107,7 @@ public class OpretOversigtWindow extends Stage {
         sliderMinFadstørelse.setBlockIncrement(50);
 
         Label lblMaxFadstørelse = new Label("Max fadstørelse");
-        Slider sliderMaxFadstørelse = new Slider(0, 650, 0);
+        sliderMaxFadstørelse = new Slider(0, 650, 650);
         sliderMaxFadstørelse.setShowTickLabels(true);
 //        sliderMaxFadstørelse.setShowTickMarks(false);
         sliderMaxFadstørelse.setMajorTickUnit(50);
@@ -115,7 +116,7 @@ public class OpretOversigtWindow extends Stage {
         sliderMaxFadstørelse.setBlockIncrement(50);
 
         Label lblMinGangeBrugt = new Label("Min gange brugt");
-        Slider sliderMinGangeBrugt = new Slider(0, 3, 0);
+        sliderMinGangeBrugt = new Slider(0, 3, 0);
         sliderMinGangeBrugt.setShowTickLabels(true);
         sliderMinGangeBrugt.setMajorTickUnit(1);
         sliderMinGangeBrugt.setMinorTickCount(0);
@@ -123,7 +124,7 @@ public class OpretOversigtWindow extends Stage {
         sliderMinGangeBrugt.setBlockIncrement(1);
 
         Label lblMaxGangeBrugt = new Label("Max gange brugt");
-        Slider sliderMaxGangeBrugt = new Slider(0, 3, 0);
+        sliderMaxGangeBrugt = new Slider(0, 3, 3);
         sliderMaxGangeBrugt.setShowTickLabels(true);
         sliderMaxGangeBrugt.setMajorTickUnit(1);
         sliderMaxGangeBrugt.setMinorTickCount(0);
@@ -137,20 +138,8 @@ public class OpretOversigtWindow extends Stage {
         GridPane.setHalignment(fyldtJa, HPos.LEFT);
         fyldtJa.setFocusTraversable(false);
 
-        fyldtJa.setOnMouseClicked(event -> {
-            fyldtNej.setDisable(fyldtJa.isSelected());
-        });
-
-        fyldtNej = new CheckBox("nej");
-        pane.add(fyldtNej, 1, 3);
-        GridPane.setHalignment(fyldtNej, HPos.CENTER);
-        fyldtNej.setFocusTraversable(false);
-        fyldtNej.setOnMouseClicked(event -> {
-            fyldtJa.setDisable(fyldtNej.isSelected());
-        });
-
         HBox hBoxskalværefyldt = new HBox();
-        hBoxskalværefyldt.getChildren().setAll(lblSkalVæreFyldt, fyldtJa, fyldtNej);
+        hBoxskalværefyldt.getChildren().setAll(lblSkalVæreFyldt, fyldtJa);
         hBoxskalværefyldt.setSpacing(10);
 
         btnFadType = new Button("Fadtype");
@@ -172,8 +161,10 @@ public class OpretOversigtWindow extends Stage {
         sidebarFadtype.setTranslateX(1000);
         sidebarFadtype.setSpacing(20);
 
-        CheckBox cbExBourbon = new CheckBox("EXBOURBON");
-        CheckBox cbExLorososherry = new CheckBox("EXOLOROSOSHERRY");
+        cbExBourbon = new CheckBox("EXBOURBON");
+        cbExLorososherry = new CheckBox("EXOLOROSOSHERRY");
+
+
 
         Label label = new Label("Fadtype");
 
@@ -214,7 +205,7 @@ public class OpretOversigtWindow extends Stage {
         sidebarTræsort.setTranslateX(1000);
         sidebarTræsort.setSpacing(20);
 
-        CheckBox cbTræsortEgetræ = new CheckBox("Egetræ");
+        cbTræsortEgetræ = new CheckBox("Egetræ");
 
         Label lblTræSort = new Label("Træsort");
         btnTræsortLuk = new Button("luk");
@@ -292,7 +283,6 @@ public class OpretOversigtWindow extends Stage {
         btnTilføjLeverandør.setOnAction(Event -> {
             valgteLeverandører.add(txfLeverandør.getText());
             lwlValgteLeverandører.getItems().setAll(valgteLeverandører);
-            System.out.println(valgteLeverandører.getFirst());
         });
 
         VBox vBoxValgteLeverandører = new VBox();
@@ -317,7 +307,7 @@ public class OpretOversigtWindow extends Stage {
 
         lwlWhiskeyserier = new ListView<>();
         pane.add(lwlWhiskeyserier, 0, 3);
-//        lwlWhiskeyserier.getItems().setAll(Controller.getWhiskeyserier());
+        lwlWhiskeyserier.getItems().setAll(Controller.getWhiskyserie());
         lwlWhiskeyserier.setMaxHeight(200);
 
         Label lblBatches = new Label("Batches");
@@ -357,7 +347,7 @@ public class OpretOversigtWindow extends Stage {
 
         btnAfbryd = new Button("Afbryd");
         pane.add(btnAfbryd, 0, 6);
-        btnAfbryd.setOnAction(Event -> afbryd());
+        btnAfbryd.setOnAction(Event -> close());
 
         //Knapper til at åbne sidepanel fadtype og træsort i sidepanel
         btnFadType.setOnAction(Event -> {
@@ -398,6 +388,33 @@ public class OpretOversigtWindow extends Stage {
     }
 
     public void filtrerFade() {
+        double minFadStørelse = sliderMinFadstørelse.getValue();
+        double maxFadStørelse = sliderMaxFadstørelse.getValue();
+        int minAlder = (int) sliderMinAlder.getValue();
+        int maxAlder = (int) sliderMaxAlder.getValue();
+        int minBrugt = (int) sliderMinGangeBrugt.getValue();
+        int MaxBrugt = (int) sliderMaxGangeBrugt.getValue();
+        Boolean skalVæreFyldt = false;
+        List<Fadtype> valgteFadTyper = new ArrayList<>();
+        List<Træsort> valgeTræsorter = new ArrayList<>();
+        List<String> valgteLeverandører = lwlValgteLeverandører.getItems();
+
+        if(fyldtJa.isSelected()) {
+            skalVæreFyldt = true;
+        }
+
+        if(cbExBourbon.isSelected()){
+            valgteFadTyper.add(Fadtype.EXBOURBON);
+        }
+        if(cbExLorososherry.isSelected()) {
+            valgteFadTyper.add(Fadtype.EXOLOROSOSHERRY);
+        }
+        if(cbTræsortEgetræ.isSelected()){
+            valgeTræsorter.add(Træsort.EGETRÆ);
+        }
+
+
+       lwlFade.getItems().setAll(Controller.fadsøgning(minFadStørelse,maxFadStørelse,minAlder,maxAlder,minBrugt,MaxBrugt,valgteFadTyper,valgteLeverandører,valgeTræsorter,skalVæreFyldt));
 
     }
 
