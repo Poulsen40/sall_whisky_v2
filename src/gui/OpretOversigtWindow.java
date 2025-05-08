@@ -52,13 +52,50 @@ public class OpretOversigtWindow extends Stage {
         pane.setGridLinesVisible(false);
 
         VBox Sidebar = new VBox();
-        Sidebar.setPrefWidth(400);
+        Sidebar.setPrefWidth(350);
         Sidebar.setVisible(false);
-        pane.add(Sidebar,2,1);
-        Label lbb = new Label("kat");
-        Sidebar.getChildren().addAll(lbb);
-        Sidebar.setStyle("-fx-background-color: #00FFFF; -fx-padding: 10;");
+        pane.add(Sidebar, 2, 1);
+        Sidebar.setStyle("-fx-background-color: #CCCCCC; -fx-padding: 10;");
         Sidebar.setTranslateX(1000);
+
+        Label lblMinAlder = new Label("Min alder");
+        Slider sliderMinAlder = new Slider(0, 10, 5);
+        sliderMinAlder.setShowTickLabels(true);
+//        sliderMinAlder.setShowTickMarks(false);
+        sliderMinAlder.setMajorTickUnit(1);
+        sliderMinAlder.setMinorTickCount(0);
+        sliderMinAlder.setSnapToTicks(true);
+        sliderMinAlder.setBlockIncrement(1);
+
+        Label lblMaxAlder = new Label("Max alder");
+        Slider sliderMaxAlder = new Slider(0, 10, 5);
+        sliderMaxAlder.setShowTickLabels(true);
+//        sliderMaxAlder.setShowTickMarks(false);
+        sliderMaxAlder.setMajorTickUnit(1);
+        sliderMaxAlder.setMinorTickCount(0);
+        sliderMaxAlder.setSnapToTicks(true);
+        sliderMaxAlder.setBlockIncrement(1);
+
+        Label lblMinFadStørelse = new Label("Min fadstørelse");
+        Slider sliderMinFadstørelse = new Slider(0, 10, 5);
+        sliderMinFadstørelse.setShowTickLabels(true);
+//        sliderMinFadstørelse.setShowTickMarks(false);
+        sliderMinFadstørelse.setMajorTickUnit(1);
+        sliderMinFadstørelse.setMinorTickCount(0);
+        sliderMinFadstørelse.setSnapToTicks(true);
+        sliderMinFadstørelse.setBlockIncrement(1);
+
+        Label lblMaxFadstørelse = new Label("Max fadstørelse");
+        Slider sliderMaxFadstørelse = new Slider(0, 10, 5);
+        sliderMaxFadstørelse.setShowTickLabels(true);
+//        sliderMaxFadstørelse.setShowTickMarks(false);
+        sliderMaxFadstørelse.setMajorTickUnit(1);
+        sliderMaxFadstørelse.setMinorTickCount(0);
+        sliderMaxFadstørelse.setSnapToTicks(true);
+        sliderMaxFadstørelse.setBlockIncrement(1);
+
+        Sidebar.getChildren().addAll(lblMinAlder, sliderMinAlder,lblMaxAlder,sliderMaxAlder,lblMinFadStørelse,sliderMinFadstørelse,lblMaxFadstørelse,sliderMaxFadstørelse);
+
 
         Label lblFade = new Label("Fade");
         pane.add(lblFade, 0, 0);
@@ -85,23 +122,19 @@ public class OpretOversigtWindow extends Stage {
         lwlBatches.setMaxHeight(200);
 
         btnFiltrerFade = new Button("Filtrer");
-        pane.add(btnFiltrerFade,1,1);
+        pane.add(btnFiltrerFade, 1, 1);
         btnFiltrerFade.setOnAction(Event -> {
-                    TranslateTransition transision = new TranslateTransition(Duration.millis(600),Sidebar);
+                    TranslateTransition transision = new TranslateTransition(Duration.millis(600), Sidebar);
                     TranslateTransition transitionUd = new TranslateTransition(Duration.millis(600), Sidebar);
-
-                    if(!Sidebar.isVisible()) {
-                        transision.setToX(150);
+                    if (!Sidebar.isVisible()) {
+                        transision.setToX(100);
                         transision.play();
                         Sidebar.setVisible(true);
-                    }
-                    else {
+                    } else {
                         transitionUd.setToX(800);
                         transitionUd.setOnFinished(e -> Sidebar.setVisible(false));
                         transitionUd.play();
                     }
-
-
                 }
         );
 
@@ -112,11 +145,11 @@ public class OpretOversigtWindow extends Stage {
         btnVisHistorie.setOnAction(Event -> visHistorie());
 
         VBox VboxWhiskey = new VBox(10);
-        VboxWhiskey.getChildren().addAll(btnFiltrerWhiskey,btnVisHistorie);
-        pane.add(VboxWhiskey,1,3);
+        VboxWhiskey.getChildren().addAll(btnFiltrerWhiskey, btnVisHistorie);
+        pane.add(VboxWhiskey, 1, 3);
 
         btnAfbryd = new Button("Afbryd");
-        pane.add(btnAfbryd,0,6);
+        pane.add(btnAfbryd, 0, 6);
         btnAfbryd.setOnAction(Event -> afbryd());
 
     }
