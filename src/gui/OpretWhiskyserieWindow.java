@@ -297,7 +297,9 @@ public class OpretWhiskyserieWindow extends Stage {
                 txaDestilatInfo.setText(Controller.toStringFadOgDestillat(selectedDestillat));
 
                 txfTapMængde.clear();
-                lwlDestillat.refresh();
+                if (selectedDestillat.getSamletMængde() <= 0){
+                    lwlDestillat.getItems().remove(selectedDestillat);
+                }
                 setInfoBox();
             }
         }

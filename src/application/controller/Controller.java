@@ -252,16 +252,28 @@ public class Controller {
         StringBuilder h = new StringBuilder();
 
         h.append("Whisky serie navn: " + whiskyserie.getSerieNavn() + "\nDato oprettet: " + whiskyserie.getDato() + "\nSamlet mængde væske: " + Controller.samletMængdeWhiskySerie(whiskyserie, vandmængde)
-                + "\nForventet antal flasker: " + Controller.antalForventetFlakser(whiskyserie, Controller.samletMængdeWhiskySerie(whiskyserie, vandmængde)) + "\nBatches brug i whisky: \n");
+                + "\nForventet antal flasker: " + Controller.antalForventetFlakser(whiskyserie, Controller.samletMængdeWhiskySerie(whiskyserie, vandmængde)));
+
+        HashSet<Integer> fadIds = new HashSet<>();
+        h.append("\nFad info: \n");
+        for (DestillatMængde destillatMængde : destillatMængder){
+            Destillat destillat = destillatMængde.getDestillat();
+            Fad fad = destillat.getFad();
+            int fadId = fad.getFadNr();
+            if (fadIds.add(fadId)){
+                h.append("id: " + fadId + ", type: " + fad.getFadtype() + ", størrelse: " + fad.getFadStørrelse() + "\n");
+            }
+        }
 
         HashSet<Integer> batchIds = new HashSet<>();
+        h.append("Batch info: \n");
         for (DestillatMængde destillatMængde : destillatMængder) {
             Destillat destillat = destillatMængde.getDestillat();
             for (BatchMængde batchMængde : destillat.getBatchMængder()) {
                 int batchId = batchMængde.getBatch().getBatchID();
                 if (batchIds.add(batchId)) {
                     //Bruger append så den ikke overskriver ID'et der stod før
-                    h.append("Batch id: " + batchId+ " ");
+                    h.append("id: " + batchId+ " ");
                 }
             }
 
@@ -297,7 +309,7 @@ public class Controller {
         ArrayList<Destillat> alleklarDestillater = new ArrayList<>();
 
         for (Destillat d : Controller.getDestillater()) {
-            if (Controller.getDestillat(d.getFad()) != null && ChronoUnit.YEARS.between(d.getDatoForPåfyldning(), LocalDateTime.now()) >= 3) {
+            if (Controller.getDestillat(d.getFad()) != null && ChronoUnit.YEARS.between(d.getDatoForPåfyldning(), LocalDateTime.now()) >= 3 && d.getSamletMængde() > 0) {
                 alleklarDestillater.add(d);
             }
         }
@@ -309,7 +321,7 @@ public class Controller {
         ArrayList<Destillat> alleklarDestillater = new ArrayList<>();
 
         for (Destillat d : Controller.getDestillater()) {
-            if (Controller.getDestillat(d.getFad()) != null && ChronoUnit.YEARS.between(d.getDatoForPåfyldning(), LocalDateTime.now()) >= 3) {
+            if (Controller.getDestillat(d.getFad()) != null && ChronoUnit.YEARS.between(d.getDatoForPåfyldning(), LocalDateTime.now()) >= 3 && d.getSamletMængde() > 0) {
                 alleklarDestillater.add(d);
             }
         }
