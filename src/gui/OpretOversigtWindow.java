@@ -45,11 +45,11 @@ public class OpretOversigtWindow extends Stage {
 
     private static Button btnFiltrerFade, btnFiltrerWhiskey, btnVisHistorie, btnAfbryd, btnFadType, btnFadtypeVælg,
             btnTræsort, btnFadtypeLuk, btnTræsortLuk, btnTræsortVælg, btnLeverandørVælg, btnLeverandørLuk, btnLeverandør,
-            btnTilføjLeverandør, btnFiltrerMedValg;
+            btnTilføjLeverandør, btnFiltrerMedValg, btnFjernLeverandør;
     private static CheckBox fyldtJa = new CheckBox("Ja");
     private static Slider sliderMinAlder, sliderMaxAlder, sliderMinFadstørelse, sliderMaxFadstørelse, sliderMinGangeBrugt,
             sliderMaxGangeBrugt;
-    private static CheckBox cbExBourbon, cbExLorososherry, cbTræsortEgetræ;
+    private static CheckBox cbExBourbon, cbExOlorososherry, cbTræsortEgetræ;
 
     private void initContent(GridPane pane) {
         pane.setPadding(new Insets(10));
@@ -147,8 +147,8 @@ public class OpretOversigtWindow extends Stage {
         sidebarFadtype.setTranslateX(1000);
         sidebarFadtype.setSpacing(20);
 
-        cbExBourbon = new CheckBox("EXBOURBON");
-        cbExLorososherry = new CheckBox("EXOLOROSOSHERRY");
+        cbExBourbon = new CheckBox("Ex bourbon");
+        cbExOlorososherry = new CheckBox("Ex Oloroso sherry");
 
 
         Label label = new Label("Fadtype");
@@ -162,7 +162,7 @@ public class OpretOversigtWindow extends Stage {
                 transitionUd.play();
             }
             cbExBourbon.setSelected(false);
-            cbExLorososherry.setSelected(false);
+            cbExOlorososherry.setSelected(false);
         });
 
         btnFadtypeVælg = new Button("Vælg");
@@ -179,7 +179,7 @@ public class OpretOversigtWindow extends Stage {
         FadtypeLukVælg.setSpacing(250);
         FadtypeLukVælg.getChildren().setAll(btnFadtypeLuk, btnFadtypeVælg);
 
-        sidebarFadtype.getChildren().setAll(label, cbExBourbon, cbExLorososherry, FadtypeLukVælg);
+        sidebarFadtype.getChildren().setAll(label, cbExBourbon, cbExOlorososherry, FadtypeLukVælg);
 
         //Sidebar træsort
         VBox sidebarTræsort = new VBox();
@@ -232,6 +232,9 @@ public class OpretOversigtWindow extends Stage {
         List<String> valgteLeverandører = new ArrayList<>();
 
         Label lblLeverandør = new Label("Leverandør");
+
+        TextField txfLeverandør = new TextField();
+
         btnLeverandørLuk = new Button("luk");
         btnLeverandørLuk.setOnAction(Event -> {
             TranslateTransition transitionUd = new TranslateTransition(Duration.millis(600), sidebarLeverandør);
@@ -241,6 +244,7 @@ public class OpretOversigtWindow extends Stage {
                 transitionUd.play();
                 lwlValgteLeverandører.getItems().clear();
                 valgteLeverandører.clear();
+                txfLeverandør.clear();
 
 
             }
@@ -253,6 +257,7 @@ public class OpretOversigtWindow extends Stage {
                 transitionUd.setToX(1000);
                 transitionUd.setOnFinished(e -> sidebarLeverandør.setVisible(false));
                 transitionUd.play();
+                txfLeverandør.clear();
             }
         });
 
@@ -263,7 +268,6 @@ public class OpretOversigtWindow extends Stage {
         btnTilføjLeverandør = new Button("Tilføj");
         Label lblTilføjLeverandør = new Label("Tilføj leverandør");
         Label lblValgteLeverandører = new Label("Valgte Leverandører");
-        TextField txfLeverandør = new TextField();
         HBox udfyldLeverandør = new HBox();
         btnTilføjLeverandør.setOnAction(Event -> {
             valgteLeverandører.add(txfLeverandør.getText());
@@ -276,7 +280,13 @@ public class OpretOversigtWindow extends Stage {
         udfyldLeverandør.setSpacing(10);
         udfyldLeverandør.getChildren().setAll(lblTilføjLeverandør, txfLeverandør, btnTilføjLeverandør);
 
-        sidebarLeverandør.getChildren().addAll(lblLeverandør, udfyldLeverandør, vBoxValgteLeverandører, leverandørLukVælg);
+        btnFjernLeverandør = new Button("Fjern Leverandør");
+        btnFjernLeverandør.setOnAction(Event -> {
+            valgteLeverandører.remove(lwlValgteLeverandører.getSelectionModel().getSelectedItem());
+            lwlValgteLeverandører.getItems().setAll(valgteLeverandører);
+        });
+
+        sidebarLeverandør.getChildren().addAll(lblLeverandør, udfyldLeverandør, vBoxValgteLeverandører, btnFjernLeverandør, leverandørLukVælg);
 
         //Tilføjer ting til pane
         Label lblFade = new Label("Fade");
@@ -396,7 +406,7 @@ public class OpretOversigtWindow extends Stage {
         if (cbExBourbon.isSelected()) {
             valgteFadTyper.add(Fadtype.EXBOURBON);
         }
-        if (cbExLorososherry.isSelected()) {
+        if (cbExOlorososherry.isSelected()) {
             valgteFadTyper.add(Fadtype.EXOLOROSOSHERRY);
         }
         if (cbTræsortEgetræ.isSelected()) {
@@ -404,7 +414,8 @@ public class OpretOversigtWindow extends Stage {
         }
 
 
-        lwlFade.getItems().setAll(Controller.fadsøgning(minFadStørelse, maxFadStørelse, minAlder, maxAlder, minBrugt, MaxBrugt, valgteFadTyper, valgteLeverandører, valgeTræsorter, skalVæreFyldt));
+        lwlFade.getItems().setAll(Controller.fadsøgning(minFadStørelse, maxFadStørelse, minAlder, maxAlder, minBrugt, MaxBrugt,
+                valgteFadTyper, valgteLeverandører, valgeTræsorter, skalVæreFyldt));
 
     }
 
