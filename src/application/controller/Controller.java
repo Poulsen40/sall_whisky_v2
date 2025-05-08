@@ -60,8 +60,8 @@ public class Controller {
         return destillatMængde;
     }
 
-    public static Whiskyprodukt createWhiskyprodukt(Whiskyserie whiskyserie) {
-        Whiskyprodukt whiskyprodukt = whiskyserie.createWhiskyprodukt();
+    public static Whiskyprodukt createWhiskyprodukt(Whiskyserie whiskyserie, double flaskeStr) {
+        Whiskyprodukt whiskyprodukt = whiskyserie.createWhiskyprodukt(flaskeStr);
         Storage.addWhiskyprodukt(whiskyprodukt);
         return whiskyprodukt;
     }
