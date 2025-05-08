@@ -223,6 +223,7 @@ public class OpretWhiskyserieWindow extends Stage {
         txaInfo.setPrefWidth(450);
 
         Button btnTapPåFlaske = new Button("Tap flasker");
+        btnTapPåFlaske.setOnAction(event -> tapPåFlaske());
 
 
         HBox step3_2 = new HBox();
@@ -300,6 +301,13 @@ public class OpretWhiskyserieWindow extends Stage {
                 setInfoBox();
             }
         }
+    }
+
+    public void tapPåFlaske(){
+
+
+        Controller.createWhiskyprodukt(whiskyserie,70);
+
     }
 
 

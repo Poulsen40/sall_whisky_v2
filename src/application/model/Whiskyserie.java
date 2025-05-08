@@ -45,8 +45,8 @@ public class Whiskyserie {
         return new ArrayList<>(whiskyprodukter);
     }
 
-    public Whiskyprodukt createWhiskyprodukt(){
-        Whiskyprodukt whiskyprodukt = new Whiskyprodukt(this);
+    public Whiskyprodukt createWhiskyprodukt(double flaskeStr){
+        Whiskyprodukt whiskyprodukt = new Whiskyprodukt(this,flaskeStr);
         whiskyprodukter.add(whiskyprodukt);
         return whiskyprodukt;
     }
