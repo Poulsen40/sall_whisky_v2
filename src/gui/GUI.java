@@ -8,8 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.lang.management.OperatingSystemMXBean;
@@ -30,7 +30,7 @@ public class GUI extends Application {
         pane.setGridLinesVisible(false);
         pane.setPadding(new Insets(10));
         pane.setHgap(100);
-        pane.setVgap(100);
+        pane.setVgap(20);
 
         HBox hBoxButtons = new HBox(40);
         pane.add(hBoxButtons,0,1,3,1);
@@ -68,7 +68,11 @@ public class GUI extends Application {
         pane.add(imageView,0,0);
         GridPane.setColumnSpan(imageView,3);
         imageView.setFitHeight(450);
-        imageView.setFitWidth(660);
+        imageView.setFitWidth(800);
+
+        BackgroundFill backgroundFill = new BackgroundFill(Color.WHITE,CornerRadii.EMPTY,Insets.EMPTY);
+        pane.setBackground(new Background(backgroundFill));
+
 
     }
 

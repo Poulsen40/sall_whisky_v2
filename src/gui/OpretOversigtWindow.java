@@ -43,27 +43,13 @@ public class OpretOversigtWindow extends Stage {
     private static ListView<Batch> lwlBatches;
     private ListView<String> lwlValgteLeverandører;
 
-    private static Button btnFiltrerFade;
-    private static Button btnFiltrerWhiskey;
-    private static Button btnVisHistorie;
-    private static Button btnAfbryd;
-    private static Button btnFadType;
-    private static Button btnFadtypeVælg;
-    private static Button btnFadtypeLuk;
-    private static Button btnTræsort;
-    private static Button btnTræsortLuk;
-    private static Button btnTræsortVælg;
-    private static Button btnLeverandørVælg;
-    private static Button btnLeverandørLuk;
-    private static Button btnLeverandør;
-    private static Button btnTilføjLeverandør;
-    private static Button btnFiltrerMedValg;
+    private static Button btnFiltrerFade, btnFiltrerWhiskey, btnVisHistorie, btnAfbryd, btnFadType, btnFadtypeVælg,
+            btnTræsort, btnFadtypeLuk, btnTræsortLuk, btnTræsortVælg, btnLeverandørVælg, btnLeverandørLuk, btnLeverandør,
+            btnTilføjLeverandør, btnFiltrerMedValg;
     private static CheckBox fyldtJa = new CheckBox("Ja");
-    private static Slider sliderMinAlder,sliderMaxAlder, sliderMinFadstørelse, sliderMaxFadstørelse, sliderMinGangeBrugt,
+    private static Slider sliderMinAlder, sliderMaxAlder, sliderMinFadstørelse, sliderMaxFadstørelse, sliderMinGangeBrugt,
             sliderMaxGangeBrugt;
-    private  static CheckBox cbExBourbon,cbExLorososherry,cbTræsortEgetræ;
-
-
+    private static CheckBox cbExBourbon, cbExLorososherry, cbTræsortEgetræ;
 
     private void initContent(GridPane pane) {
         pane.setPadding(new Insets(10));
@@ -71,6 +57,7 @@ public class OpretOversigtWindow extends Stage {
         pane.setVgap(10);
         pane.setGridLinesVisible(false);
 
+        //Filter sidepanel
         VBox Sidebar = new VBox();
         Sidebar.setPrefWidth(350);
         Sidebar.setVisible(false);
@@ -82,7 +69,7 @@ public class OpretOversigtWindow extends Stage {
         Label lblMinAlder = new Label("Min destillat alder");
         sliderMinAlder = new Slider(0, 50, 0);
         sliderMinAlder.setShowTickLabels(true);
-//        sliderMinAlder.setShowTickMarks(true);
+        sliderMinAlder.setShowTickMarks(true);
         sliderMinAlder.setMajorTickUnit(5);
         sliderMinAlder.setMinorTickCount(4);
         sliderMinAlder.setSnapToTicks(true);
@@ -99,7 +86,6 @@ public class OpretOversigtWindow extends Stage {
 
         Label lblMinFadStørelse = new Label("Min fadstørelse");
         sliderMinFadstørelse = new Slider(0, 650, 0);
-
         sliderMinFadstørelse.setShowTickLabels(true);
         sliderMinFadstørelse.setMajorTickUnit(50);
         sliderMinFadstørelse.setMinorTickCount(0);
@@ -147,10 +133,10 @@ public class OpretOversigtWindow extends Stage {
         btnLeverandør = new Button("Leverandør");
         btnFiltrerMedValg = new Button("Filtrer");
 
-        VBox.setMargin(btnFiltrerMedValg,new Insets(100,0,0,0));
+        VBox.setMargin(btnFiltrerMedValg, new Insets(100, 0, 0, 0));
 
         Sidebar.getChildren().addAll(lblMinAlder, sliderMinAlder, lblMaxAlder, sliderMaxAlder, lblMinFadStørelse, sliderMinFadstørelse, lblMaxFadstørelse,
-                sliderMaxFadstørelse, lblMinGangeBrugt, sliderMinGangeBrugt, lblMaxGangeBrugt, sliderMaxGangeBrugt, hBoxskalværefyldt, btnFadType, btnTræsort, btnLeverandør,btnFiltrerMedValg);
+                sliderMaxFadstørelse, lblMinGangeBrugt, sliderMinGangeBrugt, lblMaxGangeBrugt, sliderMaxGangeBrugt, hBoxskalværefyldt, btnFadType, btnTræsort, btnLeverandør, btnFiltrerMedValg);
 
         //Fadtype sidepanel
         VBox sidebarFadtype = new VBox();
@@ -163,7 +149,6 @@ public class OpretOversigtWindow extends Stage {
 
         cbExBourbon = new CheckBox("EXBOURBON");
         cbExLorososherry = new CheckBox("EXOLOROSOSHERRY");
-
 
 
         Label label = new Label("Fadtype");
@@ -301,6 +286,7 @@ public class OpretOversigtWindow extends Stage {
         pane.add(lwlFade, 0, 1);
         lwlFade.getItems().setAll(Controller.getFade());
         lwlFade.setMaxHeight(200);
+        lwlFade.setMinWidth(400);
 
         Label lblWhiskeyserier = new Label("Whiskeyserier");
         pane.add(lblWhiskeyserier, 0, 2);
@@ -324,17 +310,20 @@ public class OpretOversigtWindow extends Stage {
                     TranslateTransition transision = new TranslateTransition(Duration.millis(600), Sidebar);
                     TranslateTransition transitionUd = new TranslateTransition(Duration.millis(600), Sidebar);
                     if (!Sidebar.isVisible()) {
-                        transision.setToX(100);
+                        transision.setToX(10);
                         transision.play();
                         Sidebar.setVisible(true);
+
                     } else {
                         transitionUd.setToX(800);
-                        transitionUd.setOnFinished(e -> Sidebar.setVisible(false));
+                        transitionUd.setOnFinished(e ->
+                                Sidebar.setVisible(false));
                         transitionUd.play();
                     }
                 }
         );
 
+        //Knapper
         btnFiltrerWhiskey = new Button("Filtrer");
         btnFiltrerWhiskey.setOnAction(Event -> filtrerWhiskey());
 
@@ -349,11 +338,12 @@ public class OpretOversigtWindow extends Stage {
         pane.add(btnAfbryd, 0, 6);
         btnAfbryd.setOnAction(Event -> close());
 
+
         //Knapper til at åbne sidepanel fadtype og træsort i sidepanel
         btnFadType.setOnAction(Event -> {
                     TranslateTransition transision = new TranslateTransition(Duration.millis(600), sidebarFadtype);
                     if (!sidebarFadtype.isVisible()) {
-                        transision.setToX(100);
+                        transision.setToX(10);
                         transision.play();
                         sidebarFadtype.setVisible(true);
                     }
@@ -363,7 +353,7 @@ public class OpretOversigtWindow extends Stage {
         btnTræsort.setOnAction(Event -> {
                     TranslateTransition transision = new TranslateTransition(Duration.millis(600), sidebarTræsort);
                     if (!sidebarTræsort.isVisible()) {
-                        transision.setToX(100);
+                        transision.setToX(10);
                         transision.play();
                         sidebarTræsort.setVisible(true);
                     }
@@ -373,7 +363,7 @@ public class OpretOversigtWindow extends Stage {
         btnLeverandør.setOnAction(Event -> {
                     TranslateTransition transision = new TranslateTransition(Duration.millis(600), sidebarLeverandør);
                     if (!sidebarLeverandør.isVisible()) {
-                        transision.setToX(100);
+                        transision.setToX(10);
                         transision.play();
                         sidebarLeverandør.setVisible(true);
                     }
@@ -399,30 +389,30 @@ public class OpretOversigtWindow extends Stage {
         List<Træsort> valgeTræsorter = new ArrayList<>();
         List<String> valgteLeverandører = lwlValgteLeverandører.getItems();
 
-        if(fyldtJa.isSelected()) {
+        if (fyldtJa.isSelected()) {
             skalVæreFyldt = true;
         }
 
-        if(cbExBourbon.isSelected()){
+        if (cbExBourbon.isSelected()) {
             valgteFadTyper.add(Fadtype.EXBOURBON);
         }
-        if(cbExLorososherry.isSelected()) {
+        if (cbExLorososherry.isSelected()) {
             valgteFadTyper.add(Fadtype.EXOLOROSOSHERRY);
         }
-        if(cbTræsortEgetræ.isSelected()){
+        if (cbTræsortEgetræ.isSelected()) {
             valgeTræsorter.add(Træsort.EGETRÆ);
         }
 
 
-       lwlFade.getItems().setAll(Controller.fadsøgning(minFadStørelse,maxFadStørelse,minAlder,maxAlder,minBrugt,MaxBrugt,valgteFadTyper,valgteLeverandører,valgeTræsorter,skalVæreFyldt));
+        lwlFade.getItems().setAll(Controller.fadsøgning(minFadStørelse, maxFadStørelse, minAlder, maxAlder, minBrugt, MaxBrugt, valgteFadTyper, valgteLeverandører, valgeTræsorter, skalVæreFyldt));
 
     }
 
     public void filtrerWhiskey() {
-
+        //TODO
     }
 
     public void visHistorie() {
-
+        //TODO
     }
 }
