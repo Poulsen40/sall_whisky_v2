@@ -51,6 +51,9 @@ public class OpretOversigtWindow extends Stage {
             sliderMaxGangeBrugt;
     private static CheckBox cbExBourbon, cbExLorososherry, cbTræsortEgetræ;
 
+    // Buttons til filter af Whisky
+    private static Slider sliderMinAlkopct, sliderMaxalkopct, sliderMinStørrelse, slidermaxStørrelse, sliderManxantalflasker, sliderminAntalFlasker;
+
     private void initContent(GridPane pane) {
         pane.setPadding(new Insets(10));
         pane.setHgap(10);
@@ -65,6 +68,16 @@ public class OpretOversigtWindow extends Stage {
         Sidebar.setStyle("-fx-background-color: #CCCCCC; -fx-padding: 10;");
         Sidebar.setTranslateX(1000);
         Sidebar.setSpacing(10);
+
+        //Whiksy Sidepanel
+        VBox Whiskyslidebar = new VBox();
+        Whiskyslidebar.setPrefWidth(350);
+        Whiskyslidebar.setVisible(false);
+        pane.add(Whiskyslidebar, 2, 1, 2, 6);
+        Whiskyslidebar.setStyle("-fx-background-color: #CCCCCC; -fx-padding: 10;");
+        Whiskyslidebar.setTranslateX(1000);
+        Whiskyslidebar.setSpacing(10);
+
 
         Label lblMinAlder = new Label("Min destillat alder");
         sliderMinAlder = new Slider(0, 50, 0);
@@ -117,6 +130,69 @@ public class OpretOversigtWindow extends Stage {
         sliderMaxGangeBrugt.setSnapToTicks(true);
         sliderMaxGangeBrugt.setBlockIncrement(1);
 
+        // Labes i WhiskySidepanelet
+        Label lblMinalkoholpct = new Label("Min Alkohol pct");
+        sliderMinAlkopct = new Slider(0, 100, 0);
+        sliderMinAlkopct.setShowTickLabels(true);
+        sliderMinAlkopct.setShowTickMarks(true);
+        sliderMinAlkopct.setMajorTickUnit(5);
+        sliderMinAlkopct.setMinorTickCount(4);
+        sliderMinAlkopct.setSnapToTicks(true);
+        sliderMinAlkopct.setBlockIncrement(1);
+
+        Label LblMaxalkoholpct = new Label("Max Alkohol pct");
+        sliderMaxalkopct = new Slider(0, 100, 0);
+        sliderMaxalkopct.setShowTickLabels(true);
+        sliderMaxalkopct.setShowTickMarks(true);
+        sliderMaxalkopct.setMajorTickUnit(5);
+        sliderMaxalkopct.setMinorTickCount(4);
+        sliderMaxalkopct.setSnapToTicks(true);
+        sliderMaxalkopct.setBlockIncrement(1);
+
+        Label Lblminstørrelse = new Label("Min størrelse/mængden ");
+        sliderMinStørrelse = new Slider(0, 100, 0);
+        sliderMinStørrelse.setShowTickLabels(true);
+        sliderMinStørrelse.setShowTickMarks(true);
+        sliderMinStørrelse.setMajorTickUnit(5);
+        sliderMinStørrelse.setMinorTickCount(4);
+        sliderMinStørrelse.setSnapToTicks(true);
+        sliderMinStørrelse.setBlockIncrement(1);
+
+        Label LblMaxStørrelse = new Label("Max størrelse/mængden ");
+        slidermaxStørrelse = new Slider(0, 100, 0);
+        slidermaxStørrelse.setShowTickLabels(true);
+        slidermaxStørrelse.setShowTickMarks(true);
+        slidermaxStørrelse.setMajorTickUnit(10);
+        slidermaxStørrelse.setMinorTickCount(9);
+        slidermaxStørrelse.setSnapToTicks(true);
+        slidermaxStørrelse.setBlockIncrement(1);
+
+        Label LblminAntalFlasker = new Label("Min Antal flasker");
+        sliderminAntalFlasker = new Slider(0, 500, 0);
+        sliderminAntalFlasker.setShowTickLabels(true);
+        sliderminAntalFlasker.setShowTickMarks(true);
+        sliderminAntalFlasker.setMajorTickUnit(50);
+        sliderminAntalFlasker.setMinorTickCount(10);
+        sliderminAntalFlasker.setSnapToTicks(true);
+        sliderminAntalFlasker.setBlockIncrement(1);
+
+
+        Label LblmaxAntalFlasker = new Label("Max Antal flakser ");
+        sliderManxantalflasker = new Slider(0, 500, 500);
+        sliderManxantalflasker.setShowTickLabels(true);
+        sliderManxantalflasker.setShowTickMarks(true);
+        sliderManxantalflasker.setMajorTickUnit(50);
+        sliderManxantalflasker.setMinorTickCount(10);
+        sliderManxantalflasker.setSnapToTicks(true);
+        sliderManxantalflasker.setBlockIncrement(1);
+
+
+
+
+
+
+
+
         Label lblSkalVæreFyldt = new Label("Skal fadet være fyldt?");
 
         fyldtJa = new CheckBox("Ja");
@@ -137,6 +213,9 @@ public class OpretOversigtWindow extends Stage {
 
         Sidebar.getChildren().addAll(lblMinAlder, sliderMinAlder, lblMaxAlder, sliderMaxAlder, lblMinFadStørelse, sliderMinFadstørelse, lblMaxFadstørelse,
                 sliderMaxFadstørelse, lblMinGangeBrugt, sliderMinGangeBrugt, lblMaxGangeBrugt, sliderMaxGangeBrugt, hBoxskalværefyldt, btnFadType, btnTræsort, btnLeverandør, btnFiltrerMedValg);
+
+        Whiskyslidebar.getChildren().addAll(lblMinalkoholpct,sliderMinAlkopct,LblMaxalkoholpct,sliderMaxalkopct,Lblminstørrelse,sliderMinStørrelse,LblMaxStørrelse,slidermaxStørrelse
+        ,LblminAntalFlasker,sliderminAntalFlasker,LblmaxAntalFlasker,sliderManxantalflasker);
 
         //Fadtype sidepanel
         VBox sidebarFadtype = new VBox();
@@ -324,8 +403,23 @@ public class OpretOversigtWindow extends Stage {
         );
 
         //Knapper
-        btnFiltrerWhiskey = new Button("Filtrer");
-        btnFiltrerWhiskey.setOnAction(Event -> filtrerWhiskey());
+        btnFiltrerWhiskey = new Button("wFiltrer");
+        btnFiltrerWhiskey.setOnAction(Event -> {
+                    TranslateTransition transision = new TranslateTransition(Duration.millis(600), Whiskyslidebar);
+                    TranslateTransition transitionUd = new TranslateTransition(Duration.millis(600), Whiskyslidebar);
+                    if (!Whiskyslidebar.isVisible()) {
+                        transision.setToX(10);
+                        transision.play();
+                        Whiskyslidebar.setVisible(true);
+
+                    } else {
+                        transitionUd.setToX(800);
+                        transitionUd.setOnFinished(e ->
+                                Whiskyslidebar.setVisible(false));
+                        transitionUd.play();
+                    }
+                }
+        );
 
         btnVisHistorie = new Button("Vis historie");
         btnVisHistorie.setOnAction(Event -> visHistorie());
@@ -372,6 +466,16 @@ public class OpretOversigtWindow extends Stage {
 
         btnFiltrerMedValg.setOnAction(Event -> filtrerFade());
     }
+
+    //------------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------
+    // WHISKY OVERSIGT/FILTRERING
+    //------------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------
+
+
+
+
 
     public void afbryd() {
 
