@@ -311,7 +311,7 @@ public class OpretOversigtWindow extends Stage {
 
         lwlBatches = new ListView<>();
         pane.add(lwlBatches, 0, 5);
-        lwlBatches.getItems().setAll(Controller.getBatch());
+        lwlBatches.getItems().setAll(Controller.getBatches());
         lwlBatches.setMaxHeight(200);
 
         btnFiltrerFade = new Button("Filtrer");

@@ -87,7 +87,7 @@ public class Controller {
         return Storage.getLager();
     }
 
-    public static ArrayList<Batch> getBatch() {
+    public static ArrayList<Batch> getBatches() {
         return Storage.getBatches();
     }
 
@@ -274,6 +274,26 @@ public class Controller {
                 // Filtrerer efter om fadet skal være fyldt
                 .filter(f -> !skalVæreFyldt || f.getDestillat() != null)
                 .collect(Collectors.toList());
+    }
+
+   public static ArrayList<Fad> frieFadeTilDestillat(ArrayList<Fad> fade){
+       ArrayList<Fad> frieFade = new ArrayList<>();
+       for (Fad f : Controller.getFade()) {
+           if (Controller.getDestillat(f) == null && f.getAntalGangeBrugt() < 3) {
+               frieFade.add(f);
+           }
+       }
+       return frieFade;
+   }
+
+    public static ArrayList<Batch> batchKlarTilDestillat(ArrayList<Batch> batches){
+        ArrayList<Batch> batchesMedVæske = new ArrayList<>();
+        for (Batch b : Controller.getBatches()) {
+            if (Controller.getMængdeVæske(b) > 0) {
+                batchesMedVæske.add(b);
+            }
+        }
+        return batchesMedVæske;
     }
 
     public static void setWhiskyInfo(ArrayList<DestillatMængde> destillatMængder, Whiskyserie whiskyserie, double vandmængde, double antalFlasker){
