@@ -1,10 +1,7 @@
 package gui;
 
 import application.controller.Controller;
-import application.model.Destillat;
-import application.model.DestillatMængde;
-import application.model.Fad;
-import application.model.Whiskyserie;
+import application.model.*;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -168,6 +165,7 @@ public class OpretWhiskyserieWindow extends Stage {
 
 
         txfTapMængde = new TextField();
+        txfTapMængde.setPromptText("Måles i liter (L)");
 
         Label lblTapMængde = new Label("Mængden du vil tappe");
 
@@ -207,9 +205,10 @@ public class OpretWhiskyserieWindow extends Stage {
         Label lblStep3 = new Label("Step 3 : fortynd eventuel din whiskey serie. \nTap på flasker når endelig produkt er opnået");
         lblStep3.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
 
-        Label lblVand = new Label("Fortynd eventuelt med vand (liter)");
+        Label lblVand = new Label("Fortynd eventuelt med vand");
 
         txfVand = new TextField();
+        txfVand.setPromptText("Måles i liter (L)");
 
         Button btnFortynd = new Button("Fortynd");
         GridPane.setHalignment(btnFortynd, HPos.RIGHT);
@@ -270,7 +269,6 @@ public class OpretWhiskyserieWindow extends Stage {
             alert.setContentText("Du skal vælge et destillat før du kan tappe");
             alert.showAndWait();
         } else {
-
             if (txfTapMængde.getText().trim().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Du skal indtaste mængden af væske du vil tappe");
@@ -307,8 +305,32 @@ public class OpretWhiskyserieWindow extends Stage {
 
     public void tapPåFlaske(){
 
+        if (whiskyserie == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Du skal have valgt eller oprettet en whiskyserie før du kan tappe");
+            alert.showAndWait();
+        } else {
 
-        Controller.createWhiskyprodukt(whiskyserie,70);
+            //Beregner samlet mængde whisky med vand inkluderet
+            double samletMængdeWhisky = Controller.samletMængdeWhiskySerie(whiskyserie, mængdeVand);
+
+            //beregning af antalflasker der skal tappes
+            int antalFlasker = (int) Controller.antalForventetFlakser(whiskyserie, samletMængdeWhisky);
+
+            double mængdePrFlaske = samletMængdeWhisky / antalFlasker;
+
+            //Laver antal flasker
+            for (int i = 0; i <antalFlasker; i++) {
+                Controller.createWhiskyprodukt(whiskyserie,70);
+            }
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("Whisky tappet på " + antalFlasker + " flasker af " + mængdePrFlaske + " cl pr flaske");
+            alert.showAndWait();
+
+            System.out.println("whisky produkter " + Controller.getWhiskyprodukter());
+
+        }
 
     }
 
