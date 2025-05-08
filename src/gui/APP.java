@@ -55,6 +55,7 @@ public class APP {
         BatchMængde bbb = b2.createBatchMængde(200, d1);
         BatchMængde bbbb = b3.createBatchMængde(200, d1);
 
+
         Destillat d2 = Controller.createDestilat(LocalDateTime.of(2020, 1, 1, 2, 2), f2);
         BatchMængde bbbbb= b1.createBatchMængde(200, d2);
 

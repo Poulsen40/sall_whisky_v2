@@ -338,13 +338,18 @@ public class OpretWhiskyserieWindow extends Stage {
 
         for (DestillatMængde d : destillatMængder){
            Destillat destillat = d.getDestillat();
-            System.out.println(d.getDestillat().getSamletMængde());
+           double mængdeefterTap = destillat.getSamletMængde();
+            double tapMængder = 0;
+
             for (DestillatMængde destillatMængde1 : destillat.getDestillatMængder()){
-                System.out.println(destillatMængde1.getMængde());
+                tapMængder += destillatMængde1.getMængde();
+                System.out.println("tapmænde i loop" + tapMængder);
             }
-
-
+            double originalMængde = mængdeefterTap + tapMængder;
+            destillat.setSamletMængde(originalMængde);
+            System.out.println("nymængde/orgiginalmængde" + originalMængde);
         }
+
 
         Controller.removeDestilatMængderFraWhiskyserie(whiskyserie,Controller.getDestillatmængder(whiskyserie));
         Controller.fjernWhiskyserie(whiskyserie);
