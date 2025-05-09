@@ -4,6 +4,7 @@ import com.sun.source.tree.NewClassTree;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Whiskyserie {
     private String serieNavn;
@@ -13,6 +14,7 @@ public class Whiskyserie {
     private Fad Fad;
     private LocalDate dato;
     private double antalFlasker;
+    private List<WhiskyType> whiskyTyper;
 
 
     private ArrayList<Whiskyprodukt> whiskyprodukter = new ArrayList<>();
@@ -110,13 +112,21 @@ public class Whiskyserie {
         return dato;
     }
 
+    public List<WhiskyType> getWhiskyTyper(){
+        return new ArrayList<>(whiskyTyper);
+    }
+
+    public void setWhiskyTyper(List<WhiskyType> whiskyTyper) {
+        this.whiskyTyper = whiskyTyper;
+    }
+
     @Override
     public String toString() {
         return "Whiskyserie{" +
                 "serieNavn='" + serieNavn + '\'' +
                 ", alkoholPct=" + alkoholPct + ", vandmængde= " + vandMængde +
                 ", størrelse=" + størrelse +
-                ", dato=" + dato + ", antal flasker=" + antalFlasker +
+                ", dato=" + dato + ", antal flasker=" + antalFlasker + ", whiskytype= " + whiskyTyper +
                 '}';
     }
 }
