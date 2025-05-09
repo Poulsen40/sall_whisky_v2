@@ -144,7 +144,7 @@ public class OpretOversigtWindow extends Stage {
         sliderMinAlkopct.setBlockIncrement(1);
 
         Label LblMaxalkoholpct = new Label("Max Alkohol pct");
-        sliderMaxalkopct = new Slider(0, 100, 0);
+        sliderMaxalkopct = new Slider(0, 100, 100);
         sliderMaxalkopct.setShowTickLabels(true);
         sliderMaxalkopct.setShowTickMarks(true);
         sliderMaxalkopct.setMajorTickUnit(5);
@@ -162,7 +162,7 @@ public class OpretOversigtWindow extends Stage {
         sliderMinStørrelse.setBlockIncrement(1);
 
         Label LblMaxStørrelse = new Label("Max størrelse/mængden ");
-        slidermaxStørrelse = new Slider(0, 100, 0);
+        slidermaxStørrelse = new Slider(0, 100, 100);
         slidermaxStørrelse.setShowTickLabels(true);
         slidermaxStørrelse.setShowTickMarks(true);
         slidermaxStørrelse.setMajorTickUnit(10);
@@ -171,39 +171,39 @@ public class OpretOversigtWindow extends Stage {
         slidermaxStørrelse.setBlockIncrement(1);
 
         Label LblminAntalFlasker = new Label("Min Antal flasker");
-        sliderminAntalFlasker = new Slider(0, 500, 0);
+        sliderminAntalFlasker = new Slider(0, 2000, 0);
         sliderminAntalFlasker.setShowTickLabels(true);
         sliderminAntalFlasker.setShowTickMarks(true);
-        sliderminAntalFlasker.setMajorTickUnit(50);
-        sliderminAntalFlasker.setMinorTickCount(10);
+        sliderminAntalFlasker.setMajorTickUnit(100);
+        sliderminAntalFlasker.setMinorTickCount(50);
         sliderminAntalFlasker.setSnapToTicks(true);
         sliderminAntalFlasker.setBlockIncrement(1);
 
 
         Label LblmaxAntalFlasker = new Label("Max Antal flakser ");
-        sliderManxantalflasker = new Slider(0, 500, 500);
+        sliderManxantalflasker = new Slider(0, 2000, 2000);
         sliderManxantalflasker.setShowTickLabels(true);
         sliderManxantalflasker.setShowTickMarks(true);
-        sliderManxantalflasker.setMajorTickUnit(50);
-        sliderManxantalflasker.setMinorTickCount(10);
+        sliderManxantalflasker.setMajorTickUnit(100);
+        sliderManxantalflasker.setMinorTickCount(50);
         sliderManxantalflasker.setSnapToTicks(true);
         sliderManxantalflasker.setBlockIncrement(1);
 
         Label LblMinårForWhiskyserien = new Label("Min År på Whiskyeserien");
-        sliderminAlderForWhiskeyserien = new Slider(0, 500, 500);
+        sliderminAlderForWhiskeyserien = new Slider(0, 20, 0);
         sliderminAlderForWhiskeyserien.setShowTickLabels(true);
-        sliderminAlderForWhiskeyserien.setShowTickMarks(true);
-        sliderminAlderForWhiskeyserien.setMajorTickUnit(50);
-        sliderminAlderForWhiskeyserien.setMinorTickCount(10);
+       // sliderminAlderForWhiskeyserien.setShowTickMarks(true);
+        sliderminAlderForWhiskeyserien.setMajorTickUnit(1);
+        sliderminAlderForWhiskeyserien.setMinorTickCount(0);
         sliderminAlderForWhiskeyserien.setSnapToTicks(true);
         sliderminAlderForWhiskeyserien.setBlockIncrement(1);
 
         Label LblMaxÅrForWhiskySerien = new Label("Max År på Whiskyeserien");
-        slidermaxAlderForWhiskySerien = new Slider(0, 500, 500);
+        slidermaxAlderForWhiskySerien = new Slider(0, 20, 20);
         slidermaxAlderForWhiskySerien.setShowTickLabels(true);
-        slidermaxAlderForWhiskySerien.setShowTickMarks(true);
-        slidermaxAlderForWhiskySerien.setMajorTickUnit(50);
-        slidermaxAlderForWhiskySerien.setMinorTickCount(10);
+       // slidermaxAlderForWhiskySerien.setShowTickMarks(true);
+        slidermaxAlderForWhiskySerien.setMajorTickUnit(1);
+        slidermaxAlderForWhiskySerien.setMinorTickCount(0);
         slidermaxAlderForWhiskySerien.setSnapToTicks(true);
         slidermaxAlderForWhiskySerien.setBlockIncrement(1);
 
@@ -236,7 +236,8 @@ public class OpretOversigtWindow extends Stage {
                 sliderMaxFadstørelse, lblMinGangeBrugt, sliderMinGangeBrugt, lblMaxGangeBrugt, sliderMaxGangeBrugt, hBoxskalværefyldt, btnFadType, btnTræsort, btnLeverandør, btnFiltrerMedValg);
 
         Whiskysidebar.getChildren().addAll(lblMinalkoholpct,sliderMinAlkopct,LblMaxalkoholpct,sliderMaxalkopct,Lblminstørrelse,sliderMinStørrelse,LblMaxStørrelse,slidermaxStørrelse
-        ,LblminAntalFlasker,sliderminAntalFlasker,LblmaxAntalFlasker,sliderManxantalflasker,LblMinårForWhiskyserien,sliderminAlderForWhiskeyserien,LblMaxÅrForWhiskySerien,slidermaxAlderForWhiskySerien,Btnwhiskyetyper,BtnVis);
+        ,LblminAntalFlasker,sliderminAntalFlasker,LblmaxAntalFlasker,sliderManxantalflasker,
+                LblMinårForWhiskyserien,sliderminAlderForWhiskeyserien,LblMaxÅrForWhiskySerien,slidermaxAlderForWhiskySerien,Btnwhiskyetyper,BtnVis);
 
 
 
@@ -618,7 +619,33 @@ public class OpretOversigtWindow extends Stage {
     }
 
     public void filtrerWhiskey() {
-        //TODO
+        double minAlkoholpct = sliderMinAlkopct.getValue();
+        double maxAlkoholpct = sliderMaxalkopct.getValue();
+        double minMægnde = sliderMinStørrelse.getValue();
+        double maxMægnde = slidermaxStørrelse.getValue();
+        int minAntalflasker = (int) sliderminAntalFlasker.getValue();
+        int maxAntalFlaser = (int) sliderManxantalflasker.getValue();
+        int minAlder = (int) sliderminAlderForWhiskeyserien.getValue();
+        int maxAlder = (int) slidermaxAlderForWhiskySerien.getValue();
+        List<WhiskyType> valgteWhiskyTyper = new ArrayList<>();
+
+        if(cbcaststrenght.isSelected()){
+            valgteWhiskyTyper.add(WhiskyType.CASKSTRENGTH);
+        }
+        if(cbmaltstrengt.isSelected()){
+            valgteWhiskyTyper.add(WhiskyType.MALTSTRENGTH);
+        }
+        if(cbsinglemalt.isSelected()){
+            valgteWhiskyTyper.add(WhiskyType.SINGLEMALT);
+        }
+        if(cbSinglecask.isSelected()){
+            valgteWhiskyTyper.add(WhiskyType.SINGLECASK);
+        }
+
+        lwlWhiskeyserier.getItems().setAll(Controller.whiskeySøgning(minAlkoholpct,maxAlkoholpct,minMægnde,maxMægnde,minAntalflasker,maxAntalFlaser,minAlder,maxAlder,valgteWhiskyTyper));
+
+
+
     }
 
     public void visHistorie() {
