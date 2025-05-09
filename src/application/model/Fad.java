@@ -57,7 +57,11 @@ public class Fad {
 
 
     public void fjernFraLager() {
-        
+        if (destillat.getSamletMængde() == 0) {
+            lager.fjernFadFraObevaringspldas(this);
+        } else {
+            throw new RuntimeException("Fadet kan ikke fjernes fra lageret da der stadig er noget destilliatmængde på den");
+        }
     }
 
     public String tilføjTilLager(Lager lager) {

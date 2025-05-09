@@ -101,6 +101,27 @@ public class Lager {
         return placering;
     }
 
+    public void fjernFadFraObevaringspldas(Fad fad){
+
+        if(fad.getLager().equals(this)){
+            for (int i = 0; i < obevaringsplads.length; i++) {
+                for (int j = 0; j < obevaringsplads[i].length; j++) {
+                    for (int k = 0; k < obevaringsplads[i][j].length; k++) {
+                        if(obevaringsplads[i][j][k].equals(fad)){
+                            obevaringsplads[i][j][k] = null;
+                            if(næsteLedigePlads == 0 && aktuelleHylde == 0){
+                                aktuelleHylde = obevaringsplads[i].length;
+                                næsteLedigePlads = obevaringsplads[i][j].length;
+                            }
+                            antalledigepladser++;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+
     @Override
     public String toString() {
         return navn + "Ledige pladser = " + antalledigepladser;
