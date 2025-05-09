@@ -214,7 +214,7 @@ public class OpretWhiskyserieWindow extends Stage {
 
         Button btnFortynd = new Button("Fortynd");
         GridPane.setHalignment(btnFortynd, HPos.RIGHT);
-        btnFortynd.setOnAction(event -> setInfoBox());
+        btnFortynd.setOnAction(event -> fortynd());
 
         VBox step3 = new VBox();
         step3.setSpacing(15);
@@ -222,6 +222,7 @@ public class OpretWhiskyserieWindow extends Stage {
 
         txaInfo = new TextArea("Whisky serie information: \n");
         txaInfo.setPrefWidth(450);
+        txaInfo.setPrefHeight(200);
         txaInfo.setEditable(false);
 
         Button btnTapPåFlaske = new Button("Tap flasker");
@@ -305,9 +306,26 @@ public class OpretWhiskyserieWindow extends Stage {
                 txfTapMængde.clear();
                 if (selectedDestillat.getSamletMængde() <= 0) {
                     lwlDestillat.getItems().remove(selectedDestillat);
+                    Controller.fjernDestillat(selectedDestillat);
+                    //Skal laves til controller
+                    selectedDestillat.getFad().fjernFraLager();
+
                 }
                 setInfoBox();
             }
+        }
+    }
+
+    public void fortynd(){
+        if (whiskyserie == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Du skal udføre step 1 først");
+            alert.showAndWait();
+        }
+        if (!txfVand.getText().trim().isEmpty() && whiskyserie != null) {
+            mængdeVand += Double.parseDouble(txfVand.getText().trim());
+            txfVand.clear();
+            setInfoBox();
         }
     }
 
@@ -343,31 +361,42 @@ public class OpretWhiskyserieWindow extends Stage {
 
 
     public void setInfoBox() {
-
-        if (!txfVand.getText().trim().isEmpty()) {
-            mængdeVand += Double.parseDouble(txfVand.getText().trim());
-            txfVand.clear();
-        }
         txaInfo.setText(Controller.toStringInfoBoxWhiskyserie(whiskyserie.getDestillatMængder(), whiskyserie, mængdeVand));
         txaInfo.appendText("\nMængde vand tilføjer whiskyserien " + mængdeVand);
-
-
         txaInfo.appendText("\nAlkohol procent: " + Controller.beregnAlkoholProcentPåWhiskyserie(whiskyserie.getDestillatMængder(), mængdeVand));
     }
 
     public void afbryd() {
-        ArrayList<DestillatMængde> destillatMængder = new ArrayList<>(Controller.getDestillatmængder(whiskyserie));
-        Controller.removeDestilatMængderFraWhiskyserie(whiskyserie,whiskyserie.getDestillatMængder());
+        Alert yseOrNo = new Alert(Alert.AlertType.CONFIRMATION);
+        yseOrNo.setTitle("Bekræft afbrydelse");
+        yseOrNo.setHeaderText("Er du sikker på, at du vil afbryde?");
+        yseOrNo.setContentText("Alle ikke gemte ændringer går tabt.");
 
-        for (DestillatMængde d : destillatMængder) {
-            Destillat destillat = d.getDestillat();
-            Controller.removeDestillatMængdeFraDestillat(destillat, d);
+        Optional<ButtonType> result = yseOrNo.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+
+            if (whiskyserie != null){
+                ArrayList<DestillatMængde> destillatMængder = new ArrayList<>(Controller.getDestillatmængder(whiskyserie));
+                Controller.removeDestilatMængderFraWhiskyserie(whiskyserie, whiskyserie.getDestillatMængder());
+
+
+                for (DestillatMængde d : destillatMængder) {
+                    Destillat destillat = d.getDestillat();
+                    Controller.removeDestillatMængdeFraDestillat(destillat, d);
+                }
+
+
+                Controller.fjernWhiskyserie(whiskyserie);
+                lwlDestillat.refresh();
+            }
+
+            close();
+
+        } else {
+            yseOrNo.close();
+
         }
-
-        Controller.fjernWhiskyserie(whiskyserie);
-        lwlDestillat.refresh();
-
-        close();
 
     }
 }

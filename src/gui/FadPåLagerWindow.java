@@ -41,7 +41,6 @@ public class FadPåLagerWindow extends Stage {
 
 
     private static ListView<Lager> lwlager;
-//    private static ListView<Fad> lwFad;
     private static TextArea txadestillat;
     private static Button btnCancel;
     private static Button btnAdd;

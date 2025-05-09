@@ -301,6 +301,28 @@ public class Controller {
         whiskyserie.setStørrelse(Controller.samletMængdeWhiskySerie(whiskyserie,vandmængde));
         whiskyserie.setVandMængde(vandmængde);
         whiskyserie.setAntalFlasker(antalFlasker);
+
+        int antalFad = 0;
+        List<WhiskyType> whiskyTypes = new ArrayList<>();
+        for (DestillatMængde destillatMængde : destillatMængder){
+            if (destillatMængde.getDestillat().getFad() != null){
+                antalFad++;
+            }
+        }
+
+        if (vandmængde == 0 && antalFad > 1) {
+            whiskyserie.setWhiskyType(WhiskyType.MALTSTRENGTH);
+        }
+        if (vandmængde > 0 && antalFad > 1){
+            whiskyserie.setWhiskyType(WhiskyType.SINGLEMALT);
+        }
+        if (vandmængde == 0 && antalFad ==1){
+            whiskyserie.setWhiskyType(WhiskyType.CASKSTRENGTH);
+        }
+        if (vandmængde > 0 && antalFad == 1){
+            whiskyserie.setWhiskyType(WhiskyType.SINGLECASK);
+        }
+        System.out.println(whiskyserie.getWhiskyType());
     }
 
     public static String toStringInfoBoxWhiskyserie(ArrayList<DestillatMængde> destillatMængder, Whiskyserie whiskyserie, double vandmængde) {
@@ -382,6 +404,26 @@ public class Controller {
         }
 
         return destillaterEfterFiltrering;
+    }
+
+    public static List<Whiskyserie> whiskeySøgning(double minAlkoholProcent, double maxAlkoholProcent,
+                                                   double minMængde, double maxMængde,
+                                                   int minAntalFlakser, int maxAntalFlasker, int minAlder, int maxAlder,
+                                                   List<WhiskyType> whiskeyTyper ) {
+
+        List<Whiskyserie> whiskyserier = Controller.getWhiskyserie();
+        LocalDateTime nu = LocalDateTime.now();
+
+        return whiskyserier.stream()
+                .filter(w -> w.getAlkoholPct() >= minAlkoholProcent && w.getAlkoholPct() <= maxAlkoholProcent)
+                .filter(w -> w.getStørrelse() >= minMængde && w.getStørrelse() <= maxMængde)
+                .filter(w -> w.getAntalFlasker() >= minAntalFlakser && w.getAntalFlasker() <= maxAntalFlasker)
+                .filter(w -> {
+                    long alder = ChronoUnit.YEARS.between(w.getDato(),nu);
+                    return alder >= minAlder && alder <= maxAlder; })
+                .filter(w -> whiskeyTyper == null || whiskeyTyper.isEmpty() || whiskeyTyper.contains(w.getWhiskyType()))
+                .collect(Collectors.toList());
+
     }
 }
 
