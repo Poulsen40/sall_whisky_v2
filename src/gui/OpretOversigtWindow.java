@@ -52,7 +52,10 @@ public class OpretOversigtWindow extends Stage {
     private static CheckBox cbExBourbon, cbExOlorososherry, cbTræsortEgetræ;
 
     // Buttons til filter af Whisky
-    private static Slider sliderMinAlkopct, sliderMaxalkopct, sliderMinStørrelse, slidermaxStørrelse, sliderManxantalflasker, sliderminAntalFlasker;
+    private static Slider sliderMinAlkopct, sliderMaxalkopct, sliderMinStørrelse, slidermaxStørrelse, sliderManxantalflasker, sliderminAntalFlasker, sliderminAlderForWhiskeyserien, slidermaxAlderForWhiskySerien;
+    private static Button Btnwhiskyetyper, BtnLukWhisky, BtnvælgWhisky, BtnVis;
+    private static Label LblWhiskytype;
+    private static CheckBox cbSinglecask, cbsinglemalt, cbcaststrenght, cbmaltstrengt;
 
     private void initContent(GridPane pane) {
         pane.setPadding(new Insets(10));
@@ -70,13 +73,13 @@ public class OpretOversigtWindow extends Stage {
         Sidebar.setSpacing(10);
 
         //Whiksy Sidepanel
-        VBox Whiskyslidebar = new VBox();
-        Whiskyslidebar.setPrefWidth(350);
-        Whiskyslidebar.setVisible(false);
-        pane.add(Whiskyslidebar, 2, 1, 2, 6);
-        Whiskyslidebar.setStyle("-fx-background-color: #CCCCCC; -fx-padding: 10;");
-        Whiskyslidebar.setTranslateX(1000);
-        Whiskyslidebar.setSpacing(10);
+        VBox Whiskysidebar = new VBox();
+        Whiskysidebar.setPrefWidth(350);
+        Whiskysidebar.setVisible(false);
+        pane.add(Whiskysidebar, 2, 1, 2, 6);
+        Whiskysidebar.setStyle("-fx-background-color: #CCCCCC; -fx-padding: 10;");
+        Whiskysidebar.setTranslateX(1000);
+        Whiskysidebar.setSpacing(10);
 
 
         Label lblMinAlder = new Label("Min destillat alder");
@@ -186,11 +189,23 @@ public class OpretOversigtWindow extends Stage {
         sliderManxantalflasker.setSnapToTicks(true);
         sliderManxantalflasker.setBlockIncrement(1);
 
+        Label LblMinårForWhiskyserien = new Label("Min År på Whiskyeserien");
+        sliderminAlderForWhiskeyserien = new Slider(0, 500, 500);
+        sliderminAlderForWhiskeyserien.setShowTickLabels(true);
+        sliderminAlderForWhiskeyserien.setShowTickMarks(true);
+        sliderminAlderForWhiskeyserien.setMajorTickUnit(50);
+        sliderminAlderForWhiskeyserien.setMinorTickCount(10);
+        sliderminAlderForWhiskeyserien.setSnapToTicks(true);
+        sliderminAlderForWhiskeyserien.setBlockIncrement(1);
 
-
-
-
-
+        Label LblMaxÅrForWhiskySerien = new Label("Max År på Whiskyeserien");
+        slidermaxAlderForWhiskySerien = new Slider(0, 500, 500);
+        slidermaxAlderForWhiskySerien.setShowTickLabels(true);
+        slidermaxAlderForWhiskySerien.setShowTickMarks(true);
+        slidermaxAlderForWhiskySerien.setMajorTickUnit(50);
+        slidermaxAlderForWhiskySerien.setMinorTickCount(10);
+        slidermaxAlderForWhiskySerien.setSnapToTicks(true);
+        slidermaxAlderForWhiskySerien.setBlockIncrement(1);
 
 
         Label lblSkalVæreFyldt = new Label("Skal fadet være fyldt?");
@@ -209,13 +224,78 @@ public class OpretOversigtWindow extends Stage {
         btnLeverandør = new Button("Leverandør");
         btnFiltrerMedValg = new Button("Filtrer");
 
+
+
+
+        Btnwhiskyetyper = new Button("WhiskyTyper");
+        BtnVis = new Button("Vis");
+
         VBox.setMargin(btnFiltrerMedValg, new Insets(100, 0, 0, 0));
 
         Sidebar.getChildren().addAll(lblMinAlder, sliderMinAlder, lblMaxAlder, sliderMaxAlder, lblMinFadStørelse, sliderMinFadstørelse, lblMaxFadstørelse,
                 sliderMaxFadstørelse, lblMinGangeBrugt, sliderMinGangeBrugt, lblMaxGangeBrugt, sliderMaxGangeBrugt, hBoxskalværefyldt, btnFadType, btnTræsort, btnLeverandør, btnFiltrerMedValg);
 
-        Whiskyslidebar.getChildren().addAll(lblMinalkoholpct,sliderMinAlkopct,LblMaxalkoholpct,sliderMaxalkopct,Lblminstørrelse,sliderMinStørrelse,LblMaxStørrelse,slidermaxStørrelse
-        ,LblminAntalFlasker,sliderminAntalFlasker,LblmaxAntalFlasker,sliderManxantalflasker);
+        Whiskysidebar.getChildren().addAll(lblMinalkoholpct,sliderMinAlkopct,LblMaxalkoholpct,sliderMaxalkopct,Lblminstørrelse,sliderMinStørrelse,LblMaxStørrelse,slidermaxStørrelse
+        ,LblminAntalFlasker,sliderminAntalFlasker,LblmaxAntalFlasker,sliderManxantalflasker,LblMinårForWhiskyserien,sliderminAlderForWhiskeyserien,LblMaxÅrForWhiskySerien,slidermaxAlderForWhiskySerien,Btnwhiskyetyper,BtnVis);
+
+
+
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //WhiskyTyper sidepanel
+        VBox sidebarWhiskyTyper = new VBox();
+        sidebarWhiskyTyper.setPrefWidth(350);
+        sidebarWhiskyTyper.setVisible(false);
+        pane.add(sidebarWhiskyTyper, 2, 1, 2, 6);
+        sidebarWhiskyTyper.setStyle("-fx-background-color: #CCCCCC; -fx-padding: 10;");
+        sidebarWhiskyTyper.setTranslateX(1000);
+        sidebarWhiskyTyper.setSpacing(20);
+
+        cbSinglecask = new CheckBox("SINGLE CASK");
+        cbsinglemalt = new CheckBox("SINGLE MALT");
+        cbmaltstrengt = new CheckBox("MALT STRENGTH");
+        cbcaststrenght = new CheckBox("CAST STRENGHT");
+
+        cbSinglecask.setSelected(false);
+        cbsinglemalt.setSelected(false);
+        cbmaltstrengt.setSelected(false);
+        cbcaststrenght.setSelected(false);
+
+        LblWhiskytype = new Label("Whiskytyper");
+
+        BtnLukWhisky = new Button("Luk");
+
+        BtnLukWhisky.setOnAction(Event -> {
+            TranslateTransition transitionUd = new TranslateTransition(Duration.millis(600), sidebarWhiskyTyper);
+            if (sidebarWhiskyTyper.isVisible()) {
+                transitionUd.setToX(1000);
+                transitionUd.setOnFinished(e -> sidebarWhiskyTyper.setVisible(false));
+                transitionUd.play();
+            }
+            cbSinglecask.setSelected(false);
+            cbsinglemalt.setSelected(false);
+            cbmaltstrengt.setSelected(false);
+            cbcaststrenght.setSelected(false);
+        });
+
+        BtnvælgWhisky = new Button("Vælg");
+
+        BtnvælgWhisky = new Button("Vælg");
+        BtnvælgWhisky.setOnAction(Event -> {
+            TranslateTransition transitionUd = new TranslateTransition(Duration.millis(600), sidebarWhiskyTyper);
+            if (sidebarWhiskyTyper.isVisible()) {
+                transitionUd.setToX(1000);
+                transitionUd.setOnFinished(e -> sidebarWhiskyTyper.setVisible(false));
+                transitionUd.play();
+            }
+        });
+
+        HBox Whiskylukvælg = new HBox();
+        Whiskylukvælg.setSpacing(250);
+        Whiskylukvælg.getChildren().setAll(BtnLukWhisky, BtnvælgWhisky);
+
+        sidebarWhiskyTyper.getChildren().addAll(LblWhiskytype,cbSinglecask,cbsinglemalt,cbmaltstrengt,cbcaststrenght,Whiskylukvælg);
+
+
 
         //Fadtype sidepanel
         VBox sidebarFadtype = new VBox();
@@ -225,6 +305,8 @@ public class OpretOversigtWindow extends Stage {
         sidebarFadtype.setStyle("-fx-background-color: #CCCCCC; -fx-padding: 10;");
         sidebarFadtype.setTranslateX(1000);
         sidebarFadtype.setSpacing(20);
+
+
 
         cbExBourbon = new CheckBox("Ex bourbon");
         cbExOlorososherry = new CheckBox("Ex Oloroso sherry");
@@ -415,17 +497,17 @@ public class OpretOversigtWindow extends Stage {
         //Knapper
         btnFiltrerWhiskey = new Button("wFiltrer");
         btnFiltrerWhiskey.setOnAction(Event -> {
-                    TranslateTransition transision = new TranslateTransition(Duration.millis(600), Whiskyslidebar);
-                    TranslateTransition transitionUd = new TranslateTransition(Duration.millis(600), Whiskyslidebar);
-                    if (!Whiskyslidebar.isVisible()) {
+                    TranslateTransition transision = new TranslateTransition(Duration.millis(600), Whiskysidebar);
+                    TranslateTransition transitionUd = new TranslateTransition(Duration.millis(600), Whiskysidebar);
+                    if (!Whiskysidebar.isVisible()) {
                         transision.setToX(10);
                         transision.play();
-                        Whiskyslidebar.setVisible(true);
+                        Whiskysidebar.setVisible(true);
 
                     } else {
                         transitionUd.setToX(800);
                         transitionUd.setOnFinished(e ->
-                                Whiskyslidebar.setVisible(false));
+                                Whiskysidebar.setVisible(false));
                         transitionUd.play();
                     }
                 }
@@ -441,7 +523,6 @@ public class OpretOversigtWindow extends Stage {
         btnAfbryd = new Button("Afbryd");
         pane.add(btnAfbryd, 0, 6);
         btnAfbryd.setOnAction(Event -> close());
-
 
         //Knapper til at åbne sidepanel fadtype og træsort i sidepanel
         btnFadType.setOnAction(Event -> {
@@ -474,7 +555,20 @@ public class OpretOversigtWindow extends Stage {
                 }
         );
 
+        Btnwhiskyetyper.setOnAction(Event -> {
+                    TranslateTransition transision = new TranslateTransition(Duration.millis(600), sidebarWhiskyTyper);
+                    if (!sidebarWhiskyTyper.isVisible()) {
+                        transision.setToX(10);
+                        transision.play();
+                        sidebarWhiskyTyper.setVisible(true);
+                    }
+                }
+        );
+
+
         btnFiltrerMedValg.setOnAction(Event -> filtrerFade());
+
+        BtnVis.setOnAction(Event -> filtrerWhiskey());
     }
 
     //------------------------------------------------------------------------------------------------------
