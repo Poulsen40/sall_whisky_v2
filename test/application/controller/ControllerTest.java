@@ -7,13 +7,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import storage.Storage;
 
+import javax.swing.tree.ExpandVetoException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static java.util.Arrays.asList;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ControllerTest {
 
@@ -183,8 +186,30 @@ class ControllerTest {
         assertEquals(0, fade.size()); // Maksimale værdier overalt - kun fyldte fade
     }
 
+    @Test
+    void TC28() {
+        Whiskyserie whiskyserie = Controller.createWhiskyserie("Test", LocalDate.of(2025,5,9));
+        assertNotNull(whiskyserie);
+    }
 
+    @Test
+    void TC29() {
+        Exception exception = assertThrows(RuntimeException.class, () ->{Controller.createWhiskyserie(null, LocalDate.of(2025,5,9));});
+        assertEquals(exception.getMessage(),"Du skal give din whisky serie et navn");
+    }
 
+    @Test
+    void TC30() {
+        Fad f1 = Controller.createFad(65, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
+        Destillat d1 = Controller.createDestilat(LocalDateTime.of(2022, 1, 1, 2, 2), f1);
 
+        Exception exception = assertThrows(RuntimeException.class, () ->{Controller.createDestilat(LocalDateTime.now(),f1);});
+        assertEquals(exception.getMessage(),"Du kan ikke vælge et fad der allerede er fyldt");
+    }
 
+    @Test
+    void TC31() {
+        Exception exception = assertThrows(RuntimeException.class, () ->{Controller.createDestilat(LocalDateTime.now(),null);});
+        assertEquals(exception.getMessage(),"Du skal vælge et fad");
+    }
 }

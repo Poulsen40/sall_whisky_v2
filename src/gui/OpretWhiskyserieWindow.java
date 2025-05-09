@@ -300,7 +300,7 @@ public class OpretWhiskyserieWindow extends Stage {
             } else {
                 destillatMængde = Controller.createDestillatMængde(mængde, whiskyserie, selectedDestillat);
 
-                Controller.addDestillatMængde(destillatMængde, whiskyserie);
+                //Controller.addDestillatMængde(destillatMængde, whiskyserie);
                 txaDestilatInfo.setText(Controller.toStringFadOgDestillat(selectedDestillat));
 
                 txfTapMængde.clear();
