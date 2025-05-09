@@ -301,6 +301,30 @@ public class Controller {
         whiskyserie.setStørrelse(Controller.samletMængdeWhiskySerie(whiskyserie,vandmængde));
         whiskyserie.setVandMængde(vandmængde);
         whiskyserie.setAntalFlasker(antalFlasker);
+
+        int antalFad = 0;
+        List<WhiskyType> whiskyTypes = new ArrayList<>();
+        for (DestillatMængde destillatMængde : destillatMængder){
+            if (destillatMængde.getDestillat().getFad() != null){
+                antalFad++;
+                System.out.println("antalfad" + antalFad);
+            }
+        }
+
+        if (vandmængde == 0 && antalFad > 1) {
+            whiskyTypes.add(WhiskyType.MALTSTRENGTH);
+        }
+        if (vandmængde > 0 && antalFad > 1){
+            whiskyTypes.add(WhiskyType.SINGLEMALT);
+        }
+        if (vandmængde == 0 && antalFad ==1){
+            whiskyTypes.add(WhiskyType.CASKSTRENGTH);
+        }
+        if (vandmængde > 0 && antalFad == 1){
+            whiskyTypes.add(WhiskyType.SINGLECASK);
+        }
+        whiskyserie.setWhiskyTyper(whiskyTypes);
+        System.out.println("whiskytyper" + whiskyTypes);
     }
 
     public static String toStringInfoBoxWhiskyserie(ArrayList<DestillatMængde> destillatMængder, Whiskyserie whiskyserie, double vandmængde) {
