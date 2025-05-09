@@ -13,7 +13,6 @@ public class Whiskyserie {
     private double antalFlasker;
     private WhiskyType whiskyType;
 
-
     private ArrayList<Whiskyprodukt> whiskyprodukter = new ArrayList<>();
 
     private ArrayList<DestillatMængde> destillatMængder = new ArrayList<>();
