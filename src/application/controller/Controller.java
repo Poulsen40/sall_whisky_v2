@@ -383,5 +383,25 @@ public class Controller {
 
         return destillaterEfterFiltrering;
     }
+
+    public static List<Whiskyserie> whiskeySøgning(double minAlkoholProcent, double maxAlkoholProcent,
+                                                   double minMængde, double maxMængde,
+                                                   int minAntalFlakser, int maxAntalFlasker, int minAlder, int maxAlder,
+                                                   list<whiskyType> whiskeyTyper ) {
+
+        List<Whiskyserie> whiskyserier = Controller.getWhiskyserie();
+        LocalDateTime nu = LocalDateTime.now();
+
+        return whiskyserier.stream()
+                .filter(w -> w.getAlkoholPct() >= minAlkoholProcent && w.getAlkoholPct() <= maxAlkoholProcent)
+                .filter(w -> w.getStørrelse() >= minMængde && w.getStørrelse() <= maxMængde)
+                .filter(w -> w.getAntalFlasker() >= minAntalFlakser && w.getAntalFlasker() <= maxAntalFlasker)
+                .filter(w -> {
+                    long alder = ChronoUnit.YEARS.between(w.getDato(),nu);
+                    return alder >= minAlder && alder <= maxAlder; })
+                .filter(w -> whiskeyTyper == null || whiskeyTyper.isEmpty || whiskeyTyper.contains(w.getWhiskeytype))
+                .collect(Collectors.toList());
+
+    }
 }
 

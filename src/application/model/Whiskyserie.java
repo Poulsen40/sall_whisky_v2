@@ -110,6 +110,8 @@ public class Whiskyserie {
         return dato;
     }
 
+    public double getAntalFlasker() { return antalFlasker; }
+
     @Override
     public String toString() {
         return "Whiskyserie{" +
