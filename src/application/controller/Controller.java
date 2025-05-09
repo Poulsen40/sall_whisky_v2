@@ -409,7 +409,7 @@ public class Controller {
     public static List<Whiskyserie> whiskeySøgning(double minAlkoholProcent, double maxAlkoholProcent,
                                                    double minMængde, double maxMængde,
                                                    int minAntalFlakser, int maxAntalFlasker, int minAlder, int maxAlder,
-                                                   list<whiskyType> whiskeyTyper ) {
+                                                   List<WhiskyType> whiskeyTyper ) {
 
         List<Whiskyserie> whiskyserier = Controller.getWhiskyserie();
         LocalDateTime nu = LocalDateTime.now();
@@ -421,7 +421,7 @@ public class Controller {
                 .filter(w -> {
                     long alder = ChronoUnit.YEARS.between(w.getDato(),nu);
                     return alder >= minAlder && alder <= maxAlder; })
-                .filter(w -> whiskeyTyper == null || whiskeyTyper.isEmpty || whiskeyTyper.contains(w.getWhiskeytype))
+                .filter(w -> whiskeyTyper == null || whiskeyTyper.isEmpty() || whiskeyTyper.contains(w.getWhiskyType()))
                 .collect(Collectors.toList());
 
     }
