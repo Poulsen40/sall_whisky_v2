@@ -40,10 +40,6 @@ public class Fad {
         this.destillat = destillat;
     }
 
-        /*Der skal laves en metode til at tømme et fad når Use case med at lave wiskey laves.
-        Det er nok noget med at destilatklassen har en metode som kader den der er her som så
-        fjerner destilatet på fadet. -André
-         */
 
 
     //Metoder til Lager
@@ -54,8 +50,14 @@ public class Fad {
         }
     }
 
+    /*Der skal laves en metode til at tømme et fad når Use case med at lave wiskey laves.
+        Det er nok noget med at destilatklassen har en metode som kader den der er her som så
+        fjerner destilatet på fadet. -André
+         */
+
+
     public void fjernFraLager() {
-        //TODO
+        
     }
 
     public String tilføjTilLager(Lager lager) {
