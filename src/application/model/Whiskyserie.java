@@ -1,7 +1,5 @@
 package application.model;
 
-import com.sun.source.tree.NewClassTree;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -13,6 +11,7 @@ public class Whiskyserie {
     private Fad Fad;
     private LocalDate dato;
     private double antalFlasker;
+    private WhiskyType whiskyType;
 
 
     private ArrayList<Whiskyprodukt> whiskyprodukter = new ArrayList<>();
@@ -110,6 +109,14 @@ public class Whiskyserie {
         return dato;
     }
 
+    public WhiskyType getWhiskyType() {
+        return whiskyType;
+    }
+
+    public void setWhiskyType(WhiskyType whiskyType) {
+        this.whiskyType = whiskyType;
+    }
+
     public double getAntalFlasker() { return antalFlasker; }
 
     @Override
@@ -118,7 +125,7 @@ public class Whiskyserie {
                 "serieNavn='" + serieNavn + '\'' +
                 ", alkoholPct=" + alkoholPct + ", vandmængde= " + vandMængde +
                 ", størrelse=" + størrelse +
-                ", dato=" + dato + ", antal flasker=" + antalFlasker +
+                ", dato=" + dato + ", antal flasker=" + antalFlasker + ", whiskytype= " + whiskyType +
                 '}';
     }
 }
