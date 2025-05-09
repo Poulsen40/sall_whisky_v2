@@ -307,24 +307,22 @@ public class Controller {
         for (DestillatMængde destillatMængde : destillatMængder){
             if (destillatMængde.getDestillat().getFad() != null){
                 antalFad++;
-                System.out.println("antalfad" + antalFad);
             }
         }
 
         if (vandmængde == 0 && antalFad > 1) {
-            whiskyTypes.add(WhiskyType.MALTSTRENGTH);
+            whiskyserie.setWhiskyType(WhiskyType.MALTSTRENGTH);
         }
         if (vandmængde > 0 && antalFad > 1){
-            whiskyTypes.add(WhiskyType.SINGLEMALT);
+            whiskyserie.setWhiskyType(WhiskyType.SINGLEMALT);
         }
         if (vandmængde == 0 && antalFad ==1){
-            whiskyTypes.add(WhiskyType.CASKSTRENGTH);
+            whiskyserie.setWhiskyType(WhiskyType.CASKSTRENGTH);
         }
         if (vandmængde > 0 && antalFad == 1){
-            whiskyTypes.add(WhiskyType.SINGLECASK);
+            whiskyserie.setWhiskyType(WhiskyType.SINGLECASK);
         }
-        whiskyserie.setWhiskyTyper(whiskyTypes);
-        System.out.println("whiskytyper" + whiskyTypes);
+        System.out.println(whiskyserie.getWhiskyType());
     }
 
     public static String toStringInfoBoxWhiskyserie(ArrayList<DestillatMængde> destillatMængder, Whiskyserie whiskyserie, double vandmængde) {
