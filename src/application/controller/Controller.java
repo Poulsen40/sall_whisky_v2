@@ -459,7 +459,7 @@ public class Controller {
 
     public static List<Whiskyserie> whiskeySøgning(double minAlkoholProcent, double maxAlkoholProcent,
                                                    double minMængde, double maxMængde,
-                                                   int minAntalFlakser, int maxAntalFlasker, int minAlder, int maxAlder,
+                                                   int minAntalFlasker, int maxAntalFlasker, int minAlder, int maxAlder,
                                                    List<WhiskyType> whiskeyTyper ) {
 
         List<Whiskyserie> whiskyserier = Controller.getWhiskyserie();
@@ -468,7 +468,7 @@ public class Controller {
         return whiskyserier.stream()
                 .filter(w -> w.getAlkoholPct() >= minAlkoholProcent && w.getAlkoholPct() <= maxAlkoholProcent)
                 .filter(w -> w.getStørrelse() >= minMængde && w.getStørrelse() <= maxMængde)
-                .filter(w -> w.getAntalFlasker() >= minAntalFlakser && w.getAntalFlasker() <= maxAntalFlasker)
+                .filter(w -> w.getAntalFlasker() >= minAntalFlasker && w.getAntalFlasker() <= maxAntalFlasker)
                 .filter(w -> {
                     long alder = ChronoUnit.YEARS.between(w.getDato(),nu);
                     return alder >= minAlder && alder <= maxAlder; })
