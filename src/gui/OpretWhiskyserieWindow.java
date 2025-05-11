@@ -129,10 +129,10 @@ public class OpretWhiskyserieWindow extends Stage {
                 if (empty || destillat == null) {
                     setText(null);
                 } else {
-                    long år = ChronoUnit.YEARS.between(destillat.getDatoForPåfyldning(), LocalDateTime.now());
-                    long måneder = ChronoUnit.MONTHS.between(destillat.getDatoForPåfyldning().plusYears(år), LocalDateTime.now());
-                    long dage = ChronoUnit.DAYS.between(destillat.getDatoForPåfyldning().plusYears(år).plusMonths(måneder), LocalDateTime.now());
-                    setText("Dato for påfyldning: " + destillat.getDatoForPåfyldning().toLocalDate() + "\nAlder på destillat: " + år + " år " + måneder + " måneder " + dage + " dage");
+                    long år = ChronoUnit.YEARS.between(Controller.getDatoForPåfyldning(destillat), LocalDateTime.now());
+                    long måneder = ChronoUnit.MONTHS.between(Controller.getDatoForPåfyldning(destillat).plusYears(år), LocalDateTime.now());
+                    long dage = ChronoUnit.DAYS.between(Controller.getDatoForPåfyldning(destillat).plusYears(år).plusMonths(måneder), LocalDateTime.now());
+                    setText("Dato for påfyldning: " + Controller.getDatoForPåfyldning(destillat).toLocalDate() + "\nAlder på destillat: " + år + " år " + måneder + " måneder " + dage + " dage");
                 }
             }
         });
@@ -304,7 +304,7 @@ public class OpretWhiskyserieWindow extends Stage {
                 txaDestilatInfo.setText(Controller.toStringFadOgDestillat(selectedDestillat));
 
                 txfTapMængde.clear();
-                if (selectedDestillat.getSamletMængde() <= 0) {
+                if (Controller.getSamletMængde(selectedDestillat) <= 0) {
                     lwlDestillat.getItems().remove(selectedDestillat);
                     Controller.fjernDestillat(selectedDestillat);
                     //Skal laves til controller

@@ -665,18 +665,19 @@ public class OpretOversigtWindow extends Stage {
 
                 if (empty || fad == null) {
                     setText(null);
-                } else if (fad.getDestillat() == null) {
-                    setText("Fad Information:\n" + "Fad nr: " + fad.getFadNr() + "    Fadstørelse: " + fad.getFadStørrelse() + "    levarandør: " + fad.getLevarandør()
-                            + "    Er Brugt: " + fad.isErBrugt() + "`\nFadtype: " + fad.getFadtype() + "    Træsort: " +
-                            fad.getTræsort() + "\nAntalGangeBrugt: " + fad.getAntalGangeBrugt() + "    LiterPåfyldt: " + fad.getLiterPåfyldt()
+                } else if (Controller.getDestillat(fad) == null) {
+                    setText("Fad Information:\n" + "Fad nr: " + Controller.getFadNr(fad) + "    Fadstørelse: " + Controller.getFadStørrelse(fad) + "    levarandør: " + Controller.getLeverandør(fad)
+                            + "    Er Brugt: " + Controller.isErBrugt(fad) + "`\nFadtype: " + Controller.getFadtype(fad) + "    Træsort: " +
+                            Controller.getTræsort(fad) + "\nAntalGangeBrugt: " + Controller.getAntalGangeBrugt(fad) + "    LiterPåfyldt: " + Controller.getLiterPåfyldt(fad)
                             + "\nInformation om destillat på fadet:\n" + "Fadet har intet Destilat");
                 } else {
-                    setText("Fad Information\n" + "Fad nr: " + fad.getFadNr() + "    Fadstørelse: " + fad.getFadStørrelse() + "    levarandør: " + fad.getLevarandør()
-                            + "    Er Brugt: " + fad.isErBrugt() + "`\nFadtype: " + fad.getFadtype() + "    Træsort: " +
-                            fad.getTræsort() + "\nAntalGangeBrugt: " + fad.getAntalGangeBrugt() + "    LiterPåfyldt: " + fad.getLiterPåfyldt()
+                    Destillat destillat = Controller.getDestillat(fad);
+                    setText("Fad Information\n" + "Fad nr: " + Controller.getFadNr(fad) + "    Fadstørelse: " + Controller.getFadStørrelse(fad) + "    levarandør: " + Controller.getLeverandør(fad)
+                            + "    Er Brugt: " + Controller.isErBrugt(fad) + "`\nFadtype: " + Controller.getFadtype(fad) + "    Træsort: " +
+                            Controller.getTræsort(fad) + "\nAntalGangeBrugt: " + Controller.getAntalGangeBrugt(fad) + "    LiterPåfyldt: " + Controller.getLiterPåfyldt(fad)
                             + "\nInformation om destillat på fadet\n" + "Alder: " +
-                            ChronoUnit.YEARS.between(fad.getDestillat().getDatoForPåfyldning().toLocalDate(), LocalDate.now()) + " År" +
-                            "    Alkholprocent: " + fad.getDestillat().beregnalkoholprocent());
+                            ChronoUnit.YEARS.between(Controller.getDatoForPåfyldning(destillat).toLocalDate(), LocalDate.now()) + " År" +
+                            "    Alkholprocent: " + Controller.getAlkoholprocent(destillat));
                 }
             }
         });
@@ -691,14 +692,15 @@ public class OpretOversigtWindow extends Stage {
                 if (empty || whiskyserie == null) {
                     setText(null);
                 } else {
-                    setText("WhiskeySerie infromation:\nSerienavn: " + whiskyserie.getSerieNavn() + "    Alkoholprocent: " + String.format("%.2f%%",whiskyserie.getAlkoholPct()) +
-                            "    Mængde: " + whiskyserie.getStørrelse() + "L" + "\nAlder: " + ChronoUnit.YEARS.between(whiskyserie.getDato(),LocalDate.now()) + " År" + "    Antal flasker: " +
-                            + whiskyserie.getAntalFlasker() + "    Whiskeytype: " + whiskyserie.getWhiskyType());
+                    setText("WhiskeySerie infromation:\nSerienavn: " + Controller.getSerieNavn(whiskyserie) + "    Alkoholprocent: " + String.format("%.2f%%",Controller.getAlkoholPct(whiskyserie)) +
+                            "    Mængde: " + Controller.getStørrelse(whiskyserie) + "L" + "\nAlder: " + ChronoUnit.YEARS.between(Controller.getDato(whiskyserie),LocalDate.now()) + " År" + "    Antal flasker: " +
+                            + Controller.getAntalFlasker(whiskyserie) + "    Whiskeytype: " + Controller.getWhiskyType(whiskyserie));
                 }
             }
         });
     }
 
+    //Skal slut dato med bliver den nogensinde sat og brugt?
     public void setLwlBatchesTekstLayout(){
         lwlBatches.setCellFactory(lw -> new ListCell<Batch>() {
             @Override
@@ -708,10 +710,10 @@ public class OpretOversigtWindow extends Stage {
                 if (empty || batch == null) {
                     setText(null);
                 } else {
-                    setText("Batch information:\nBatch Id: " + batch.getBatchID() + "    Alkoholprocent: " + String.format("%.2f%%",batch.getAlkoholPct()) +
-                            "    Mængde: " + batch.getMængdeVæske() + "L" + "\nMark: " + batch.getMark() + " Kornsort: " + batch.getKornSort() + "    Maltbatch: " +
-                            batch.getMaltBach() + "\nRygemateriale: " + batch.getRygemateriale() + "    Startdato: "
-                            + batch.getStartDato() + "    Slutdato: " + batch.getSlutDato());
+                    setText("Batch information:\nBatch Id: " + Controller.getBatchID(batch) + "    Alkoholprocent: " + String.format("%.2f%%",Controller.getAlkoholPct(batch)) +
+                            "    Mængde: " + Controller.getMængdeVæske(batch) + "L" + "\nMark: " + Controller.getMark(batch) + " Kornsort: " + Controller.getKornSort(batch) + "    Maltbatch: " +
+                            Controller.getMaltBach(batch) + "\nRygemateriale: " + Controller.getRygemateriale(batch) + "    Startdato: "
+                            + Controller.getStartDato(batch) + "    Slutdato: " + Controller.getSlutDato(batch));
                 }
             }
         });
