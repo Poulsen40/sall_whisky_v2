@@ -205,6 +205,13 @@ public class Controller {
 
     public static String getKornSort(Batch batch) { return batch.getKornSort(); }
 
+    public static String getLagerNavn(Fad fad) {
+        if (fad.getLager() != null) {
+            return fad.getLager().getNavn();
+        }
+        return "Ikke placeret på et lager";
+    }
+
 
     //Set metoder
 

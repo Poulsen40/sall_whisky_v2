@@ -721,13 +721,15 @@ public class OpretOversigtWindow extends Stage {
                 } else if (Controller.getDestillat(fad) == null) {
                     setText("Fad Information:\n" + "Fad nr: " + Controller.getFadNr(fad) + "    Fadstørelse: " + Controller.getFadStørrelse(fad) + "    levarandør: " + Controller.getLeverandør(fad)
                             + "    Er Brugt: " + Controller.isErBrugt(fad) + "\nFadtype: " + Controller.getFadtype(fad) + "    Træsort: " +
-                            Controller.getTræsort(fad) + "\nAntalGangeBrugt: " + Controller.getAntalGangeBrugt(fad) + "    LiterPåfyldt: " + Controller.getLiterPåfyldt(fad)
+                            Controller.getTræsort(fad) + "\nAntalGangeBrugt: " + Controller.getAntalGangeBrugt(fad) + "    Liter på fyldt: " + Controller.getLiterPåfyldt(fad) + "\nLager: " +
+                            Controller.getLagerNavn(fad)
                             + "\nInformation om destillat på fadet:\n" + "Fadet har intet Destilat");
                 } else {
                     Destillat destillat = Controller.getDestillat(fad);
                     setText("Fad Information\n" + "Fad nr: " + Controller.getFadNr(fad) + "    Fadstørelse: " + Controller.getFadStørrelse(fad) + "    levarandør: " + Controller.getLeverandør(fad)
                             + "    Er Brugt: " + Controller.isErBrugt(fad) + "\nFadtype: " + Controller.getFadtype(fad) + "    Træsort: " +
-                            Controller.getTræsort(fad) + "\nAntalGangeBrugt: " + Controller.getAntalGangeBrugt(fad) + "    LiterPåfyldt: " + Controller.getLiterPåfyldt(fad)
+                            Controller.getTræsort(fad) + "\nAntalGangeBrugt: " + Controller.getAntalGangeBrugt(fad) + "    LiterPåfyldt: " + Controller.getLiterPåfyldt(fad) + "\nLager: " +
+                            Controller.getLagerNavn(fad)
                             + "\nInformation om destillat på fadet\n" + "Alder: " +
                             ChronoUnit.YEARS.between(Controller.getDatoForPåfyldning(destillat).toLocalDate(), LocalDate.now()) + " År" +
                             "    Alkholprocent: " + Controller.getAlkoholprocent(destillat));

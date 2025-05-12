@@ -80,7 +80,7 @@ public class Lager {
      * pre: lagert må ikke være fyldt og fad må ikke være null
      *
      * @param fad
-     * @return
+     * @return String med placeringen af fadet på lageret
      */
     public String tilføjFadTilobevaringsplads(Fad fad) {
         obevaringsplads[aktuelleReol][aktuelleHylde][næsteLedigePlads] = fad;

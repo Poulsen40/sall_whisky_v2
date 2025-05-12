@@ -9,7 +9,6 @@ public class Fad {
     private Fadtype fadtype;
     private Træsort træsort;
     private int antalGangeBrugt;
-    private double literPåfyldt;
     // linkattribut til destilat
     private Destillat destillat;
     //linkattribut til lager
@@ -127,11 +126,10 @@ public class Fad {
     }
 
     public double getLiterPåfyldt() {
-        return literPåfyldt;
-    }
-
-    public void setLiterPåfyldt(double literPåfyldt) {
-        this.literPåfyldt = literPåfyldt;
+        if(destillat != null) {
+            return destillat.getSamletMængde();
+        }
+        return 0;
     }
 
     public Lager getLager() {
