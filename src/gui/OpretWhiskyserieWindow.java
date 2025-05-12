@@ -355,6 +355,9 @@ public class OpretWhiskyserieWindow extends Stage {
 
             Controller.setWhiskyInfo(whiskyserie.getDestillatMængder(),whiskyserie,mængdeVand,antalFlasker);
 
+            whiskyserie = null;
+            mængdeVand = 0;
+
 
         }
     }
