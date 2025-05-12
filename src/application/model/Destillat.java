@@ -63,6 +63,7 @@ public class Destillat {
             samletrentalkoholprocent += mængde * alkopct / 100;
             samletmængde += mængde;
         }
+        System.out.println(samletrentalkoholprocent + " " + samletmængde);
         return samletrentalkoholprocent/ samletmængde * 100;
     }
 
@@ -103,4 +104,7 @@ public class Destillat {
     public String toString() {
         return  "Antal liter " + getSamletMængde() + "\nSamlet alkoholprocenten i Distillat " + beregnalkoholprocent() + "\nInfo omkirng indkluderet batches " + udskrivBatches();
     }
+
+
+
 }

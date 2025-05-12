@@ -212,4 +212,147 @@ class ControllerTest {
         Exception exception = assertThrows(RuntimeException.class, () ->{Controller.createDestilat(LocalDateTime.now(),null);});
         assertEquals(exception.getMessage(),"Du skal vælge et fad");
     }
+
+    @Test
+    void TC32() {
+        Fad f = new Fad(65, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
+        Destillat d = new Destillat( LocalDateTime.of(2022, 1, 1, 2, 2), f);
+        Batch b = new Batch("Malt1", "Sort1", "Mark1", 300, 40, "ingen", Rygemateriale.GLØD);
+        Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
+
+        BatchMængde bm = Controller.createBatchMængde(100, d, b);
+        DestillatMængde dm = Controller.createDestillatMængde(300, w, d);
+
+        ArrayList<DestillatMængde> dmList = new ArrayList<>();
+        dmList.add(dm);
+
+        double result = Controller.beregnAlkoholProcentPåWhiskyserie(dmList, 0);
+        assertEquals(40, result);
+
+        System.out.println("TC32 PASSED " + result);
+    }
+
+    @Test
+    void TC33() {
+        Fad f = new Fad(65, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
+        Destillat d = new Destillat( LocalDateTime.of(2022, 1, 1, 2, 2), f);
+        Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
+        Batch b1 = new Batch("Malt1", "Sort1", "Mark1", 280, 55, "ingen", Rygemateriale.GLØD);
+        Batch b2 = new Batch("Malt2", "Sort2", "Mark2", 100, 71, "ingen", Rygemateriale.GLØD);
+
+        BatchMængde bm1 = Controller.createBatchMængde(280, d, b1);
+        BatchMængde bm2 = Controller.createBatchMængde(100, d, b2);
+
+        // Opret DestillatMængde for de to batches
+        DestillatMængde dm1 = Controller.createDestillatMængde(280, w, d);
+        DestillatMængde dm2 = Controller.createDestillatMængde(100, w, d);
+        ArrayList<DestillatMængde> dmList = new ArrayList<>();
+        dmList.add(dm1);
+        dmList.add(dm2);
+
+        double result = Controller.beregnAlkoholProcentPåWhiskyserie(dmList, 83);
+        assertEquals(48.59, result, 0.01);
+
+        System.out.println("TC33 PASSED " + result);
+    }
+
+    @Test
+    void TC34() {
+        Fad f = new Fad(65, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
+        Destillat d = new Destillat( LocalDateTime.of(2022, 1, 1, 2, 2), f);
+        Batch b = new Batch("Malt1", "Sort1", "Mark1", 50, 100, "ingen", Rygemateriale.GLØD);
+        Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
+
+        BatchMængde bm = Controller.createBatchMængde(50, d, b);
+        DestillatMængde dm = Controller.createDestillatMængde(50, w, d);
+
+        ArrayList<DestillatMængde> dmList = new ArrayList<>();
+        dmList.add(dm);
+
+        double result = Controller.beregnAlkoholProcentPåWhiskyserie(dmList, 50);
+        assertEquals(50.0, result);
+
+        System.out.println("TC32 PASSED " + result);
+    }
+
+    @Test
+    void TC35() {
+        Fad f = new Fad(65, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
+        Destillat d = new Destillat( LocalDateTime.of(2022, 1, 1, 2, 2), f);
+        Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
+        Batch b = new Batch("Malt1", "Sort1", "Mark1", -4, 50, "ingen", Rygemateriale.GLØD);
+
+        BatchMængde bm = Controller.createBatchMængde(-4, d, b);
+        DestillatMængde dm = Controller.createDestillatMængde(-4, w, d);
+
+        ArrayList<DestillatMængde> dmList = new ArrayList<>();
+        dmList.add(dm);
+
+        double result = Controller.beregnAlkoholProcentPåWhiskyserie(dmList, -3);
+        assertEquals(28.57, result,0.01);
+
+        System.out.println("TC35 PASSED " + result);
+    }
+
+    @Test
+    void TC36() {
+        Fad f = new Fad(65, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
+        Destillat d = new Destillat( LocalDateTime.of(2022, 1, 1, 2, 2), f);
+        Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
+        Batch b = new Batch("Malt1", "Sort1", "Mark1", 500, 20, "ingen", Rygemateriale.GLØD);
+
+        BatchMængde bm = Controller.createBatchMængde(500, d, b);
+        DestillatMængde dm = Controller.createDestillatMængde(500, w, d);
+
+        ArrayList<DestillatMængde> dmList = new ArrayList<>();
+        dmList.add(dm);
+
+        double result = Controller.beregnAlkoholProcentPåWhiskyserie(dmList, 1500);
+        assertEquals(5, result);
+
+        System.out.println("TC356PASSED " + result);
+    }
+
+    @Test
+    void TC37() {
+        Fad f = new Fad(65, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
+        Destillat d = new Destillat( LocalDateTime.of(2022, 1, 1, 2, 2), f);
+        Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
+        Batch b1 = new Batch("Malt1", "Sort1", "Mark1", 300, 60, "ingen", Rygemateriale.GLØD);
+        Batch b2 = new Batch("Malt2", "Sort2", "Mark2", 200, 10, "ingen", Rygemateriale.GLØD);
+
+        BatchMængde bm1 = Controller.createBatchMængde(300, d, b1);
+        BatchMængde bm2 = Controller.createBatchMængde(200, d, b2);
+
+        // Opret DestillatMængde for de to batches
+        DestillatMængde dm1 = Controller.createDestillatMængde(300, w, d);
+        DestillatMængde dm2 = Controller.createDestillatMængde(200, w, d);
+        ArrayList<DestillatMængde> dmList = new ArrayList<>();
+        dmList.add(dm1);
+        dmList.add(dm2);
+
+        double result = Controller.beregnAlkoholProcentPåWhiskyserie(dmList, 0);
+        assertEquals(40, result, 0.01);
+
+        System.out.println("TC37 PASSED " + result);
+    }
+
+    @Test
+    void TC38() {
+        Fad f = new Fad(65, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
+        Destillat d = new Destillat( LocalDateTime.of(2022, 1, 1, 2, 2), f);
+        Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
+        Batch b = new Batch("Malt1", "Sort1", "Mark1", 0, 35, "ingen", Rygemateriale.GLØD);
+
+        BatchMængde bm = Controller.createBatchMængde(0, d, b);
+        DestillatMængde dm = Controller.createDestillatMængde(0, w, d);
+
+        ArrayList<DestillatMængde> dmList = new ArrayList<>();
+        dmList.add(dm);
+
+        double result = Controller.beregnAlkoholProcentPåWhiskyserie(dmList, 107);
+        assertTrue(Double.isNaN(result), "Du kan ikke dividere med 0");
+
+        System.out.println("TC356PASSED " + result);
+    }
 }
