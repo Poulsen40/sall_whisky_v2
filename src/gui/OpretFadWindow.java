@@ -175,7 +175,7 @@ public class OpretFadWindow extends Stage {
                 System.out.println(f1);
                 hide();
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setContentText("Batch er oprettet");
+                alert.setContentText("Fad er oprettet");
                 alert.showAndWait();
             }
 
