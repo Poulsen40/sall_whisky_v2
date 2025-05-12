@@ -19,7 +19,6 @@ public class Batch {
     //Linkattribut
     private ArrayList<BatchMængde> batchMængder = new ArrayList<>();
 
-
     public Batch(String maltBach, String kornSort, String mark, double mængdeVæske, double alkoholPct, String kommentar, Rygemateriale rygemateriale) {
         this.maltBach = maltBach;
         this.kornSort = kornSort;
