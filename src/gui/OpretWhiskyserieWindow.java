@@ -311,9 +311,17 @@ public class OpretWhiskyserieWindow extends Stage {
                         lwlDestillat.getItems().remove(selectedDestillat);
                         Controller.fjernDestillat(selectedDestillat);
                         //Skal laves til controller
-                        selectedDestillat.getFad().fjernFraLager();
+                        setInfoBox();
+                        System.out.println(selectedDestillat.getFad());
+                        Fad fad = selectedDestillat.getFad();
+                        System.out.println(fad);
+                        System.out.println("lager tjek" +  fad.getLager());
+
+                        Controller.fjernFadFraLager(fad);
+                        Controller.fjernDestillat(selectedDestillat);
+                        lwlDestillat.getItems().remove(selectedDestillat);
+
                     }
-                    setInfoBox();
                 }
             }
         }
