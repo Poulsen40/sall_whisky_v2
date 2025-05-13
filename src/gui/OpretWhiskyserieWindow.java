@@ -307,7 +307,7 @@ public class OpretWhiskyserieWindow extends Stage {
                     txaDestilatInfo.setText(Controller.toStringFadOgDestillat(selectedDestillat));
 
                     txfTapMængde.clear();
-                    if (Controller.getSamletMængde(selectedDestillat) <= 0) {
+                    if (Controller.getSamletMængde(selectedDestillat) == 0) {
                         lwlDestillat.getItems().remove(selectedDestillat);
                         Controller.fjernDestillat(selectedDestillat);
                         //Skal laves til controller
