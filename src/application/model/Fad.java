@@ -143,6 +143,10 @@ public class Fad {
         return lager;
     }
 
+    public String getPlaceringPåLager() {
+        return placeringPåLager;
+    }
+
     @Override
     public String toString() {
         return "Fad{" +
