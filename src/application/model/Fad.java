@@ -9,6 +9,7 @@ public class Fad {
     private Fadtype fadtype;
     private Træsort træsort;
     private int antalGangeBrugt;
+    private String placeringPåLager;
     // linkattribut til destilat
     private Destillat destillat;
     //linkattribut til lager
@@ -56,6 +57,7 @@ public class Fad {
     public void fjernFraLager() {
         if (destillat.getSamletMængde() == 0) {
             lager.fjernFadFraObevaringspldas(this);
+            placeringPåLager = "";
         } else {
             throw new RuntimeException("Fadet kan ikke fjernes fra lageret da der stadig er noget destilliatmængde på den");
         }
@@ -68,6 +70,7 @@ public class Fad {
         String placering;
         setLager(lager);
         placering = lager.tilføjFadTilobevaringsplads(this);
+        placeringPåLager = placering;
         return placering;
     }
 
