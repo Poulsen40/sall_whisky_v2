@@ -551,7 +551,7 @@ public class OpretOversigtWindow extends Stage {
         );
 
         //Knapper
-        btnFiltrerWhiskey = new Button("wFiltrer");
+        btnFiltrerWhiskey = new Button("Filtrer");
         btnFiltrerWhiskey.setOnAction(Event -> {
                     TranslateTransition transision = new TranslateTransition(Duration.millis(600), Whiskysidebar);
                     TranslateTransition transitionUd = new TranslateTransition(Duration.millis(600), Whiskysidebar);
@@ -710,7 +710,7 @@ public class OpretOversigtWindow extends Stage {
             alert.setContentText("Vælg først en whisky serie du vil se historien på");
             alert.showAndWait();
         } else {
-            VisHistorieVindue dia = new VisHistorieVindue("Hej", lwlWhiskeyserier.getSelectionModel().getSelectedItem());
+            VisHistorieVindue dia = new VisHistorieVindue("Historie", lwlWhiskeyserier.getSelectionModel().getSelectedItem());
             dia.show();
         }
     }
