@@ -96,6 +96,8 @@ public class APP {
         Destillat d3 = Controller.createDestilat(LocalDateTime.of(2018, 1, 1, 2, 2), f3);
         BatchMængde bhnbbb = b3.createBatchMængde(200, d3);
 
+
+
 //        Whiskyserie whiskyserie = Controller.createWhiskyserie("Hej", LocalDate.now());
 //        DestillatMængde destillatMængde = d1.createDestillatMængde(100,whiskyserie);
 //        DestillatMængde destillatMængde1 = d2.createDestillatMængde(100,whiskyserie);

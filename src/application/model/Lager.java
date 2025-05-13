@@ -136,11 +136,27 @@ public class Lager {
 
             // Kun hvis det var det sidste fad, skal vi opdatere næste ledige plads
             if (fadI == sidsteI && fadJ == sidsteJ && fadK == sidsteK) {
-                aktuelleHylde = fadJ;
-                næsteLedigePlads = fadK;
+                // Find den nye sidste plads
+                boolean found = false;
+                for (int i = obevaringsplads.length - 1; i >= 0 && !found; i--) {
+                    for (int j = obevaringsplads[i].length - 1; j >= 0 && !found; j--) {
+                        for (int k = obevaringsplads[i][j].length - 1; k >= 0 && !found; k--) {
+                            if (obevaringsplads[i][j][k] != null) {
+                                aktuelleHylde = j;
+                                næsteLedigePlads = k + 1;
+                                found = true;
+                            }
+                        }
+                    }
+                }
+                if (!found) {
+                    aktuelleHylde = 0;
+                    næsteLedigePlads = 0;
+                }
             }
         }
     }
+
 
     @Override
     public String toString() {
