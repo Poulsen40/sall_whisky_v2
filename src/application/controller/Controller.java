@@ -514,9 +514,7 @@ public class Controller {
 
     public static void tælAntalGangeBrugt(Fad fad) {
         if (fad != null) {
-            System.out.println("antal gange før opdatering: " + fad.getAntalGangeBrugt());
             fad.setAntalGangeBrugt(fad.getAntalGangeBrugt() + 1);
-            System.out.println("antal gange før opdatering: " + fad.getAntalGangeBrugt());
 
         }
     }

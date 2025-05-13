@@ -63,7 +63,6 @@ public class Destillat {
             samletrentalkoholprocent += mængde * alkopct / 100;
             samletmængde += mængde;
         }
-        System.out.println(samletrentalkoholprocent + " " + samletmængde);
         return samletrentalkoholprocent/ samletmængde * 100;
     }
 
@@ -72,12 +71,10 @@ public class Destillat {
         for (BatchMængde batchMængde : batchMængder) {
             mængde += batchMængde.getMængde();
         }
-
         for (DestillatMængde destillatMængde : destillatMængder) {
             mængde -= destillatMængde.getMængde();
 
         }
-
         return mængde;
     }
 
