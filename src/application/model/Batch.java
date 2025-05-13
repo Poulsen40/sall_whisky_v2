@@ -2,6 +2,7 @@ package application.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Batch {
     private LocalDate startDato;
@@ -17,7 +18,7 @@ public class Batch {
     private static int batchNr = 1;
 
     //Linkattribut
-    private ArrayList<BatchMængde> batchMængder = new ArrayList<>();
+    private List<BatchMængde> batchMængder = new ArrayList<>();
 
     public Batch(String maltBach, String kornSort, String mark, double mængdeVæske, double alkoholPct, String kommentar, Rygemateriale rygemateriale) {
         this.maltBach = maltBach;

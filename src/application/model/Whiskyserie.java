@@ -2,20 +2,20 @@ package application.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Whiskyserie {
     private String serieNavn;
     private double alkoholPct;
     private double størrelse;
     private double vandMængde;
-    private Fad Fad;
     private LocalDate dato;
     private double antalFlasker;
     private WhiskyType whiskyType;
 
-    private ArrayList<Whiskyprodukt> whiskyprodukter = new ArrayList<>();
+    private List<Whiskyprodukt> whiskyprodukter = new ArrayList<>();
 
-    private ArrayList<DestillatMængde> destillatMængder = new ArrayList<>();
+    private List<DestillatMængde> destillatMængder = new ArrayList<>();
 
 
     public Whiskyserie(String serieNavn, LocalDate dato) {
@@ -76,9 +76,6 @@ public class Whiskyserie {
         this.antalFlasker = antalFlasker;
     }
 
-    public application.model.Fad getFad() {
-        return Fad;
-    }
 
     public void setSerieNavn(String serieNavn) {
         this.serieNavn = serieNavn;
@@ -94,10 +91,6 @@ public class Whiskyserie {
 
     public void setVandMængde(double vandMængde) {
         this.vandMængde = vandMængde;
-    }
-
-    public void setFad(application.model.Fad fad) {
-        Fad = fad;
     }
 
     public void setDato(LocalDate dato) {
