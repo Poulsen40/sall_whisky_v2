@@ -93,9 +93,9 @@ public class OpretOversigtWindow extends Stage {
         sliderMinAlder.setMinorTickCount(4);
         sliderMinAlder.setSnapToTicks(true);
         sliderMinAlder.setBlockIncrement(1);
-        Label lblMinAlder = new Label("Min destillat alder: " + (int)  sliderMinAlder.getValue());
+        Label lblMinAlder = new Label("Min destillat alder: " + (int) sliderMinAlder.getValue());
         sliderMinAlder.valueProperty().addListener((observable, oldValue, newValue) -> {
-            lblMinAlder.setText("Min destillat alder: " + newValue.intValue() );
+            lblMinAlder.setText("Min destillat alder: " + newValue.intValue());
         });
 
         sliderMaxAlder = new Slider(0, 50, 50);
@@ -106,7 +106,7 @@ public class OpretOversigtWindow extends Stage {
         sliderMaxAlder.setBlockIncrement(1);
         Label lblMaxAlder = new Label("Max destillat alder: " + (int) sliderMaxAlder.getValue());
         sliderMaxAlder.valueProperty().addListener((observable, oldValue, newValue) -> {
-            lblMaxAlder.setText("Max destillat alder: " +  newValue.intValue());
+            lblMaxAlder.setText("Max destillat alder: " + newValue.intValue());
         });
 
         sliderMinFadstørelse = new Slider(0, 650, 0);
@@ -117,7 +117,7 @@ public class OpretOversigtWindow extends Stage {
         sliderMinFadstørelse.setBlockIncrement(50);
         Label lblMinFadStørelse = new Label("Min fadstørelse: " + (int) sliderMinFadstørelse.getValue());
         sliderMinFadstørelse.valueProperty().addListener((observable, oldValue, newValue) -> {
-            lblMinFadStørelse.setText("Min fadstørelse: " +  newValue.intValue());
+            lblMinFadStørelse.setText("Min fadstørelse: " + newValue.intValue());
         });
 
         sliderMaxFadstørelse = new Slider(0, 650, 650);
@@ -128,7 +128,7 @@ public class OpretOversigtWindow extends Stage {
         sliderMaxFadstørelse.setBlockIncrement(50);
         Label lblMaxFadstørelse = new Label("Max fadstørelse: " + (int) sliderMaxFadstørelse.getValue());
         sliderMaxFadstørelse.valueProperty().addListener((observable, oldValue, newValue) -> {
-            lblMaxFadstørelse.setText("Max fadstørelse: " +  newValue.intValue());
+            lblMaxFadstørelse.setText("Max fadstørelse: " + newValue.intValue());
         });
 
         sliderMinGangeBrugt = new Slider(0, 3, 0);
@@ -139,9 +139,8 @@ public class OpretOversigtWindow extends Stage {
         sliderMinGangeBrugt.setBlockIncrement(1);
         Label lblMinGangeBrugt = new Label("Min gange brugt: " + (int) sliderMinGangeBrugt.getValue());
         sliderMinGangeBrugt.valueProperty().addListener((observable, oldValue, newValue) -> {
-            lblMinGangeBrugt.setText("Min gange brugt: " +  newValue.intValue());
+            lblMinGangeBrugt.setText("Min gange brugt: " + newValue.intValue());
         });
-
 
 
         sliderMaxGangeBrugt = new Slider(0, 3, 3);
@@ -152,7 +151,7 @@ public class OpretOversigtWindow extends Stage {
         sliderMaxGangeBrugt.setBlockIncrement(1);
         Label lblMaxGangeBrugt = new Label("Max gange brugt: " + (int) sliderMaxGangeBrugt.getValue());
         sliderMaxGangeBrugt.valueProperty().addListener((observable, oldValue, newValue) -> {
-            lblMaxGangeBrugt.setText("Max gange brugt: " +  newValue.intValue());
+            lblMaxGangeBrugt.setText("Max gange brugt: " + newValue.intValue());
         });
 
         // Labes i WhiskySidepanelet
@@ -165,7 +164,7 @@ public class OpretOversigtWindow extends Stage {
         sliderMinAlkopct.setBlockIncrement(1);
         Label lblMinalkoholpct = new Label("Min Alkohol pct: " + (int) sliderMinAlkopct.getValue());
         sliderMinAlkopct.valueProperty().addListener((observable, oldValue, newValue) -> {
-            lblMinalkoholpct.setText("Min Alkohol pct: " +  newValue.intValue());
+            lblMinalkoholpct.setText("Min Alkohol pct: " + newValue.intValue());
         });
 
         sliderMaxalkopct = new Slider(0, 100, 100);
@@ -177,7 +176,7 @@ public class OpretOversigtWindow extends Stage {
         sliderMaxalkopct.setBlockIncrement(1);
         Label LblMaxalkoholpct = new Label("Max Alkohol pct: " + (int) sliderMaxalkopct.getValue());
         sliderMaxalkopct.valueProperty().addListener((observable, oldValue, newValue) -> {
-            LblMaxalkoholpct.setText("Max Alkohol pct: " +  newValue.intValue());
+            LblMaxalkoholpct.setText("Max Alkohol pct: " + newValue.intValue());
         });
 
         sliderMinStørrelse = new Slider(0, 100, 0);
@@ -189,7 +188,7 @@ public class OpretOversigtWindow extends Stage {
         sliderMinStørrelse.setBlockIncrement(1);
         Label Lblminstørrelse = new Label("Min størrelse/mængden: " + (int) sliderMinStørrelse.getValue());
         sliderMinStørrelse.valueProperty().addListener((observable, oldValue, newValue) -> {
-            Lblminstørrelse.setText("Min størrelse/mængden: " +  newValue.intValue());
+            Lblminstørrelse.setText("Min størrelse/mængden: " + newValue.intValue());
         });
 
         slidermaxStørrelse = new Slider(0, 100, 100);
@@ -201,7 +200,7 @@ public class OpretOversigtWindow extends Stage {
         slidermaxStørrelse.setBlockIncrement(1);
         Label LblMaxStørrelse = new Label("Max størrelse/mængden: " + (int) slidermaxStørrelse.getValue());
         slidermaxStørrelse.valueProperty().addListener((observable, oldValue, newValue) -> {
-            LblMaxStørrelse.setText("Max størrelse/mængden: " +  newValue.intValue());
+            LblMaxStørrelse.setText("Max størrelse/mængden: " + newValue.intValue());
         });
 
         sliderminAntalFlasker = new Slider(0, 2000, 0);
@@ -213,7 +212,7 @@ public class OpretOversigtWindow extends Stage {
         sliderminAntalFlasker.setBlockIncrement(1);
         Label LblminAntalFlasker = new Label("Min Antal flasker: " + (int) sliderminAntalFlasker.getValue());
         sliderminAntalFlasker.valueProperty().addListener((observable, oldValue, newValue) -> {
-            LblminAntalFlasker.setText("Min Antal flasker: " +  newValue.intValue());
+            LblminAntalFlasker.setText("Min Antal flasker: " + newValue.intValue());
         });
 
         sliderManxantalflasker = new Slider(0, 2000, 2000);
@@ -225,7 +224,7 @@ public class OpretOversigtWindow extends Stage {
         sliderManxantalflasker.setBlockIncrement(1);
         Label LblmaxAntalFlasker = new Label("Max Antal flakser: " + (int) sliderManxantalflasker.getValue());
         sliderManxantalflasker.valueProperty().addListener((observable, oldValue, newValue) -> {
-            LblmaxAntalFlasker.setText("Max Antal flakser: " +  newValue.intValue());
+            LblmaxAntalFlasker.setText("Max Antal flakser: " + newValue.intValue());
         });
 
         sliderminAlderForWhiskeyserien = new Slider(0, 20, 0);
@@ -237,7 +236,7 @@ public class OpretOversigtWindow extends Stage {
         sliderminAlderForWhiskeyserien.setBlockIncrement(1);
         Label LblMinårForWhiskyserien = new Label("Min År på Whiskyeserien: " + (int) sliderminAlderForWhiskeyserien.getValue());
         sliderminAlderForWhiskeyserien.valueProperty().addListener((observable, oldValue, newValue) -> {
-            LblMinårForWhiskyserien.setText("Min År på Whiskyeserien: " +  newValue.intValue());
+            LblMinårForWhiskyserien.setText("Min År på Whiskyeserien: " + newValue.intValue());
         });
 
         slidermaxAlderForWhiskySerien = new Slider(0, 20, 20);
@@ -249,9 +248,8 @@ public class OpretOversigtWindow extends Stage {
         slidermaxAlderForWhiskySerien.setBlockIncrement(1);
         Label LblMaxÅrForWhiskySerien = new Label("Max År på Whiskyeserien: " + (int) slidermaxAlderForWhiskySerien.getValue());
         slidermaxAlderForWhiskySerien.valueProperty().addListener((observable, oldValue, newValue) -> {
-            LblMaxÅrForWhiskySerien.setText("Max År på Whiskyeserien: " +  newValue.intValue());
+            LblMaxÅrForWhiskySerien.setText("Max År på Whiskyeserien: " + newValue.intValue());
         });
-
 
 
         Label lblSkalVæreFyldt = new Label("Skal fadet være fyldt?");
@@ -278,20 +276,20 @@ public class OpretOversigtWindow extends Stage {
 
         VBox.setMargin(btnFiltrerMedValg, new Insets(100, 0, 0, 0));
 
-        HBox sidebarRydVis = new HBox(btnRydvalgFad , btnFiltrerMedValg);
-        HBox.setMargin(btnRydvalgFad,new Insets(100,0,0,0));
-        HBox.setMargin(btnFiltrerMedValg,new Insets(100,0,0,0));
+        HBox sidebarRydVis = new HBox(btnRydvalgFad, btnFiltrerMedValg);
+        HBox.setMargin(btnRydvalgFad, new Insets(100, 0, 0, 0));
+        HBox.setMargin(btnFiltrerMedValg, new Insets(100, 0, 0, 0));
         sidebarRydVis.setSpacing(260);
-        VBox.setMargin(sidebarRydVis,new Insets(65,0,0,0));
+        VBox.setMargin(sidebarRydVis, new Insets(65, 0, 0, 0));
 
-        HBox sidebarRydVisWhiskey = new HBox(btnRydValgWhiskey , BtnVis);
-        HBox.setMargin(btnRydValgWhiskey,new Insets(100,0,0,0));
-        HBox.setMargin(BtnVis,new Insets(100,0,0,0));
+        HBox sidebarRydVisWhiskey = new HBox(btnRydValgWhiskey, BtnVis);
+        HBox.setMargin(btnRydValgWhiskey, new Insets(100, 0, 0, 0));
+        HBox.setMargin(BtnVis, new Insets(100, 0, 0, 0));
         sidebarRydVisWhiskey.setSpacing(260);
 
 
         Sidebar.getChildren().addAll(lblMinAlder, sliderMinAlder, lblMaxAlder, sliderMaxAlder, lblMinFadStørelse, sliderMinFadstørelse, lblMaxFadstørelse,
-                sliderMaxFadstørelse, lblMinGangeBrugt, sliderMinGangeBrugt, lblMaxGangeBrugt, sliderMaxGangeBrugt, hBoxskalværefyldt, btnFadType, btnTræsort, btnLeverandør,sidebarRydVis);
+                sliderMaxFadstørelse, lblMinGangeBrugt, sliderMinGangeBrugt, lblMaxGangeBrugt, sliderMaxGangeBrugt, hBoxskalværefyldt, btnFadType, btnTræsort, btnLeverandør, sidebarRydVis);
 
         Whiskysidebar.getChildren().addAll(lblMinalkoholpct, sliderMinAlkopct, LblMaxalkoholpct, sliderMaxalkopct, Lblminstørrelse, sliderMinStørrelse, LblMaxStørrelse, slidermaxStørrelse
                 , LblminAntalFlasker, sliderminAntalFlasker, LblmaxAntalFlasker, sliderManxantalflasker,
@@ -624,7 +622,7 @@ public class OpretOversigtWindow extends Stage {
         );
 
         btnRydvalgFad.setOnAction(Event -> resetFadSidebar()
-          );
+        );
 
 
         btnFiltrerMedValg.setOnAction(Event -> filtrerFade());
@@ -707,10 +705,17 @@ public class OpretOversigtWindow extends Stage {
     }
 
     public void visHistorie() {
-        //TODO
+        if (lwlWhiskeyserier.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Vælg først en whisky serie du vil se historien på");
+            alert.showAndWait();
+        } else {
+            VisHistorieVindue dia = new VisHistorieVindue("Hej", lwlWhiskeyserier.getSelectionModel().getSelectedItem());
+            dia.show();
+        }
     }
 
-    public void setLwlFadeTekstLayout(){
+    public void setLwlFadeTekstLayout() {
         lwlFade.setCellFactory(lw -> new ListCell<Fad>() {
             @Override
             protected void updateItem(Fad fad, boolean empty) {
@@ -738,7 +743,7 @@ public class OpretOversigtWindow extends Stage {
         });
     }
 
-    public void setLwlwhiskeyserierTekstLayout(){
+    public void setLwlwhiskeyserierTekstLayout() {
         lwlWhiskeyserier.setCellFactory(lw -> new ListCell<Whiskyserie>() {
             @Override
             protected void updateItem(Whiskyserie whiskyserie, boolean empty) {
@@ -747,16 +752,16 @@ public class OpretOversigtWindow extends Stage {
                 if (empty || whiskyserie == null) {
                     setText(null);
                 } else {
-                    setText("WhiskeySerie infromation:\nSerienavn: " + Controller.getSerieNavn(whiskyserie) + "    Alkoholprocent: " + String.format("%.2f%%",Controller.getAlkoholPct(whiskyserie)) +
-                            "    Mængde: " + Controller.getStørrelse(whiskyserie) + "L" + "\nAlder: " + ChronoUnit.YEARS.between(Controller.getDato(whiskyserie),LocalDate.now()) + " År" + "    Antal flasker: " +
-                            + Controller.getAntalFlasker(whiskyserie) + "    Whiskeytype: " + Controller.getWhiskyType(whiskyserie));
+                    setText("WhiskeySerie infromation:\nSerienavn: " + Controller.getSerieNavn(whiskyserie) + "    Alkoholprocent: " + String.format("%.2f%%", Controller.getAlkoholPct(whiskyserie)) +
+                            "    Mængde: " + Controller.getStørrelse(whiskyserie) + "L" + "\nAlder: " + ChronoUnit.YEARS.between(Controller.getDato(whiskyserie), LocalDate.now()) + " År" + "    Antal flasker: " +
+                            +Controller.getAntalFlasker(whiskyserie) + "    Whiskeytype: " + Controller.getWhiskyType(whiskyserie));
                 }
             }
         });
     }
 
     //Skal slut dato med bliver den nogensinde sat og brugt?
-    public void setLwlBatchesTekstLayout(){
+    public void setLwlBatchesTekstLayout() {
         lwlBatches.setCellFactory(lw -> new ListCell<Batch>() {
             @Override
             protected void updateItem(Batch batch, boolean empty) {
@@ -765,7 +770,7 @@ public class OpretOversigtWindow extends Stage {
                 if (empty || batch == null) {
                     setText(null);
                 } else {
-                    setText("Batch information:\nBatch Id: " + Controller.getBatchID(batch) + "    Alkoholprocent: " + String.format("%.2f%%",Controller.getAlkoholPct(batch)) +
+                    setText("Batch information:\nBatch Id: " + Controller.getBatchID(batch) + "    Alkoholprocent: " + String.format("%.2f%%", Controller.getAlkoholPct(batch)) +
                             "    Mængde: " + Controller.getMængdeVæske(batch) + "L" + "\nMark: " + Controller.getMark(batch) + " Kornsort: " + Controller.getKornSort(batch) + "    Maltbatch: " +
                             Controller.getMaltBach(batch) + "\nRygemateriale: " + Controller.getRygemateriale(batch) + "    Startdato: "
                             + Controller.getStartDato(batch) + "    Slutdato: " + Controller.getSlutDato(batch));
@@ -791,7 +796,7 @@ public class OpretOversigtWindow extends Stage {
         lwlFade.getItems().setAll(Controller.getFade());
     }
 
-    public void resetWhiskeySidebar(){
+    public void resetWhiskeySidebar() {
         sliderMinAlkopct.setValue(0);
         sliderMaxalkopct.setValue(sliderMaxalkopct.getMax());
         sliderMinStørrelse.setValue(0);
@@ -805,5 +810,13 @@ public class OpretOversigtWindow extends Stage {
         cbcaststrenght.setSelected(false);
         cbmaltstrengt.setSelected(false);
         lwlWhiskeyserier.getItems().setAll(Controller.getWhiskyserie());
+    }
+
+
+
+    // Bruger denne metode til og resette min lwlWhiskeyserier når jeg trykker afbryd i min visHistorieVindue
+
+    public static void resetwhikskylistview(){
+        lwlWhiskeyserier.getSelectionModel().clearSelection();
     }
 }

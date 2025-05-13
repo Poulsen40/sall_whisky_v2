@@ -3,6 +3,10 @@ package application.controller;
 import application.model.*;
 import storage.Storage;
 
+import javax.imageio.ImageTranscoder;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -10,6 +14,7 @@ import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class Controller {
@@ -157,53 +162,101 @@ public class Controller {
         return destillat.getSamletMængde();
     }
 
-    public static ArrayList<Whiskyprodukt> getWhiskyprodukter() { return Storage.getWhiskyprodukter(); }
+    public static ArrayList<Whiskyprodukt> getWhiskyprodukter() {
+        return Storage.getWhiskyprodukter();
+    }
 
-    public static int getFadNr(Fad fad) { return fad.getFadNr(); }
+    public static int getFadNr(Fad fad) {
+        return fad.getFadNr();
+    }
 
-    public static Træsort getTræsort(Fad fad) { return fad.getTræsort(); }
+    public static Træsort getTræsort(Fad fad) {
+        return fad.getTræsort();
+    }
 
-    public static String getLeverandør(Fad fad) { return fad.getLevarandør(); }
+    public static String getLeverandør(Fad fad) {
+        return fad.getLevarandør();
+    }
 
-    public static int getAntalGangeBrugt(Fad fad) { return fad.getAntalGangeBrugt(); }
+    public static int getAntalGangeBrugt(Fad fad) {
+        return fad.getAntalGangeBrugt();
+    }
 
-    public static double getLiterPåfyldt(Fad fad) { return fad.getLiterPåfyldt(); }
+    public static double getLiterPåfyldt(Fad fad) {
+        return fad.getLiterPåfyldt();
+    }
 
-    public static Boolean isErBrugt(Fad fad) { return fad.isErBrugt(); }
+    public static Boolean isErBrugt(Fad fad) {
+        return fad.isErBrugt();
+    }
 
-    public static Fadtype getFadtype(Fad fad) { return fad.getFadtype(); }
+    public static Fadtype getFadtype(Fad fad) {
+        return fad.getFadtype();
+    }
 
-    public static LocalDateTime getDatoForPåfyldning(Destillat destillat) { return destillat.getDatoForPåfyldning(); }
+    public static LocalDateTime getDatoForPåfyldning(Destillat destillat) {
+        return destillat.getDatoForPåfyldning();
+    }
 
-    public static Double getAlkoholprocent (Destillat destillat) { return  destillat.beregnalkoholprocent(); }
+    public static Double getAlkoholprocent(Destillat destillat) {
+        return destillat.beregnalkoholprocent();
+    }
 
-    public static double getAntalFlasker(Whiskyserie whiskyserie) { return whiskyserie.getAntalFlasker(); }
+    public static double getAntalFlasker(Whiskyserie whiskyserie) {
+        return whiskyserie.getAntalFlasker();
+    }
 
-    public static double getStørrelse(Whiskyserie whiskyserie) { return  whiskyserie.getStørrelse(); }
+    public static double getStørrelse(Whiskyserie whiskyserie) {
+        return whiskyserie.getStørrelse();
+    }
 
-    public static String getSerieNavn(Whiskyserie whiskyserie) { return whiskyserie.getSerieNavn(); }
+    public static String getSerieNavn(Whiskyserie whiskyserie) {
+        return whiskyserie.getSerieNavn();
+    }
 
-    public static WhiskyType getWhiskyType(Whiskyserie whiskyserie) { return  whiskyserie.getWhiskyType(); }
+    public static WhiskyType getWhiskyType(Whiskyserie whiskyserie) {
+        return whiskyserie.getWhiskyType();
+    }
 
-    public static LocalDate getDato(Whiskyserie whiskyserie) { return whiskyserie.getDato(); }
+    public static LocalDate getDato(Whiskyserie whiskyserie) {
+        return whiskyserie.getDato();
+    }
 
-    public static double getAlkoholPct(Whiskyserie whiskyserie) { return whiskyserie.getAlkoholPct(); }
+    public static double getAlkoholPct(Whiskyserie whiskyserie) {
+        return whiskyserie.getAlkoholPct();
+    }
 
-    public static int getBatchID(Batch batch) { return  batch.getBatchID(); }
+    public static int getBatchID(Batch batch) {
+        return batch.getBatchID();
+    }
 
-    public static String getMaltBach(Batch batch) { return batch.getMaltBach(); }
+    public static String getMaltBach(Batch batch) {
+        return batch.getMaltBach();
+    }
 
-    public static LocalDate getStartDato(Batch batch) { return batch.getStartDato(); }
+    public static LocalDate getStartDato(Batch batch) {
+        return batch.getStartDato();
+    }
 
-    public static LocalDate getSlutDato(Batch batch) { return batch.getSlutDato(); }
+    public static LocalDate getSlutDato(Batch batch) {
+        return batch.getSlutDato();
+    }
 
-    public static Rygemateriale getRygemateriale(Batch batch) { return batch.getRygemateriale(); }
+    public static Rygemateriale getRygemateriale(Batch batch) {
+        return batch.getRygemateriale();
+    }
 
-    public static double getAlkoholPct(Batch batch) { return batch.getAlkoholPct(); }
+    public static double getAlkoholPct(Batch batch) {
+        return batch.getAlkoholPct();
+    }
 
-    public static String getMark(Batch batch) { return batch.getMark(); }
+    public static String getMark(Batch batch) {
+        return batch.getMark();
+    }
 
-    public static String getKornSort(Batch batch) { return batch.getKornSort(); }
+    public static String getKornSort(Batch batch) {
+        return batch.getKornSort();
+    }
 
     public static String getLagerNavn(Fad fad) {
         if (fad.getLager() != null) {
@@ -467,7 +520,7 @@ public class Controller {
     public static List<Whiskyserie> whiskeySøgning(double minAlkoholProcent, double maxAlkoholProcent,
                                                    double minMængde, double maxMængde,
                                                    int minAntalFlasker, int maxAntalFlasker, int minAlder, int maxAlder,
-                                                   List<WhiskyType> whiskeyTyper ) {
+                                                   List<WhiskyType> whiskeyTyper) {
 
         List<Whiskyserie> whiskyserier = Controller.getWhiskyserie();
         LocalDateTime nu = LocalDateTime.now();
@@ -477,11 +530,50 @@ public class Controller {
                 .filter(w -> w.getStørrelse() >= minMængde && w.getStørrelse() <= maxMængde)
                 .filter(w -> w.getAntalFlasker() >= minAntalFlasker && w.getAntalFlasker() <= maxAntalFlasker)
                 .filter(w -> {
-                    long alder = ChronoUnit.YEARS.between(w.getDato(),nu);
-                    return alder >= minAlder && alder <= maxAlder; })
+                    long alder = ChronoUnit.YEARS.between(w.getDato(), nu);
+                    return alder >= minAlder && alder <= maxAlder;
+                })
                 .filter(w -> whiskeyTyper == null || whiskeyTyper.isEmpty() || whiskeyTyper.contains(w.getWhiskyType()))
                 .collect(Collectors.toList());
 
+    }
+
+    public static StringBuilder info(Whiskyserie whiskyserie) {
+        StringBuilder sb = new StringBuilder();
+        StringBuilder sbfad = new StringBuilder();
+        for (DestillatMængde destillatMængde : whiskyserie.getDestillatMængder()) {
+            sbfad.append("Antal DestillatMængde: " + destillatMængde.getMængde() + " har lagt på dette fad: Fadtype:" + destillatMængde.getDestillat().getFad().getFadtype() + " Træsort: "
+                    + destillatMængde.getDestillat().getFad().getTræsort() + " Oprindelse: " + destillatMængde.getDestillat().getFad().getLevarandør() + "\n");
+        }
+
+        StringBuilder sbbatch = new StringBuilder();
+        for (DestillatMængde destillatMængde : whiskyserie.getDestillatMængder()) {
+            for (BatchMængde batchMængde : destillatMængde.getDestillat().getBatchMængder()) {
+                sbbatch.append("BatchInformationer: " + "ID: " + batchMængde.getBatch().getBatchID() + " \n Opdyrket mark" + batchMængde.getBatch().getMark() + "\nKornsort:" +
+                        " " + batchMængde.getBatch().getKornSort() + "\nMaltBach: " + batchMængde.getBatch().getMaltBach() + "\nrygemateriale:  " + batchMængde.getBatch().getRygemateriale() + "\n");
+            }
+        }
+        sb.append("WhiskySerieoinfo: \nNavn: " + whiskyserie.getSerieNavn() + "\nType: " + whiskyserie.getWhiskyType() + " \nAlkoholpct: " + whiskyserie.getAlkoholPct() + " \nAntalFlasker:" +
+                whiskyserie.getAntalFlasker() + " \nTilsat vand: " + whiskyserie.getVandMængde() + " \nÅrgang: " + whiskyserie.getDato()
+                + "\n \n" + "FadInfo: " + sbfad + "\n" + sbbatch + "\n");
+
+        return sb;
+    }
+
+    public static void printTilFil(Whiskyserie whiskyserie) {
+
+
+        File file = new File("Print.txt");
+
+        try {
+            PrintWriter printWriter = new PrintWriter(file);
+            printWriter.println(info(whiskyserie));
+            printWriter.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Ingen fil fundet");
+
+        }
     }
 }
 

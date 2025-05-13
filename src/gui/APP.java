@@ -66,6 +66,10 @@ public class APP {
         BatchMængde bbbbb= b1.createBatchMængde(200, d2);
         System.out.println("d2 alko" + d2.beregnalkoholprocent());
 
+        Whiskyserie ws1 = Controller.createWhiskyserie("Hej",LocalDate.now());
+
+        DestillatMængde dm = Controller.createDestillatMængde(40,ws1,d2);
+
 
         Destillat d3 = Controller.createDestilat(LocalDateTime.of(2018, 1, 1, 2, 2), f3);
         BatchMængde bhnbbb = b3.createBatchMængde(200, d3);
