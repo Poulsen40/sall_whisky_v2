@@ -3,6 +3,7 @@ package application.controller;
 
 import application.model.*;
 //import org.junit.Assert;
+import gui.APP;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import storage.Storage;
@@ -21,31 +22,41 @@ import static org.junit.jupiter.api.Assertions.*;
 class ControllerTest {
 
 
-    List<Fad> fade = List.of(
 
-            // Fyldte Fade
-            Controller.createFad(50, "SPANIEN", true, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0),
-            Controller.createFad(200, "USA", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 1),
-            Controller.createFad(650, "SPANIEN", true, Fadtype.EXBOURBON, Træsort.EGETRÆ, 3),
-            Controller.createFad(200, "USA", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 2),
-            Controller.createFad(100, "FRANKRIG", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 0),
-            Controller.createFad(650, "USA", true, Fadtype.EXBOURBON, Træsort.EGETRÆ, 2),
-            Controller.createFad(50, "USA", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 1),
-            Controller.createFad(200, "SPANIEN", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 3),
+    @BeforeEach
+    void setup() {
+        Storage storage = new Storage();
+        Controller.setStorage(storage);
 
-            //Tomme Fade :)
-            Controller.createFad(300, "USA", true, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0),
-            Controller.createFad(400, "SPANIEN", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 1),
-            Controller.createFad(650, "USA", false, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 3)
-    );
-    Destillat d1 = new Destillat(LocalDateTime.now().minusYears(2), fade.getFirst());
-    Destillat d2 = new Destillat(LocalDateTime.now().minusYears(5), fade.get(1));
-    Destillat d3 = new Destillat(LocalDateTime.now().minusYears(8), fade.get(2));
-    Destillat d4 = new Destillat(LocalDateTime.now().minusYears(10), fade.get(3));
-    Destillat d5 = new Destillat(LocalDateTime.now().minusYears(3), fade.get(4));
-    Destillat d6 = new Destillat(LocalDateTime.now().minusYears(0), fade.get(5));
-    Destillat d7 = new Destillat(LocalDateTime.now().minusYears(3), fade.get(6));
-    Destillat d8 = new Destillat(LocalDateTime.now().minusYears(4), fade.get(7));
+        List<Fad> fade = List.of(
+
+                // Fyldte Fade
+                Controller.createFad(50, "SPANIEN", true, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0),
+                Controller.createFad(200, "USA", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 1),
+                Controller.createFad(650, "SPANIEN", true, Fadtype.EXBOURBON, Træsort.EGETRÆ, 3),
+                Controller.createFad(200, "USA", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 2),
+                Controller.createFad(100, "FRANKRIG", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 0),
+                Controller.createFad(650, "USA", true, Fadtype.EXBOURBON, Træsort.EGETRÆ, 2),
+                Controller.createFad(50, "USA", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 1),
+                Controller.createFad(200, "SPANIEN", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 3),
+
+                //Tomme Fade :)
+                Controller.createFad(300, "USA", true, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0),
+                Controller.createFad(400, "SPANIEN", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 1),
+                Controller.createFad(650, "USA", false, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 3)
+        );
+        Destillat d1 = new Destillat(LocalDateTime.now().minusYears(2), fade.getFirst());
+        Destillat d2 = new Destillat(LocalDateTime.now().minusYears(5), fade.get(1));
+        Destillat d3 = new Destillat(LocalDateTime.now().minusYears(8), fade.get(2));
+        Destillat d4 = new Destillat(LocalDateTime.now().minusYears(10), fade.get(3));
+        Destillat d5 = new Destillat(LocalDateTime.now().minusYears(3), fade.get(4));
+        Destillat d6 = new Destillat(LocalDateTime.now().minusYears(0), fade.get(5));
+        Destillat d7 = new Destillat(LocalDateTime.now().minusYears(3), fade.get(6));
+        Destillat d8 = new Destillat(LocalDateTime.now().minusYears(4), fade.get(7));
+    }
+
+
+
 
 
     @Test
