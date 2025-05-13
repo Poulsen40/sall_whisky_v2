@@ -11,10 +11,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import javax.xml.validation.TypeInfoProvider;
-import java.awt.font.ImageGraphicAttribute;
-import java.util.Locale;
-
 public class OpretFadWindow extends Stage {
     public OpretFadWindow(String title) {
 
@@ -34,11 +30,9 @@ public class OpretFadWindow extends Stage {
 
     private static TextField txfFadStørrelse;
     private static TextField txfLeverandør;
-    private static TextField txfErBrugt;
     private static String fadtype;
     private static String træsort;
     private static TextField txfantalGangeBrugt;
-    private static TextField txfLiterPåfyldt;
     private static CheckBox brugtJa = new CheckBox("Ja");
     private static CheckBox brugtNej = new CheckBox("Nej");
     private static int antalGange;
@@ -65,6 +59,9 @@ public class OpretFadWindow extends Stage {
         Label lblAntalGangeBrugt = new Label("Antal gange brugt");
         pane.add(lblAntalGangeBrugt, 0, 4);
 
+        Label lblTræsort = new Label("Træsort");
+        pane.add(lblTræsort, 0, 7);
+
 
         txfFadStørrelse = new TextField();
         pane.add(txfFadStørrelse, 1, 1);
@@ -75,23 +72,29 @@ public class OpretFadWindow extends Stage {
         txfantalGangeBrugt = new TextField();
         pane.add(txfantalGangeBrugt, 1, 4);
 
-
+        //Checkboxes
         brugtJa = new CheckBox("Ja");
         pane.add(brugtJa, 1, 3);
         GridPane.setHalignment(brugtJa, HPos.LEFT);
         brugtJa.setFocusTraversable(false);
-
-        brugtJa.setOnMouseClicked(event -> {
-            brugtNej.setDisable(brugtJa.isSelected());
+        brugtJa.selectedProperty().addListener((obs, oldSelection, newSelection) -> {
+            brugtNej.setDisable(true);
+            if (!newSelection) {
+                brugtNej.setDisable(false);
+            }
         });
 
         brugtNej = new CheckBox("nej");
         pane.add(brugtNej, 1, 3);
         GridPane.setHalignment(brugtNej, HPos.CENTER);
         brugtNej.setFocusTraversable(false);
-        brugtNej.setOnMouseClicked(event -> {
+        brugtNej.selectedProperty().addListener((obs, oldSelection, newSelection) -> {
             brugtJa.setDisable(brugtNej.isSelected());
             txfantalGangeBrugt.setDisable(true);
+            if (!newSelection) {
+                brugtJa.setDisable(false);
+                txfantalGangeBrugt.setDisable(false);
+            }
         });
 
 
@@ -107,8 +110,7 @@ public class OpretFadWindow extends Stage {
             fadtype = comboBoxFadtype.getValue();
         });
 
-        Label lblTræsort = new Label("Træsort");
-        pane.add(lblTræsort, 0, 7);
+
         ComboBox<String> comboBoxTræsort = new ComboBox<>();
         comboBoxTræsort.getItems().add("EGETRÆ");
         comboBoxTræsort.setValue("Vælg træsort");
@@ -117,87 +119,73 @@ public class OpretFadWindow extends Stage {
             træsort = comboBoxTræsort.getValue();
         });
 
+        //Knapper
         Button opretFad = new Button("Opret fad");
         pane.add(opretFad, 1, 8);
         opretFad.setOnAction(event -> opretFad());
         GridPane.setHalignment(opretFad, HPos.RIGHT);
 
-
         Button afbrudFad = new Button("Afbryd");
-        pane.add(afbrudFad, 0, 8);
-
-        afbrudFad.setOnAction(event -> {
+        pane.add(afbrudFad, 0, 8);afbrudFad.setOnAction(event ->
+        {
             Stage stage = (Stage) afbrudFad.getScene().getWindow();
             stage.close(); // lukker dialogen
         });
 
     }
 
+    private void ShowAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
     public void opretFad() {
 
         String fadstørrelse = txfFadStørrelse.getText().trim();
         String leverandør = txfLeverandør.getText().trim();
-        if (!txfFadStørrelse.getText().trim().matches("\\d+(\\.\\d+)?")) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Fadstørrelse skal være et tal");
-            alert.showAndWait();
+
+        if (fadstørrelse.isEmpty() || leverandør.isEmpty()
+                || txfantalGangeBrugt == null) {
+            ShowAlert("Alle felter skal udfyldles");
             return;
         }
+        if (!brugtNej.isSelected() && !brugtJa.isSelected()) {
+            ShowAlert("Du skal vælge om fadet har været brugt før");
+            return;
+        }
+        if (!txfFadStørrelse.getText().trim().matches("\\d+(\\.\\d+)?") || Integer.parseInt(fadstørrelse) <= 0) {
+            ShowAlert("Fadstørrelse skal være et tal over 0");
+            return;
+        }
+
+        antalGange = 0;
+        int fadStørrelse = Integer.parseInt(txfFadStørrelse.getText().trim());
+
 
         if (brugtJa.isSelected()) {
             if (txfantalGangeBrugt.getText() != null && !txfantalGangeBrugt.getText().trim().matches("\\d+(\\.\\d+)?")) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Antal gange brugt skal være et tal");
-                alert.showAndWait();
+                ShowAlert("Antal gange brugt skal være et tal");
                 return;
-
+            }
+            if (Integer.parseInt(txfantalGangeBrugt.getText().trim()) == 0) {
+                ShowAlert("Et fad skal minimun have været brugt 1 gang før");
+                return;
+            }
+            if (Integer.parseInt(txfantalGangeBrugt.getText().trim()) > 2) {
+                ShowAlert("Et fad kan højest være brugt 2 gange");
+                return;
             } else {
                 antalGange = Integer.parseInt(txfantalGangeBrugt.getText().trim());
-                if (fadstørrelse.isEmpty() || leverandør.isEmpty()
-                        || txfantalGangeBrugt == null) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("Alle felter skal udfyldles");
-                    alert.showAndWait();
-                    return;
-                }
             }
         }
 
-        if (brugtNej.isSelected()) {
-            antalGange = 0;
-            if (fadstørrelse.isEmpty() || leverandør.isEmpty()) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Alle felter skal udfyldles");
-                alert.showAndWait();
-                return;
-            }
-        }
-
-        int fadStørrelse = Integer.parseInt(txfFadStørrelse.getText().trim());
-
-        if (antalGange > 2) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Et fad kan højest være brugt 2 gange");
-            alert.showAndWait();
+        if (!leverandør.isEmpty() && leverandør.matches("\\d+")) {
+            ShowAlert("Leverandør skal skrives med bogstaver");
             return;
         }
-        if (fadStørrelse <= 0) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Fadstørrelse skal være over 0");
-            alert.showAndWait();
-            return;
-        }
-        if (fadtype == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Fadtype skal være valgt");
-            alert.showAndWait();
-            return;
-        }
-        if (træsort == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Træsort skal være valgt");
-            alert.showAndWait();
-            return;
+        if (fadtype == null || træsort == null) {
+            ShowAlert("Fadtype og træsort skal være valgt");
         } else {
             boolean brugt = false;
             if (brugtNej.isSelected()) {
@@ -213,10 +201,7 @@ public class OpretFadWindow extends Stage {
             alert.showAndWait();
             hide();
             System.out.println(fad);
-
         }
-
-
     }
 }
 
