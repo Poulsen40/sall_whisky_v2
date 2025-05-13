@@ -17,23 +17,24 @@ public class Controller {
 
     //skal bruges til load og save
     private static Storage storage;
-//
-//
-//    public static void setStorage(Storage storage){
-//        Controller.storage = storage;
-//    }
+
+    public static void setStorage(Storage storage){
+        Controller.storage = storage;
+    }
 
 
     //Create metoder
     public static Batch createBatch(String maltBach, String kornSort, String mark, double mængdeVæske, double alkoholPct, String kommentar, Rygemateriale rygemateriale) {
         Batch batch = new Batch(maltBach, kornSort, mark, mængdeVæske, alkoholPct, kommentar, rygemateriale);
-        Storage.addBatch(batch);
+        storage.addBatch(batch);
+        batch.setBatchID(storage.batchId());
         return batch;
     }
 
     public static Fad createFad(double fadStørrelse, String levarandør, boolean erBrugt, Fadtype fadtype, Træsort træsort, int antalGangeBrugt) {
         Fad fad = new Fad(fadStørrelse, levarandør, erBrugt, fadtype, træsort, antalGangeBrugt);
-        Storage.addFad(fad);
+        storage.addFad(fad);
+        fad.setFadNr(storage.fadId());
         return fad;
     }
 
@@ -50,7 +51,7 @@ public class Controller {
             throw new IllegalArgumentException("Du kan ikke vælge et fad der allerede er fyldt");
         } else {
             Destillat destillat = new Destillat(datoForPåfyldning, fad);
-            Storage.addDestillat(destillat);
+            storage.addDestillat(destillat);
             return destillat;
         }
     }
@@ -60,7 +61,7 @@ public class Controller {
             throw new IllegalArgumentException("Du skal give din whisky serie et navn");
         } else {
             Whiskyserie whiskyserie = new Whiskyserie(serieNavn, dato);
-            Storage.addWhiskyserie(whiskyserie);
+            storage.addWhiskyserie(whiskyserie);
             return whiskyserie;
         }
     }
@@ -72,7 +73,8 @@ public class Controller {
 
     public static Whiskyprodukt createWhiskyprodukt(Whiskyserie whiskyserie, double flaskeStr) {
         Whiskyprodukt whiskyprodukt = whiskyserie.createWhiskyprodukt(flaskeStr);
-        Storage.addWhiskyprodukt(whiskyprodukt);
+        storage.addWhiskyprodukt(whiskyprodukt);
+        whiskyprodukt.setNrID(storage.whiskeyproduktId());
         return whiskyprodukt;
     }
 
@@ -85,18 +87,18 @@ public class Controller {
 
     public static Lager createLager(int rækker, int hylder, int plads, String navn) {
         Lager lager = new Lager(rækker, hylder, plads, navn);
-        Storage.addLager(lager);
+        storage.addLager(lager);
         return lager;
     }
 
     //Fjern metoder
 
     public static void fjernDestillat(Destillat destillat) {
-        Storage.removeDestillat(destillat);
+        storage.removeDestillat(destillat);
     }
 
     public static void fjernWhiskyserie(Whiskyserie whiskyserie) {
-        Storage.removeWhiskyserie(whiskyserie);
+        storage.removeWhiskyserie(whiskyserie);
     }
 
     public static void fjernFadFraLager(Fad fad) {
@@ -113,23 +115,23 @@ public class Controller {
     //Get metoder
 
     public static ArrayList<Fad> getFade() {
-        return Storage.getFade();
+        return storage.getFade();
     }
 
     public static ArrayList<Lager> getlagere() {
-        return Storage.getLager();
+        return storage.getLager();
     }
 
     public static ArrayList<Batch> getBatches() {
-        return Storage.getBatches();
+        return storage.getBatches();
     }
 
     public static ArrayList<Destillat> getDestillater() {
-        return Storage.getDestillater();
+        return storage.getDestillater();
     }
 
     public static ArrayList<Whiskyserie> getWhiskyserie() {
-        return Storage.getWhiskyserier();
+        return storage.getWhiskyserier();
     }
 
     public static Batch getbatch(BatchMængde batchMængde) {
@@ -168,7 +170,7 @@ public class Controller {
     }
 
     public static ArrayList<Whiskyprodukt> getWhiskyprodukter() {
-        return Storage.getWhiskyprodukter();
+        return storage.getWhiskyprodukter();
     }
 
     public static int getFadNr(Fad fad) {
@@ -396,7 +398,7 @@ public class Controller {
     public static List<Fad> fadsøgning(double minfadstørrelse, double maxfadstørrelse, int minAlder, int maxAlder, int minBrugt, int maxBrugt,
                                        List<Fadtype> fadTyper, List<String> leverandør,
                                        List<Træsort> træsortList, boolean skalVæreFyldt) {
-        List<Fad> fade = Storage.getFade();
+        List<Fad> fade = storage.getFade();
 
         // Den her bruger jeg senere til og tjekke for alderen på væsken på fadet
         LocalDateTime nu = LocalDateTime.now();

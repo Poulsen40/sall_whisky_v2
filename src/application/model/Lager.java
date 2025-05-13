@@ -1,9 +1,10 @@
 package application.model;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class Lager {
+public class Lager implements Serializable {
 
     private String navn;
     private int antalledigepladser;

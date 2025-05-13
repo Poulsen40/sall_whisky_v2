@@ -1,8 +1,9 @@
 package application.model;
 
+import java.io.Serializable;
 import java.security.spec.RSAOtherPrimeInfo;
 
-public class Whiskyprodukt {
+public class Whiskyprodukt implements Serializable {
     private static int nr = 1;
     private int nrID;
     private Whiskyserie whiskyserie;
@@ -12,6 +13,10 @@ public class Whiskyprodukt {
         nrID = nr++;
         this.whiskyserie = whiskyserie;
         this.flaskeStr = flaskeStr;
+    }
+
+    public void setNrID(int nrID) {
+        this.nrID = nrID;
     }
 
     @Override

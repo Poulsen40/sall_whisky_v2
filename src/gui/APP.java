@@ -13,24 +13,20 @@ import java.time.LocalDateTime;
 
 public class APP {
     public static void main(String[] args) {
-//        Storage LS = loadStorage();
-//		if (LS == null){
-//			LS = new ListStorage();
-//			System.out.println("Empty ListStorage created");
-//		}
-//		Controller.setStorage((ListStorage) LS);
-//
-//		if (Controller.getCompanies().isEmpty() && Controller.getEmployees().isEmpty()){
-//			initStorage();
-//			System.out.println("Storage initialized");
-//		}
-//		Application.launch(StartWindow.class);
-//		saveStorage(LS);
+        Storage storage = loadStorage();
+        if (storage == null) {
+            storage = new Storage();
+            System.out.println("Empty ListStorage created");
+        }
+        Controller.setStorage(storage);
 
-
-        initStorage();
-
+        if (Controller.getBatches().isEmpty() && Controller.getFade().isEmpty() && Controller.getlagere().isEmpty()
+                && Controller.getDestillater().isEmpty()) {
+            initStorage();
+            System.out.println("Storage initialized");
+        }
         Application.launch(GUI.class);
+        saveStorage(storage);
 
     }
 
@@ -38,7 +34,7 @@ public class APP {
         //opretter lager
         Lager lager = Controller.createLager(10, 3, 2, "Container lager");
         Lager lager1 = Controller.createLager(12, 3, 10, "Lars landmand");
-        Lager lilleLager = Controller.createLager(2,1,2, "Lille lager");
+        Lager lilleLager = Controller.createLager(2, 1, 2, "Lille lager");
 
         //Batch
         Batch b1 = Controller.createBatch("Malt2", "Sort", "Sorte mark", 85, 10, "ingen", Rygemateriale.GLØD);
@@ -58,12 +54,6 @@ public class APP {
         Controller.addFadTilLager(f2, lilleLager);
 
 
-
-
-
-
-
-
         //tilføjer fad til lager
 //        Controller.addFadTilLager(f1, lager);
 //        Controller.addFadTilLager(f2, lager);
@@ -78,24 +68,21 @@ public class APP {
         BatchMængde bbbb = b3.createBatchMængde(200, d1);
 
 
-
-        System.out.println("samlet mængde d1" +d1.getSamletMængde());
+        System.out.println("samlet mængde d1" + d1.getSamletMængde());
         System.out.println("efter tjek d1 " + d1.getSamletMængde());
 
 
-
         Destillat d2 = Controller.createDestilat(LocalDateTime.of(2020, 1, 1, 2, 2), f2);
-        BatchMængde bbbbb= b1.createBatchMængde(200, d2);
+        BatchMængde bbbbb = b1.createBatchMængde(200, d2);
         System.out.println("d2 alko" + d2.beregnalkoholprocent());
 
-        Whiskyserie ws1 = Controller.createWhiskyserie("Hej",LocalDate.now());
+        Whiskyserie ws1 = Controller.createWhiskyserie("Hej", LocalDate.now());
 
-        DestillatMængde dm = Controller.createDestillatMængde(40,ws1,d2);
+        DestillatMængde dm = Controller.createDestillatMængde(40, ws1, d2);
 
 
         Destillat d3 = Controller.createDestilat(LocalDateTime.of(2018, 1, 1, 2, 2), f3);
         BatchMængde bhnbbb = b3.createBatchMængde(200, d3);
-
 
 
 //        Whiskyserie whiskyserie = Controller.createWhiskyserie("Hej", LocalDate.now());
@@ -110,45 +97,41 @@ public class APP {
         //
 
 
+    }
+
+    //loader objekter i storage
+    public static Storage loadStorage() {
+        String fileName = "storage.ser";
+        try (FileInputStream fileIn = new FileInputStream(fileName);
+             ObjectInputStream objIn = new ObjectInputStream(fileIn)
+        ) {
+            Object obj = objIn.readObject();
+            Storage storage = (Storage) obj;
+            System.out.println("Storage loaded from file " + fileName);
+            return storage;
+        } catch (IOException | ClassNotFoundException ex) {
+            System.out.println("Error deserializing storage");
+            System.out.println(ex);
+            return null;
+        }
+    }
 
 
-
+    //gemmer objekter i storage
+    public static void saveStorage(Storage storage) {
+        String fileName = "storage.ser";
+        try (FileOutputStream fileOut = new FileOutputStream(fileName);
+             ObjectOutputStream objOut = new ObjectOutputStream(fileOut)
+        ) {
+            objOut.writeObject(storage);
+            System.out.println("Storage saved in file " + fileName);
+        } catch (IOException ex) {
+            System.out.println("Error serializing storage");
+            System.out.println(ex);
+            throw new RuntimeException();
+        }
     }
 }
-
-
-//loader objekter i storage
-//    public static Storage loadStorage() {
-//        String fileName = "storage.ser";
-//        try (FileInputStream fileIn = new FileInputStream(fileName);
-//             ObjectInputStream objIn = new ObjectInputStream(fileIn)
-//        ) {
-//            Object obj = objIn.readObject();
-//            Storage storage = (ListStorage) obj;
-//            System.out.println("Storage loaded from file " + fileName);
-//            return storage;
-//        } catch (IOException | ClassNotFoundException ex) {
-//            System.out.println("Error deserializing storage");
-//            System.out.println(ex);
-//            return null;
-//        }
-//    }
-
-
-//gemmer objekter i storage
-//    public static void saveStorage(Storage storage) {
-//        String fileName = "storage.ser";
-//        try (FileOutputStream fileOut = new FileOutputStream(fileName);
-//             ObjectOutputStream objOut = new ObjectOutputStream(fileOut)
-//        ) {
-//            objOut.writeObject(storage);
-//            System.out.println("Storage saved in file " + fileName);
-//        } catch (IOException ex) {
-//            System.out.println("Error serializing storage");
-//            System.out.println(ex);
-//            throw new RuntimeException();
-//        }
-//    }
 
 
 

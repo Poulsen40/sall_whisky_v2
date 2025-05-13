@@ -1,10 +1,11 @@
 package application.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Whiskyserie {
+public class Whiskyserie implements Serializable {
     private String serieNavn;
     private double alkoholPct;
     private double størrelse;

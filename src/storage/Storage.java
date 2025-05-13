@@ -2,90 +2,112 @@ package storage;
 
 import application.model.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Storage {
+public class Storage implements Serializable {
 
-    private static ArrayList<Batch> batches = new ArrayList<>();
-    private static ArrayList<Fad> fade = new ArrayList<>();
-    private static ArrayList<Lager> lagere = new ArrayList<>();
-    private static ArrayList<Destillat> destillater = new ArrayList<>();
-    private static ArrayList<Whiskyprodukt> whiskyprodukter = new ArrayList<>();
-    private static ArrayList<Whiskyserie> whiskyserier = new ArrayList<>();
+    private ArrayList<Batch> batches = new ArrayList<>();
+    private ArrayList<Fad> fade = new ArrayList<>();
+    private ArrayList<Lager> lagere = new ArrayList<>();
+    private ArrayList<Destillat> destillater = new ArrayList<>();
+    private ArrayList<Whiskyprodukt> whiskyprodukter = new ArrayList<>();
+    private ArrayList<Whiskyserie> whiskyserier = new ArrayList<>();
+    private int[] idArray = new int[] {1,1,1};
 
 
 
 
     //-----------------------------------------------------------------------------
 
-    public static ArrayList<Batch> getBatches() {
+    public ArrayList<Batch> getBatches() {
         return new ArrayList<Batch>(batches);
     }
-    public static void addBatch(Batch batch) {
+    public void addBatch(Batch batch) {
         batches.add(batch);
     }
-    public static void removeBatch(Batch batch) {
+    public void removeBatch(Batch batch) {
         batches.remove(batch);
     }
 
     //-----------------------------------------------------------------------------
 
-    public static ArrayList<Fad> getFade() {
+    public ArrayList<Fad> getFade() {
         return new ArrayList<Fad>(fade);
     }
-    public static void addFad(Fad fad) {
+    public void addFad(Fad fad) {
         fade.add(fad);
     }
-    public static void removeFad(Fad fad) {
+    public void removeFad(Fad fad) {
         fade.remove(fad);
     }
 
     //------------------------------------------------------------------------------
 
-    public static ArrayList<Lager> getLager() {
+    public ArrayList<Lager> getLager() {
         return new ArrayList<>(lagere);
     }
-    public static void addLager(Lager lager){
+    public void addLager(Lager lager){
         lagere.add(lager);
 
     }
-    public static void removeLager(Lager lager) {
+    public void removeLager(Lager lager) {
         lagere.remove(lager);
     }
 
     //----------------------------------------------------------------------------------
-    public static ArrayList<Destillat> getDestillater() {
+    public ArrayList<Destillat> getDestillater() {
         return new ArrayList<Destillat>(destillater);
     }
-    public static void addDestillat(Destillat destillat) {
+    public void addDestillat(Destillat destillat) {
         destillater.add(destillat);
     }
-    public static void removeDestillat(Destillat destillat) {
+    public void removeDestillat(Destillat destillat) {
         destillater.remove(destillat);
     }
     //----------------------------------------------------------------------------------
-    public static ArrayList<Whiskyprodukt> getWhiskyprodukter() {
+    public ArrayList<Whiskyprodukt> getWhiskyprodukter() {
         return new ArrayList<Whiskyprodukt>(whiskyprodukter);
     }
-    public static void addWhiskyprodukt(Whiskyprodukt whiskyprodukt) {
+    public void addWhiskyprodukt(Whiskyprodukt whiskyprodukt) {
         whiskyprodukter.add(whiskyprodukt);
     }
-    public static void removeWhiskyprodukt(Whiskyprodukt whiskyprodukt) {
+    public void removeWhiskyprodukt(Whiskyprodukt whiskyprodukt) {
         whiskyprodukter.remove(whiskyprodukt);
     }
 
     //-----------------------------------------------------------------------------
 
-    public static ArrayList<Whiskyserie> getWhiskyserier() {
+    public ArrayList<Whiskyserie> getWhiskyserier() {
         return new ArrayList<Whiskyserie>(whiskyserier);
     }
-    public static void addWhiskyserie(Whiskyserie whiskyserie) {
+    public void addWhiskyserie(Whiskyserie whiskyserie) {
         whiskyserier.add(whiskyserie);
     }
-    public static void removeWhiskyserie(Whiskyserie whiskyserie) {
+    public void removeWhiskyserie(Whiskyserie whiskyserie) {
         whiskyserier.remove(whiskyserie);
     }
 
+
+    //-----------------------------------------------------------------------------
+
+    public int batchId() {
+        int id = idArray[0];
+        idArray[0]++;
+        return id;
+    }
+
+    public int fadId(){
+        int id = idArray[1];
+        idArray[1]++;
+        return id;
+    }
+
+    public int whiskeyproduktId(){
+        int id = idArray[2];
+        idArray[2]++;
+        return id;
+    }
 
 }

@@ -52,7 +52,8 @@ class ControllerTest {
     void TC1CreateLager() {
         Lager lager = Controller.createLager(10, 5, 2, "ContatinerLager");
         Lager lager1 = null;
-        for (Lager l1 : Storage.getLager()) {
+        for (Lager l1 : Controller.getlagere()) {
+
             if (lager.equals(l1)) {
                 lager1 = l1;
             }

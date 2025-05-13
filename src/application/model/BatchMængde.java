@@ -1,6 +1,8 @@
 package application.model;
 
-public class BatchMængde {
+import java.io.Serializable;
+
+public class BatchMængde implements Serializable {
     private double mængde;
     private Batch batch;
 

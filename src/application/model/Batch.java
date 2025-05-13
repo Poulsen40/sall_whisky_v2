@@ -1,10 +1,11 @@
 package application.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Batch {
+public class Batch implements Serializable {
     private LocalDate startDato;
     private LocalDate slutDato;
     private String maltBach;
@@ -120,6 +121,10 @@ public class Batch {
 
     public int getBatchID() {
         return batchID;
+    }
+
+    public void setBatchID(int batchID) {
+        this.batchID = batchID;
     }
 
     @Override
