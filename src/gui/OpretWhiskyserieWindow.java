@@ -2,6 +2,7 @@ package gui;
 
 import application.controller.Controller;
 import application.model.*;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -50,6 +51,7 @@ public class OpretWhiskyserieWindow extends Stage {
     private static TextArea txaDestilatInfo;
     private static DatePicker datePicker;
     private static Button btnOpretWhiskySerieObjekt;
+    private static Button btnTap;
     private static double mængdeVand;
 
     private static Destillat selectedDestillat;
@@ -78,6 +80,7 @@ public class OpretWhiskyserieWindow extends Stage {
 
         datePicker = new DatePicker();
         datePicker.setPromptText("Vælg datoen for oprettelsen af whiskyserien");
+        datePicker.setEditable(false);  // Forhindrer manuel indtastning
         datePicker.setOnAction(event -> {
             dato = datePicker.getValue();
         });
@@ -176,7 +179,7 @@ public class OpretWhiskyserieWindow extends Stage {
         Label lblFilter = new Label("Filtrer efter alder på fad");
 
 
-        Button btnTap = new Button("Tap");
+        btnTap = new Button("Tap");
         btnTap.setOnAction(event -> {
             tapMængdeFraDestilat();
         });
@@ -274,55 +277,68 @@ public class OpretWhiskyserieWindow extends Stage {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Du skal udføre step 1 først");
             alert.showAndWait();
-        }
-        if (selectedDestillat == null) {
+        } else if (selectedDestillat == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Du skal vælge et destillat før du kan tappe");
             alert.showAndWait();
+        } else if (txfTapMængde.getText().trim().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Du skal indtaste mængden af væske du vil tappe");
+            alert.showAndWait();
+        } else if (!txfTapMængde.getText().trim().matches("\\d+(\\.\\d+)?")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Tapmængden skal være et tal");
+            alert.showAndWait();
         } else {
-            if (txfTapMængde.getText().trim().isEmpty()) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Du skal indtaste mængden af væske du vil tappe");
-                alert.showAndWait();
-            } else if (!txfTapMængde.getText().trim().matches("\\d+(\\.\\d+)?")) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Tapmængden skal være et tal");
-                alert.showAndWait();
-            }
-        }
-        if (whiskyserie != null && selectedDestillat != null && !txfTapMængde.getText().isEmpty() && txfTapMængde.getText().trim().matches("\\d+(\\.\\d+)?")) {
-            double mængde = Double.parseDouble(txfTapMængde.getText().trim());
+            if (whiskyserie != null && selectedDestillat != null && !txfTapMængde.getText().isEmpty() && txfTapMængde.getText().trim().matches("\\d+(\\.\\d+)?")) {
+                double mængde = Double.parseDouble(txfTapMængde.getText().trim());
 
-            if (mængde > selectedDestillat.getSamletMængde()) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Du kan ikke tappe mere væske end der er tilbage på destillatet");
-                alert.showAndWait();
-            } else {
-                destillatMængde = Controller.createDestillatMængde(mængde, whiskyserie, selectedDestillat);
+                if (mængde < 1) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Tapmængden skal være mininum 1");
+                    alert.showAndWait();
+                } else if (mængde > selectedDestillat.getSamletMængde()) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Du kan ikke tappe mere væske end der er tilbage på destillatet");
+                    alert.showAndWait();
+                } else {
+                    destillatMængde = Controller.createDestillatMængde(mængde, whiskyserie, selectedDestillat);
+                    //Controller.addDestillatMængde(destillatMængde, whiskyserie);
+                    txaDestilatInfo.setText(Controller.toStringFadOgDestillat(selectedDestillat));
 
-                //Controller.addDestillatMængde(destillatMængde, whiskyserie);
-                txaDestilatInfo.setText(Controller.toStringFadOgDestillat(selectedDestillat));
+                    txfTapMængde.clear();
+                    if (Controller.getSamletMængde(selectedDestillat) == 0) {
+                        lwlDestillat.getItems().remove(selectedDestillat);
+                        Controller.fjernDestillat(selectedDestillat);
+                        //Skal laves til controller
+                        setInfoBox();
+                        System.out.println(selectedDestillat.getFad());
+                        Fad fad = selectedDestillat.getFad();
+                        System.out.println(fad);
+                        System.out.println("lager tjek" +  fad.getLager());
 
-                txfTapMængde.clear();
-                if (Controller.getSamletMængde(selectedDestillat) <= 0) {
-                    lwlDestillat.getItems().remove(selectedDestillat);
-                    Controller.fjernDestillat(selectedDestillat);
-                    //Skal laves til controller
-                    selectedDestillat.getFad().fjernFraLager();
+                        Controller.fjernFadFraLager(fad);
+                        Controller.fjernDestillat(selectedDestillat);
+                        lwlDestillat.getItems().remove(selectedDestillat);
 
+                    }
                 }
-                setInfoBox();
             }
         }
     }
 
-    public void fortynd(){
-        if (whiskyserie == null){
+    public void fortynd() {
+        if (whiskyserie == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Du skal udføre step 1 først");
             alert.showAndWait();
         }
-        if (!txfVand.getText().trim().isEmpty() && whiskyserie != null) {
+        else if(whiskyserie.getDestillatMængder().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Du skal vælge et fad, indtaste en mængde og trykke 'Tap', før du kan fortynde.");
+            alert.showAndWait();
+        }
+        else if(!txfVand.getText().trim().isEmpty() && whiskyserie != null) {
             mængdeVand += Double.parseDouble(txfVand.getText().trim());
             txfVand.clear();
             setInfoBox();
@@ -330,9 +346,14 @@ public class OpretWhiskyserieWindow extends Stage {
     }
 
     public void tapPåFlaske() {
-        if (whiskyserie == null) {
+        if (whiskyserie == null){
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Du skal have valgt eller oprettet en whiskyserie før du kan tappe");
+            alert.setContentText("Du skal udføre step 1 først");
+            alert.showAndWait();
+        }
+        if (whiskyserie.getDestillatMængder().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Du skal udføre step 2 først");
             alert.showAndWait();
         } else {
             //Beregner samlet mængde whisky med vand inkluderet
@@ -353,7 +374,7 @@ public class OpretWhiskyserieWindow extends Stage {
             alert.showAndWait();
             close();
 
-            Controller.setWhiskyInfo(whiskyserie.getDestillatMængder(),whiskyserie,mængdeVand,antalFlasker);
+            Controller.setWhiskyInfo(whiskyserie.getDestillatMængder(), whiskyserie, mængdeVand, antalFlasker);
 
             whiskyserie = null;
             mængdeVand = 0;
@@ -379,7 +400,7 @@ public class OpretWhiskyserieWindow extends Stage {
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
 
-            if (whiskyserie != null){
+            if (whiskyserie != null) {
                 ArrayList<DestillatMængde> destillatMængder = new ArrayList<>(Controller.getDestillatmængder(whiskyserie));
                 Controller.removeDestilatMængderFraWhiskyserie(whiskyserie, whiskyserie.getDestillatMængder());
 

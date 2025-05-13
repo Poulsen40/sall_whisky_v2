@@ -35,12 +35,16 @@ public class APP {
     }
 
     public static void initStorage() {
+        //opretter lager
+        Lager lager = Controller.createLager(10, 3, 2, "Container lager");
+        Lager lager1 = Controller.createLager(12, 3, 10, "Lars landmand");
+        Lager lilleLager = Controller.createLager(2,1,2, "Lille lager");
+
         //Batch
         Batch b1 = Controller.createBatch("Malt2", "Sort", "Sorte mark", 85, 10, "ingen", Rygemateriale.GLØD);
         Batch b2 = Controller.createBatch("Malt2", "Sort", "Sorte mark", 100, 20, "ingen", Rygemateriale.GLØD);
         Batch b3 = Controller.createBatch("Malt2", "Sort", "Sorte mark", 25, 63, "ingen", Rygemateriale.GLØD);
         Batch b4 = Controller.createBatch("Malt2", "Sort", "Sorte mark", 45, 63, "ingen", Rygemateriale.GLØD);
-
 
         //Fad
         Fad f1 = Controller.createFad(65, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
@@ -48,6 +52,24 @@ public class APP {
         Fad f3 = Controller.createFad(12, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
         Fad f4 = Controller.createFad(100, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
         Fad f5 = Controller.createFad(78, "Spanien", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 1);
+
+        //test med småt lager
+        Controller.addFadTilLager(f1, lilleLager);
+        Controller.addFadTilLager(f2, lilleLager);
+
+
+
+
+
+
+
+
+        //tilføjer fad til lager
+//        Controller.addFadTilLager(f1, lager);
+//        Controller.addFadTilLager(f2, lager);
+        Controller.addFadTilLager(f3, lager);
+        Controller.addFadTilLager(f4, lager1);
+        Controller.addFadTilLager(f5, lager1);
 
 
         Destillat d1 = Controller.createDestilat(LocalDateTime.of(2022, 1, 1, 2, 2), f1);
@@ -66,6 +88,10 @@ public class APP {
         BatchMængde bbbbb= b1.createBatchMængde(200, d2);
         System.out.println("d2 alko" + d2.beregnalkoholprocent());
 
+        Whiskyserie ws1 = Controller.createWhiskyserie("Hej",LocalDate.now());
+
+        DestillatMængde dm = Controller.createDestillatMængde(40,ws1,d2);
+
 
         Destillat d3 = Controller.createDestilat(LocalDateTime.of(2018, 1, 1, 2, 2), f3);
         BatchMængde bhnbbb = b3.createBatchMængde(200, d3);
@@ -80,8 +106,7 @@ public class APP {
 
 
         //
-        Lager lager = Controller.createLager(10, 3, 2, "Container lager");
-        Lager lager1 = Controller.createLager(12, 3, 10, "Lars landmand");
+
 
 
 

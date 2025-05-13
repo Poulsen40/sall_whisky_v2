@@ -56,7 +56,10 @@ public class FadPåLagerWindow extends Stage {
         pane.setVgap(10);
         pane.setGridLinesVisible(false);
 
-        Label info = new Label("Info");
+        Label info = new Label("Info om destillat");
+        Label vælgLager = new Label("Vælg et lager");
+        vælgLager.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
+
 
         lwlager = new ListView<>();
         lwlager.setPrefWidth(200);
@@ -67,8 +70,9 @@ public class FadPåLagerWindow extends Stage {
 
         VBox vBox = new VBox();
         pane.add(vBox, 0, 0);
-        vBox.getChildren().add(info);
+        vBox.getChildren().add(vælgLager);
         vBox.getChildren().add(lwlager);
+        vBox.getChildren().add(info);
 
         txadestillat = new TextArea();
         pane.add(txadestillat, 0, 1);

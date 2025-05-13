@@ -101,24 +101,44 @@ public class Lager {
         return placering;
     }
 
-    public void fjernFadFraObevaringspldas(Fad fad){
+    public void fjernFadFraObevaringsplads(Fad fad) {
+        if (!fad.getLager().equals(this)) {
+            return;
+        }
 
-        if(fad.getLager().equals(this)){
-            for (int i = 0; i < obevaringsplads.length; i++) {
-                for (int j = 0; j < obevaringsplads[i].length; j++) {
-                    for (int k = 0; k < obevaringsplads[i][j].length; k++) {
-                        if(obevaringsplads[i][j][k].equals(fad)){
-                            obevaringsplads[i][j][k] = null;
-                            if(næsteLedigePlads == 0 && aktuelleHylde == 0){
-                                aktuelleHylde = obevaringsplads[i].length;
-                                næsteLedigePlads = obevaringsplads[i][j].length;
-                            }
-                            antalledigepladser++;
-                        }
+        int sidsteI = -1, sidsteJ = -1, sidsteK = -1;
+        int fadI = -1, fadJ = -1, fadK = -1;
+
+        // Gennemgå hele arrayet og find både:
+        // - hvor fadet står
+        // - og hvor det sidste fad står (sidst i brug)
+        for (int i = 0; i < obevaringsplads.length; i++) {
+            for (int j = 0; j < obevaringsplads[i].length; j++) {
+                for (int k = 0; k < obevaringsplads[i][j].length; k++) {
+                    if (obevaringsplads[i][j][k] != null) {
+                        sidsteI = i;
+                        sidsteJ = j;
+                        sidsteK = k;
+                    }
+                    if (obevaringsplads[i][j][k] != null && obevaringsplads[i][j][k].equals(fad)) {
+                        fadI = i;
+                        fadJ = j;
+                        fadK = k;
                     }
                 }
             }
+        }
 
+        // Hvis fadet blev fundet – fjern det
+        if (fadI != -1) {
+            obevaringsplads[fadI][fadJ][fadK] = null;
+            antalledigepladser++;
+
+            // Kun hvis det var det sidste fad, skal vi opdatere næste ledige plads
+            if (fadI == sidsteI && fadJ == sidsteJ && fadK == sidsteK) {
+                aktuelleHylde = fadJ;
+                næsteLedigePlads = fadK;
+            }
         }
     }
 
