@@ -11,10 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Controller {
@@ -104,6 +101,13 @@ public class Controller {
         Storage.removeWhiskyserie(whiskyserie);
     }
 
+    public static void fjernFadFraLager(Fad fad) {
+        if (fad != null && fad.getLager() != null) {
+            fad.fjernFraLager();
+        } else {
+            throw new NoSuchElementException("Du skal vælge et fad eller fadet er ikke på lager");
+        }
+    }
 
     //Get metoder
 
