@@ -90,7 +90,7 @@ public class Destillat {
     private StringBuilder udskrivBatches(){
         StringBuilder sb  = new StringBuilder();
         for (BatchMængde batchMængde : batchMængder) {
-            sb.append("\nMaltbatch: " + batchMængde.getBatch().getMaltBach() + "\nKornsort: " + batchMængde.getBatch().getKornSort() + "\nMark: " + batchMængde.getBatch().getMark());
+            sb.append("\nBatch id: " + batchMængde.getBatch().getBatchID() + ", maltbatch: " + batchMængde.getBatch().getMaltBach() + ", kornsort: " + batchMængde.getBatch().getKornSort() + ", mark: " + batchMængde.getBatch().getMark());
 
         }
         return sb;
