@@ -179,11 +179,11 @@ public class OpretOversigtWindow extends Stage {
             LblMaxalkoholpct.setText("Max Alkohol pct: " + newValue.intValue());
         });
 
-        sliderMinStørrelse = new Slider(0, 100, 0);
+        sliderMinStørrelse = new Slider(0, 1000, 0);
         sliderMinStørrelse.setShowTickLabels(true);
         sliderMinStørrelse.setShowTickMarks(true);
-        sliderMinStørrelse.setMajorTickUnit(5);
-        sliderMinStørrelse.setMinorTickCount(4);
+        sliderMinStørrelse.setMajorTickUnit(100);
+        sliderMinStørrelse.setMinorTickCount(25);
         sliderMinStørrelse.setSnapToTicks(true);
         sliderMinStørrelse.setBlockIncrement(1);
         Label Lblminstørrelse = new Label("Min størrelse/mængden: " + (int) sliderMinStørrelse.getValue());
@@ -191,11 +191,11 @@ public class OpretOversigtWindow extends Stage {
             Lblminstørrelse.setText("Min størrelse/mængden: " + newValue.intValue());
         });
 
-        slidermaxStørrelse = new Slider(0, 100, 100);
+        slidermaxStørrelse = new Slider(0, 1000, 100);
         slidermaxStørrelse.setShowTickLabels(true);
         slidermaxStørrelse.setShowTickMarks(true);
-        slidermaxStørrelse.setMajorTickUnit(10);
-        slidermaxStørrelse.setMinorTickCount(9);
+        slidermaxStørrelse.setMajorTickUnit(100);
+        slidermaxStørrelse.setMinorTickCount(25);
         slidermaxStørrelse.setSnapToTicks(true);
         slidermaxStørrelse.setBlockIncrement(1);
         Label LblMaxStørrelse = new Label("Max størrelse/mængden: " + (int) slidermaxStørrelse.getValue());
