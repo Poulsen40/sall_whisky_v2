@@ -734,7 +734,7 @@ public class OpretOversigtWindow extends Stage {
                     setText("Fad Information\n" + "Fad nr: " + Controller.getFadNr(fad) + "    Fadstørelse: " + Controller.getFadStørrelse(fad) + "    levarandør: " + Controller.getLeverandør(fad)
                             + "    Er Brugt: " + Controller.isErBrugt(fad) + "\nFadtype: " + Controller.getFadtype(fad) + "    Træsort: " +
                             Controller.getTræsort(fad) + "\nAntalGangeBrugt: " + Controller.getAntalGangeBrugt(fad) + "    LiterPåfyldt: " + Controller.getLiterPåfyldt(fad) + "\nLager: " +
-                            Controller.getLagerNavn(fad)
+                            Controller.getLagerNavn(fad) + "    Placering på lageret: " + Controller.getPlaceringPåLager(fad)
                             + "\nInformation om destillat på fadet\n" + "Alder: " +
                             ChronoUnit.YEARS.between(Controller.getDatoForPåfyldning(destillat).toLocalDate(), LocalDate.now()) + " År" +
                             "    Alkholprocent: " + Controller.getAlkoholprocent(destillat));

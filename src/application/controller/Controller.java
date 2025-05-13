@@ -3,14 +3,12 @@ package application.controller;
 import application.model.*;
 import storage.Storage;
 
-import javax.imageio.ImageTranscoder;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.Temporal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -18,7 +16,7 @@ public class Controller {
 
 
     //skal bruges til load og save
-//    private static Storage storage;
+    private static Storage storage;
 //
 //
 //    public static void setStorage(Storage storage){
@@ -271,6 +269,8 @@ public class Controller {
         }
         return "Ikke placeret på et lager";
     }
+
+    public static String getPlaceringPåLager(Fad fad) { return fad.getPlaceringPåLager();}
 
 
     //Set metoder
