@@ -308,20 +308,13 @@ public class OpretWhiskyserieWindow extends Stage {
 
                     txfTapMængde.clear();
                     if (Controller.getSamletMængde(selectedDestillat) == 0) {
-                        lwlDestillat.getItems().remove(selectedDestillat);
-                        Controller.fjernDestillat(selectedDestillat);
-                        //Skal laves til controller
-                        setInfoBox();
-                        System.out.println(selectedDestillat.getFad());
-                        Fad fad = selectedDestillat.getFad();
-                        System.out.println(fad);
-                        System.out.println("lager tjek" +  fad.getLager());
-
-                        Controller.fjernFadFraLager(fad);
+                        Controller.fjernFadFraLager(selectedDestillat.getFad());
                         Controller.fjernDestillat(selectedDestillat);
                         lwlDestillat.getItems().remove(selectedDestillat);
 
                     }
+                    setInfoBox();
+
                 }
             }
         }
@@ -346,16 +339,15 @@ public class OpretWhiskyserieWindow extends Stage {
     }
 
     public void tapPåFlaske() {
-        if (whiskyserie == null){
+        if (whiskyserie == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Du skal udføre step 1 først");
             alert.showAndWait();
-        }
-        if (whiskyserie.getDestillatMængder().isEmpty()) {
+        } else if (whiskyserie.getDestillatMængder().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Du skal udføre step 2 først");
             alert.showAndWait();
-        } else {
+        }else{
             //Beregner samlet mængde whisky med vand inkluderet
             double samletMængdeWhisky = Controller.samletMængdeWhiskySerie(whiskyserie, mængdeVand);
 
