@@ -6,13 +6,12 @@ import java.util.List;
 
 public class Destillat {
     private LocalDateTime datoForPåfyldning;
-    private double alkoholPct;
 
     //Linkattribut
     private List<BatchMængde> batchMængder = new ArrayList<>();
     private Fad fad;
 
-    private ArrayList<DestillatMængde> destillatMængder = new ArrayList<>();
+    private List<DestillatMængde> destillatMængder = new ArrayList<>();
 
 
     public Destillat(LocalDateTime datoForPåfyldning, Fad fad) {
