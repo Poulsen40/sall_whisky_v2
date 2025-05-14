@@ -18,6 +18,7 @@ public class Controller {
 
 
     //skal bruges til load og save
+
 //    private static Storage storage;
 //
 //

@@ -111,7 +111,6 @@ public class OpretBatchWindow extends Stage {
         });
 
     }
-
     public void opretBatch() {
         String mængdeVæske = txfMængdeVæske.getText().trim();
         String alkoholPct = txfAlkoholPct.getText().trim();
@@ -119,30 +118,80 @@ public class OpretBatchWindow extends Stage {
         String kornSort = txfKornsort.getText().trim();
         String mark = txfMark.getText().trim();
         String maltBatch = txfMaltBatch.getText().trim();
+        boolean isValid = true; //Bruges til at styre om en batch kan oprettes baseret på brugerens input
 
         if (maltBatch.isEmpty() || mark.isEmpty() || kornSort.isEmpty() || mængdeVæske.isEmpty() || alkoholPct.isEmpty()) {
+            isValid = false; //Hvis felterne er tomme, markeres fom false
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Du mangler at udfylde noget information");
             alert.showAndWait();
         }
-
+        if (!maltBatch.matches("[a-zA-ZæøåÆØÅ ]+")) {
+            isValid = false; //Hvis der er tal i tekstfeltet, sættes isValid til false
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Maltbatch må kun indeholde bogstaver");
+            alert.showAndWait();
+        }
+        if (!kornSort.matches("[a-zA-ZæøåÆØÅ ]+")) {
+            isValid = false; //Hvis der er tal i tekstfelte, sættes isValid til false
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Kornsort må kun indeholde bogstaver");
+            alert.showAndWait();
+        }
+        if (!mark.matches("[a-zA-ZæøåÆØÅ ]+")) {
+            isValid = false; //Hvis der er tal i tekstfeltet, sættes isValid til false
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Mark må kun indeholde bogstaver");
+            alert.showAndWait();
+        }
+        if (!kommentar.matches("[a-zA-ZæøåÆØÅ ]*")) {
+            isValid = false; //Hvis der er tal i tekstfeltet, sættes isValid til false
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Kommentar må kun indeholde bogstaver");
+            alert.showAndWait();
+        }
+        if (!alkoholPct.matches("\\d+")) {
+            isValid = false; //AlkoholPct ikke er et tal, sætted isValid til false
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Alkoholprocent skal være et tal");
+            alert.showAndWait();
+        }
+        if (!mængdeVæske.matches("\\d+")) {
+            isValid = false; //Hvis mængdeVæske ikke er et tal, sættes isValid til false
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Mængdevæske skal være et tal");
+            alert.showAndWait();
+        }
+        if (isValid){//Hvis alt brugerens input er gyldigt, fortsættes oprettelsen af batchen
         try {
             int mængdeVæske1 = Integer.parseInt(txfMængdeVæske.getText().trim());
             int alkoholPct1 = Integer.parseInt(txfAlkoholPct.getText().trim());
             if (rygemateriale == null) {
+                isValid = false; //Hvis rygemateriale ikke er valgt, markeres som false
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Du mangler at vælge et rygematerialle");
                 alert.showAndWait();
-            } else {
+            } else if (mængdeVæske1 == 0 || alkoholPct1 == 0) { //Hvis mængde og procent er 0
+                isValid = false; //markedes som false
+                if (mængdeVæske1 == 0) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Mængdevæske skal minimum være 1");
+                    alert.showAndWait();
+                }
+                if (alkoholPct1 == 0) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Alkoholprocent må ikke være 0");
+                    alert.showAndWait();
+                }
+            }if (isValid){ //Tjekker om brugerens input stadig er gyldigt
                 //Opret batch
                 Batch b1 = Controller.createBatch(maltBatch, kornSort, mark, mængdeVæske1, alkoholPct1, kommentar, Rygemateriale.valueOf(rygemateriale.toUpperCase()));
-                hide();
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setContentText("Dit batch er nu oprettet");
                 alert.showAndWait();
                 System.out.println(b1);
+                hide();
             }
-
         } catch (NumberFormatException e) {
             if (!mængdeVæske.isEmpty() || !alkoholPct.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -151,4 +200,11 @@ public class OpretBatchWindow extends Stage {
             }
         }
     }
+    }
 }
+
+
+
+
+
+
