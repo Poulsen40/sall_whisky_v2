@@ -410,17 +410,19 @@ public class Controller {
                 .filter(f -> f.getFadStørrelse() >= minfadstørrelse && f.getFadStørrelse() <= maxfadstørrelse)
                 // Filtrerer efter alder, men tjekker først om der er destillat på fadet
                 .filter(f -> {
-                    // Hvis vi ikke kræver fyldte fade og fadet er tomt, så skal det inkluderes uanset alder
-                    if (!skalVæreFyldt && f.getDestillat() == null) {
-                        return true;
+                    // Hvis fadet er tomt
+                    if (f.getDestillat() == null) {
+                        // Hvis minAlder > 0, ekskluder tomme fade (fordi de ikke kan opfylde alderskravet)
+                        if (minAlder > 0) {
+                            return false;
+                        }
+                        // Ellers inkluder tomme fade kun hvis vi ikke kræver fyldte fade
+                        return !skalVæreFyldt;
                     }
+
                     // Hvis fadet har destillat, tjek alderen
-                    if (f.getDestillat() != null) {
-                        long alder = ChronoUnit.YEARS.between(f.getDestillat().getDatoForPåfyldning(), nu);
-                        return alder >= minAlder && alder <= maxAlder;
-                    }
-                    // Hvis vi kræver fyldte fade og fadet er tomt, så skal det ikke inkluderes
-                    return false;
+                    long alder = ChronoUnit.YEARS.between(f.getDestillat().getDatoForPåfyldning(), nu);
+                    return alder >= minAlder && alder <= maxAlder;
                 })
                 // Filtrerer efter leverandør, hvis angivet
                 .filter(f -> leverandør == null || leverandør.isEmpty() || leverandør.contains(f.getLevarandør()))
