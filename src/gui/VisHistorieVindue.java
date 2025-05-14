@@ -85,5 +85,4 @@ public class VisHistorieVindue extends Stage {
 
         close();
     }
-
 }

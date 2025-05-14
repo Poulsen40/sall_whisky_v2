@@ -41,6 +41,7 @@ public class APP {
         Batch b2 = Controller.createBatch("Malt2", "Sort", "Sorte mark", 100, 20, "ingen", Rygemateriale.GLØD);
         Batch b3 = Controller.createBatch("Malt2", "Sort", "Sorte mark", 25, 63, "ingen", Rygemateriale.GLØD);
         Batch b4 = Controller.createBatch("Malt2", "Sort", "Sorte mark", 45, 63, "ingen", Rygemateriale.GLØD);
+        Batch b5 = Controller.createBatch("Malt15","Havre","André marks",100,50,"Ingen kommentart",Rygemateriale.MULD);
 
         //Fad
         Fad f1 = Controller.createFad(65, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
@@ -83,6 +84,12 @@ public class APP {
 
         Destillat d3 = Controller.createDestilat(LocalDateTime.of(2018, 1, 1, 2, 2), f3);
         BatchMængde bhnbbb = b3.createBatchMængde(200, d3);
+
+
+        Destillat d4 = Controller.createDestilat(LocalDateTime.of(2015,12,12,1,2,1),f5);
+        BatchMængde batchMængde = Controller.createBatchMængde(100,d4,b5);
+        Controller.addBatchMængde(batchMængde,d4);
+        Controller.setDestillatFad(f5,d4);
 
 
 //        Whiskyserie whiskyserie = Controller.createWhiskyserie("Hej", LocalDate.now());
