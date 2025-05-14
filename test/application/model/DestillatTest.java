@@ -27,9 +27,9 @@ class DestillatTest {
         f = new Fad(100, "TestLeverandør", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 1);
         d = new Destillat(LocalDateTime.of(2022, 1, 1, 2, 2), f);
 
-        b1 = new Batch("Malt1", "Sort1", "Mark1", 100, 40.0, "ingen", Rygemateriale.GLØD);
-        b2 = new Batch("Malt2", "Sort2", "Mark2", 100, 20.0, "ingen", Rygemateriale.GLØD);
-        b3 = new Batch("Malt3", "Sort3", "Mark3", 100, 50.0, "ingen", Rygemateriale.GLØD);
+        b1 = new Batch("Malt1", "Sort1", "Mark1", 100, 40.0, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,10,10));
+        b2 = new Batch("Malt2", "Sort2", "Mark2", 100, 20.0, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,10,10));
+        b3 = new Batch("Malt3", "Sort3", "Mark3", 100, 50.0, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,10,10));
 
         bm1 = new BatchMængde(100, d, b1);
         bm2 = new BatchMængde(100, d, b2);
@@ -67,9 +67,9 @@ class DestillatTest {
         //Batchmængde 1: 100, 50%, Batchmængde 2: 200, 33%, Batchmængde 3: 50, 80%
         d = new Destillat(LocalDateTime.of(2022, 1, 1, 2, 2), f);
 
-        b1 = new Batch("Malt1", "Sort1", "Mark1", 50, 80.0, "ingen", Rygemateriale.GLØD);
-        b2 = new Batch("Malt2", "Sort2", "Mark2", 200, 33.0, "ingen", Rygemateriale.GLØD);
-        b3 = new Batch("Malt3", "Sort3", "Mark3", 100, 50.0, "ingen", Rygemateriale.GLØD);
+        b1 = new Batch("Malt1", "Sort1", "Mark1", 50, 80.0, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,10,10));
+        b2 = new Batch("Malt2", "Sort2", "Mark2", 200, 33.0, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,10,10));
+        b3 = new Batch("Malt3", "Sort3", "Mark3", 100, 50.0, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,10,10));
 
         bm1 = new BatchMængde(100, d, b3); //bm1 AlcPct 50%
         bm2 = new BatchMængde(200, d, b2); //bm2 AlcPct 33%
@@ -88,8 +88,8 @@ class DestillatTest {
         //Batchmængde 1: 120, 43%, Batchmængde 2: 43, 20%
         d = new Destillat(LocalDateTime.of(2022, 1, 1, 2, 2), f);
 
-        b1 = new Batch("Malt1", "Sort1", "Mark1", 120, 43.0, "ingen", Rygemateriale.GLØD);
-        b2 = new Batch("Malt2", "Sort2", "Mark2", 43, 20.0, "ingen", Rygemateriale.GLØD);
+        b1 = new Batch("Malt1", "Sort1", "Mark1", 120, 43.0, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,10,10));
+        b2 = new Batch("Malt2", "Sort2", "Mark2", 43, 20.0, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,10,10));
 
         BatchMængde bigB = new BatchMængde(120, d, b1);
         BatchMængde lilB = new BatchMængde(43, d, b2);
@@ -114,7 +114,7 @@ class DestillatTest {
         d = new Destillat(LocalDateTime.of(2022, 1, 1, 2, 2), f);
 
         //Batch 1: 100, 0%
-        b1 = new Batch("Malt1", "Sort1", "Mark1", 100, 0.0, "ingen", Rygemateriale.GLØD);
+        b1 = new Batch("Malt1", "Sort1", "Mark1", 100, 0.0, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,10,10));
         bm1 = new BatchMængde(100, d, b1);
 
         d.addBatchMængde(bm1);
@@ -126,7 +126,7 @@ class DestillatTest {
     @Test
     void addBatchMængde_TC47() {
         Destillat d = new Destillat(LocalDateTime.of(2022, 1, 1, 2, 2), f);
-        Batch b = new Batch("Malt1", "Sort1", "Mark1", 100, 40, "ingen", Rygemateriale.GLØD);
+        Batch b = new Batch("Malt1", "Sort1", "Mark1", 100, 40, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,10,10));
         BatchMængde bm = new BatchMængde(100, d, b);
 
         //Tilføjer bm1 til destillat
@@ -139,7 +139,7 @@ class DestillatTest {
     @Test
     void addBatchMængde_TC48() {
         Destillat d = new Destillat(LocalDateTime.of(2022, 1, 1, 2, 2),f );
-        Batch b = new Batch("Malt1", "Sort1", "Mark1", 0, 20, "ingen", Rygemateriale.GLØD);
+        Batch b = new Batch("Malt1", "Sort1", "Mark1", 0, 20, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,10,10));
         BatchMængde bm = new BatchMængde(0, d, b);
 
         d.addBatchMængde(bm);
@@ -152,7 +152,7 @@ class DestillatTest {
     @Test
     void addBatchMængde_TC49() {
         Destillat d = new Destillat(LocalDateTime.of(2022, 1, 1, 2, 2), f);
-        Batch b = new Batch("Malt1", "Sort1", "Mark1", -100, -40, "ingen", Rygemateriale.GLØD);
+        Batch b = new Batch("Malt1", "Sort1", "Mark1", -100, -40, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,10,10));
         BatchMængde bm = new BatchMængde(-100, d, b);
 
         d.addBatchMængde(bm);
@@ -179,7 +179,7 @@ class DestillatTest {
     @Test
     void getBatchMængder_TC51() {
         Destillat destillat = new Destillat(LocalDateTime.now(), f);
-        Batch b = new Batch("Malt1", "Sort1", "Mark1", 100, 40.0, "ingen", Rygemateriale.GLØD);
+        Batch b = new Batch("Malt1", "Sort1", "Mark1", 100, 40.0, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,10,10));
         BatchMængde bm = new BatchMængde(100, destillat, b);
 
 
@@ -196,8 +196,8 @@ class DestillatTest {
     @Test
     void getBatchMængder_TC52() {
         Destillat d = new Destillat(LocalDateTime.now(), f);
-        Batch b1 = new Batch("Malt1", "Sort1", "Mark1", 100, 40.0, "ingen", Rygemateriale.GLØD);
-        Batch b2 = new Batch("Malt2", "Sort2", "Mark2", 200, 20.0, "ingen", Rygemateriale.GLØD);
+        Batch b1 = new Batch("Malt1", "Sort1", "Mark1", 100, 40.0, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,10,10));
+        Batch b2 = new Batch("Malt2", "Sort2", "Mark2", 200, 20.0, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,10,10));
         BatchMængde bm1 = new BatchMængde(100, d, b1);
         BatchMængde bm2 = new BatchMængde(200, d, b2);
 
@@ -222,7 +222,7 @@ class DestillatTest {
     @Test
     void RemoveBatchMængde_TC53() {
         Destillat d = new Destillat(LocalDateTime.now(), f);
-        Batch b = new Batch("Malt1", "Sort1", "Mark1", 100, 40.0, "ingen", Rygemateriale.GLØD);
+        Batch b = new Batch("Malt1", "Sort1", "Mark1", 100, 40.0, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,10,10));
         BatchMængde bm = new BatchMængde(100, d, b);
 
         d.addBatchMængde(bm);
@@ -238,7 +238,7 @@ class DestillatTest {
     @Test
     public void RemoveBatchMængde_TC54() {
         Destillat d = new Destillat(LocalDateTime.now(), f);
-        Batch b = new Batch("Malt1", "Sort1", "Mark1", 100, 40.0, "ingen", Rygemateriale.GLØD);
+        Batch b = new Batch("Malt1", "Sort1", "Mark1", 100, 40.0, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,10,10));
         BatchMængde bm = new BatchMængde(100, d, b);
 
         d.removeBatchMængde(bm);
@@ -389,7 +389,7 @@ class DestillatTest {
     }
     @Test
     void testGetSamletMængde_TC66() {
-        Batch b = new Batch("Malt1", "Sort1", "Mark1", 100, 40.0, "ingen", Rygemateriale.GLØD);
+        Batch b = new Batch("Malt1", "Sort1", "Mark1", 100, 40.0, "ingen", Rygemateriale.GLØD,LocalDate.of(2018,10,10));
         Destillat d = new Destillat(LocalDateTime.now(), f);
         BatchMængde bm = new BatchMængde(100, d, b);
         d.addBatchMængde(bm);
@@ -401,8 +401,8 @@ class DestillatTest {
     @Test
     void testGetSamletMængde_TC67() {
         Whiskyserie w = new Whiskyserie("Serie1", LocalDate.now());
-        Batch b1 = new Batch("Malt1", "Sort1", "Mark1", 100, 40.0, "ingen", Rygemateriale.GLØD);
-        Batch b2 = new Batch("Malt2", "Sort2", "Mark2", 200, 20.0, "ingen", Rygemateriale.GLØD);
+        Batch b1 = new Batch("Malt1", "Sort1", "Mark1", 100, 40.0, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,10,10));
+        Batch b2 = new Batch("Malt2", "Sort2", "Mark2", 200, 20.0, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,10,10));
         Destillat d = new Destillat(LocalDateTime.now(), f);
 
         BatchMængde bm1 = new BatchMængde(100, d, b1);
