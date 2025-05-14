@@ -316,6 +316,30 @@ public class Controller {
         System.out.println(whiskyserie.getWhiskyType());
     }
 
+    public static void registerSvind(Destillat destillat, Double svind){
+        if(svind < 0) {
+            throw new RuntimeException("Tallet er negativt");
+        }
+        else if (svind > destillat.getSamletMængde() + destillat.getSvind()) {
+            throw new RuntimeException("Svindet er støre ind mængden");
+        }
+        else if(destillat.getSamletMængde() <= 0) {
+            throw new RuntimeException("Der er ikke mere af det valgte destillat");
+        }
+        destillat.setSvind(svind);
+    }
+
+    public static void setMåltAlkoholprocent(Destillat destillat, double alkoholprocent) {
+        if(alkoholprocent < 0) {
+            throw new RuntimeException("Tallet er negativt");
+        }
+        else if(alkoholprocent > 100) {
+            throw new RuntimeException("Tallet er over 100");
+        }
+        destillat.setMåltAlkoholProcent(alkoholprocent);
+    }
+
+
     //Remove metoder
 
     public static void removeDestilatMængderFraWhiskyserie(Whiskyserie whiskyserie, ArrayList<DestillatMængde> destillatMængder) {

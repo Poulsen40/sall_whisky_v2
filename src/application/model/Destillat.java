@@ -7,6 +7,9 @@ import java.util.List;
 
 public class Destillat implements Serializable {
     private LocalDateTime datoForPåfyldning;
+    private double svind = 0;
+    private double måltAlkoholprocent = -1;
+
 
     //Linkattribut
     private List<BatchMængde> batchMængder = new ArrayList<>();
@@ -37,6 +40,23 @@ public class Destillat implements Serializable {
         }
     }
 
+    public double getSvind() {
+        return svind;
+    }
+
+    public void setSvind(double svind) {
+        this.svind = svind;
+        System.out.println("svind" + svind);
+    }
+
+    public double getMåltAlkoholProcent() {
+        return måltAlkoholprocent;
+    }
+
+    public void setMåltAlkoholProcent(double måltAlkoholProcent) {
+        this.måltAlkoholprocent = måltAlkoholProcent;
+    }
+
     public ArrayList<DestillatMængde> getDestillatMængder(){
         return new ArrayList<>(destillatMængder);
     }
@@ -54,16 +74,21 @@ public class Destillat implements Serializable {
     }
 
     public double beregnalkoholprocent() {
+
+        if(måltAlkoholprocent == -1) {
+
         double samletrentalkoholprocent = 0;
         double samletmængde = 0;
 
-        for (BatchMængde batchMængde : batchMængder) {
-            double alkopct = batchMængde.getBatch().getAlkoholPct();
-            double mængde = batchMængde.getMængde();
-            samletrentalkoholprocent += mængde * alkopct / 100;
-            samletmængde += mængde;
+            for (BatchMængde batchMængde : batchMængder) {
+                double alkopct = batchMængde.getBatch().getAlkoholPct();
+                double mængde = batchMængde.getMængde();
+                samletrentalkoholprocent += mængde * alkopct / 100;
+                samletmængde += mængde;
+            }
+            return samletrentalkoholprocent / samletmængde * 100;
         }
-        return samletrentalkoholprocent/ samletmængde * 100;
+        return måltAlkoholprocent;
     }
 
     public double getSamletMængde(){
@@ -75,7 +100,7 @@ public class Destillat implements Serializable {
             mængde -= destillatMængde.getMængde();
 
         }
-        return mængde;
+        return mængde - svind;
     }
 
 
