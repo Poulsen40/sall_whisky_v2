@@ -819,4 +819,12 @@ public class OpretOversigtWindow extends Stage {
     public static void resetwhikskylistview(){
         lwlWhiskeyserier.getSelectionModel().clearSelection();
     }
+
+    public void opdaterDestillat(Destillat destillat) {
+//        Controller.registerSvind(destillat)
+//        Controller.setMåltAlkoholProcent(destillat)
+    }
+
+
+
 }
