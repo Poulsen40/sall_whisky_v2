@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -47,7 +48,7 @@ public class OpretOversigtWindow extends Stage {
 
     private static Button btnFiltrerFade, btnFiltrerWhiskey, btnVisHistorie, btnAfbryd, btnFadType, btnFadtypeVælg,
             btnTræsort, btnFadtypeLuk, btnTræsortLuk, btnTræsortVælg, btnLeverandørVælg, btnLeverandørLuk, btnLeverandør,
-            btnTilføjLeverandør, btnFiltrerMedValg, btnFjernLeverandør, btnRydvalgFad;
+            btnTilføjLeverandør, btnFiltrerMedValg, btnFjernLeverandør, btnRydvalgFad, btnOpdaterDestillat;
     private static Slider sliderMinAlder, sliderMaxAlder, sliderMinFadstørelse, sliderMaxFadstørelse, sliderMinGangeBrugt,
             sliderMaxGangeBrugt;
     private static CheckBox cbExBourbon, cbExOlorososherry, cbTræsortEgetræ, cbFyldt;
@@ -532,7 +533,6 @@ public class OpretOversigtWindow extends Stage {
         setLwlBatchesTekstLayout();
 
         btnFiltrerFade = new Button("Filtrer");
-        pane.add(btnFiltrerFade, 1, 1);
         btnFiltrerFade.setOnAction(Event -> {
                     TranslateTransition transision = new TranslateTransition(Duration.millis(600), Sidebar);
                     TranslateTransition transitionUd = new TranslateTransition(Duration.millis(600), Sidebar);
@@ -549,6 +549,14 @@ public class OpretOversigtWindow extends Stage {
                     }
                 }
         );
+
+        btnOpdaterDestillat = new Button("Opdater Destillat");
+        btnOpdaterDestillat.setOnAction(Event -> OpdaterDestillat());
+
+        VBox vBoxFadeKnapper = new VBox();
+        vBoxFadeKnapper.getChildren().setAll(btnFiltrerMedValg, btnOpdaterDestillat);
+        vBoxFadeKnapper.setSpacing(10);
+        pane.add(vBoxFadeKnapper,1,1);
 
         //Knapper
         btnFiltrerWhiskey = new Button("Filtrer");
@@ -713,6 +721,24 @@ public class OpretOversigtWindow extends Stage {
             VisHistorieVindue dia = new VisHistorieVindue("Historie", lwlWhiskeyserier.getSelectionModel().getSelectedItem());
             dia.show();
         }
+    }
+
+    public void OpdaterDestillat(){
+        if(lwlFade.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Vælg først det fad med destillat du  vil opdatere");
+            alert.showAndWait();
+        }
+        else if (Controller.getDestillat(lwlFade.getSelectionModel().getSelectedItem()) == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Fadet har intet destillat");
+            alert.showAndWait();
+        }
+        else {
+            OpdaterDestillatWindow dia = new OpdaterDestillatWindow("Opdater Destillat", Controller.getDestillat(lwlFade.getSelectionModel().getSelectedItem()));
+            dia.showAndWait();
+        }
+        lwlFade.getSelectionModel().clearSelection();
     }
 
     public void setLwlFadeTekstLayout() {
