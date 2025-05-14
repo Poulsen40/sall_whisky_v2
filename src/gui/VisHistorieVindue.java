@@ -4,6 +4,7 @@ import application.controller.Controller;
 import application.model.Whiskyserie;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
@@ -76,7 +77,12 @@ public class VisHistorieVindue extends Stage {
     }
 
     private void printKnap() {
-        Controller.printTilFil(whiskyserie);
-    }
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Label er nu printet til fil");
+        alert.showAndWait();
 
+        Controller.printTilFil(whiskyserie);
+
+        close();
+    }
 }

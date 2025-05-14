@@ -18,7 +18,7 @@ public class Controller {
     //skal bruges til load og save
     private static Storage storage;
 
-    public static void setStorage(Storage storage){
+    public static void setStorage(Storage storage) {
         Controller.storage = storage;
     }
 
@@ -272,7 +272,9 @@ public class Controller {
         return "Ikke placeret på et lager";
     }
 
-    public static String getPlaceringPåLager(Fad fad) { return fad.getPlaceringPåLager();}
+    public static String getPlaceringPåLager(Fad fad) {
+        return fad.getPlaceringPåLager();
+    }
 
 
     //Set metoder
@@ -434,17 +436,19 @@ public class Controller {
                 .filter(f -> f.getFadStørrelse() >= minfadstørrelse && f.getFadStørrelse() <= maxfadstørrelse)
                 // Filtrerer efter alder, men tjekker først om der er destillat på fadet
                 .filter(f -> {
-                    // Hvis vi ikke kræver fyldte fade og fadet er tomt, så skal det inkluderes uanset alder
-                    if (!skalVæreFyldt && f.getDestillat() == null) {
-                        return true;
+                    // Hvis fadet er tomt
+                    if (f.getDestillat() == null) {
+                        // Hvis minAlder > 0, ekskluder tomme fade (fordi de ikke kan opfylde alderskravet)
+                        if (minAlder > 0) {
+                            return false;
+                        }
+                        // Ellers inkluder tomme fade kun hvis vi ikke kræver fyldte fade
+                        return !skalVæreFyldt;
                     }
+
                     // Hvis fadet har destillat, tjek alderen
-                    if (f.getDestillat() != null) {
-                        long alder = ChronoUnit.YEARS.between(f.getDestillat().getDatoForPåfyldning(), nu);
-                        return alder >= minAlder && alder <= maxAlder;
-                    }
-                    // Hvis vi kræver fyldte fade og fadet er tomt, så skal det ikke inkluderes
-                    return false;
+                    long alder = ChronoUnit.YEARS.between(f.getDestillat().getDatoForPåfyldning(), nu);
+                    return alder >= minAlder && alder <= maxAlder;
                 })
                 // Filtrerer efter leverandør, hvis angivet
                 .filter(f -> leverandør == null || leverandør.isEmpty() || leverandør.contains(f.getLevarandør()))
@@ -582,7 +586,7 @@ public class Controller {
         StringBuilder sb = new StringBuilder();
         StringBuilder sbfad = new StringBuilder();
         for (DestillatMængde destillatMængde : whiskyserie.getDestillatMængder()) {
-            sbfad.append("Antal DestillatMængde: " + destillatMængde.getMængde() + " har lagt på dette fad: Fadtype:" + destillatMængde.getDestillat().getFad().getFadtype() + " Træsort: "
+            sbfad.append("FadInfo: \n Antal DestillatMængde: " + destillatMængde.getMængde() + " har lagt på dette fad: Fadtype:" + destillatMængde.getDestillat().getFad().getFadtype() + " Træsort: "
                     + destillatMængde.getDestillat().getFad().getTræsort() + " Oprindelse: " + destillatMængde.getDestillat().getFad().getLevarandør() + "\n");
         }
 
@@ -590,14 +594,82 @@ public class Controller {
         for (DestillatMængde destillatMængde : whiskyserie.getDestillatMængder()) {
             for (BatchMængde batchMængde : destillatMængde.getDestillat().getBatchMængder()) {
                 sbbatch.append("BatchInformationer: " + "ID: " + batchMængde.getBatch().getBatchID() + " \n Opdyrket mark" + batchMængde.getBatch().getMark() + "\nKornsort:" +
-                        " " + batchMængde.getBatch().getKornSort() + "\nMaltBach: " + batchMængde.getBatch().getMaltBach() + "\nrygemateriale:  " + batchMængde.getBatch().getRygemateriale() + "\n");
+                        " " + batchMængde.getBatch().getKornSort() + "\nMaltBach: " + batchMængde.getBatch().getMaltBach() + "\nrygemateriale:  " + batchMængde.getBatch().getRygemateriale() + "\n \n");
             }
         }
         sb.append("WhiskySerieoinfo: \nNavn: " + whiskyserie.getSerieNavn() + "\nType: " + whiskyserie.getWhiskyType() + " \nAlkoholpct: " + whiskyserie.getAlkoholPct() + " \nAntalFlasker:" +
                 whiskyserie.getAntalFlasker() + " \nTilsat vand: " + whiskyserie.getVandMængde() + " \nÅrgang: " + whiskyserie.getDato()
-                + "\n \n" + "FadInfo: " + sbfad + "\n" + sbbatch + "\n");
+                + " \n \n" + sbfad + "\n" + sbbatch + "\n");
 
         return sb;
+    }
+
+    public static StringBuilder label(Whiskyserie whiskyserie) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Handcrafted from organic ");
+        // Her adder jeg aller batches til en ny ArrayList
+        List<Batch> Batches = new ArrayList<>();
+        for (DestillatMængde dm : whiskyserie.getDestillatMængder()) {
+            for (BatchMængde bm : dm.getDestillat().getBatchMængder()) {
+                if (!Batches.contains(bm.getBatch())) {
+                    Batches.add(bm.getBatch());
+                }
+            }
+        }
+        // Her adder jeg kornsort til Sb
+        List<String> kornsort = new ArrayList<>();
+        for (Batch batch : Batches) {
+            if (!kornsort.contains(batch.getKornSort())) {
+                kornsort.add(batch.getKornSort());
+                if (kornsort.size() > 1) {
+                    sb.append(" and ");
+                }
+                sb.append(batch.getKornSort());
+            }
+        }
+
+        sb.append("\nharvested from our fields ");
+
+        // Her adder jeg marker til vores label
+        List<String> marker = new ArrayList<>();
+        for (Batch batch : Batches) {
+            if (!marker.contains(batch.getMark())) {
+                marker.add(batch.getMark());
+                if (marker.size() > 1) {
+                    sb.append(" and ");
+                }
+                sb.append(batch.getMark());
+            }
+        }
+
+        sb.append("\nDouble distilled slowly \n" +
+                "in copper pot stills. Matured in \n" +
+                "carefully selected ");
+
+        //Her finder jeg ud af hvad fadtype de har lagt i
+
+        List<Fadtype> fadtypes = new ArrayList<>();
+        for (DestillatMængde dm : whiskyserie.getDestillatMængder()) {
+
+            if(!fadtypes.contains(dm.getDestillat().getFad().getFadtype())){
+                fadtypes.add(dm.getDestillat().getFad().getFadtype());
+                if(fadtypes.size() > 1){
+                    sb.append(" and ");
+                }
+                sb.append(dm.getDestillat().getFad().getFadtype());
+            }
+        }
+
+
+        // Her finder jeg ud af hvad år det Whisky er kommet på flaske
+        sb.append(" over three years. Bottled in " + whiskyserie.getDato());
+
+
+
+
+        return sb;
+
     }
 
     public static void printTilFil(Whiskyserie whiskyserie) {
@@ -607,7 +679,7 @@ public class Controller {
 
         try {
             PrintWriter printWriter = new PrintWriter(file);
-            printWriter.println(info(whiskyserie));
+            printWriter.println(label(whiskyserie));
             printWriter.close();
 
         } catch (FileNotFoundException e) {
