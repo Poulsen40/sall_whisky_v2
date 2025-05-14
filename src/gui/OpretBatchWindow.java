@@ -9,12 +9,14 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import javax.sound.midi.Soundbank;
 import java.awt.font.ImageGraphicAttribute;
+import java.time.LocalDate;
 
 public class OpretBatchWindow extends Stage {
     public OpretBatchWindow(String title) {
@@ -38,6 +40,8 @@ public class OpretBatchWindow extends Stage {
     private static TextField txfMark;
     private static TextField txfKornsort;
     private static String rygemateriale;
+    private static DatePicker datePicker;
+    private static LocalDate dato;
 
 
     private void initContent(GridPane pane) {
@@ -45,6 +49,7 @@ public class OpretBatchWindow extends Stage {
         pane.setHgap(10);
         pane.setVgap(10);
         pane.setGridLinesVisible(false);
+
 
         Label lblInformationer = new Label("Batch informationer");
         pane.add(lblInformationer, 0, 0);
@@ -98,13 +103,23 @@ public class OpretBatchWindow extends Stage {
             rygemateriale = comboBoxRygeMaterialle.getValue();
         });
 
+        Label lblDato = new Label("Dato");
+        pane.add(lblDato,0,8);
+        datePicker = new DatePicker();
+        datePicker.setPromptText("Vælg dato for batch");
+        pane.add(datePicker, 1, 8);
+        datePicker.setEditable(false); // Forhindrer manuel indtastning
+        datePicker.setOnAction(event -> {
+            dato = datePicker.getValue();
+        });
+
         Button opretBatch = new Button("Opret batch");
-        pane.add(opretBatch, 1, 8);
+        pane.add(opretBatch, 1, 9);
         opretBatch.setOnAction(event -> opretBatch());
         GridPane.setHalignment(opretBatch, HPos.RIGHT);
 
         Button afbrudBatch = new Button("Afbryd");
-        pane.add(afbrudBatch, 0, 8);
+        pane.add(afbrudBatch, 0, 9);
         afbrudBatch.setOnAction(event -> {
             Stage stage = (Stage) afbrudBatch.getScene().getWindow();
             stage.close(); // lukker dialogen
@@ -124,6 +139,12 @@ public class OpretBatchWindow extends Stage {
             isValid = false; //Hvis felterne er tomme, markeres fom false
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Du mangler at udfylde noget information");
+            alert.showAndWait();
+        }
+        if (dato == null){
+            isValid = false; //Hvis dato ikke er valgt, sættes isValid til false
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Du skal vælge en dato");
             alert.showAndWait();
         }
         if (!maltBatch.matches("[a-zA-ZæøåÆØÅ ]+")) {
@@ -185,7 +206,7 @@ public class OpretBatchWindow extends Stage {
                 }
             }if (isValid){ //Tjekker om brugerens input stadig er gyldigt
                 //Opret batch
-                Batch b1 = Controller.createBatch(maltBatch, kornSort, mark, mængdeVæske1, alkoholPct1, kommentar, Rygemateriale.valueOf(rygemateriale.toUpperCase()));
+                Batch b1 = Controller.createBatch(maltBatch, kornSort, mark, mængdeVæske1, alkoholPct1, kommentar, Rygemateriale.valueOf(rygemateriale.toUpperCase()), dato);
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setContentText("Dit batch er nu oprettet");
                 alert.showAndWait();
