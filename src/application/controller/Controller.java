@@ -499,6 +499,16 @@ public class Controller {
         return frieFade;
     }
 
+    public static ArrayList<Fad> fyldteFadePåLager(ArrayList<Fad> fade) {
+        ArrayList<Fad> fyldeFade = new ArrayList<>();
+        for (Fad f : Controller.getFade()) {
+            if (Controller.getDestillat(f) != null) {
+                fyldeFade.add(f);
+            }
+        }
+        return fyldeFade;
+    }
+
     public static ArrayList<Batch> batchKlarTilDestillat(ArrayList<Batch> batches) {
         ArrayList<Batch> batchesMedVæske = new ArrayList<>();
         for (Batch b : Controller.getBatches()) {

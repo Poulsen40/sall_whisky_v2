@@ -63,6 +63,10 @@ public class GUI extends Application {
         hBoxButtons.getChildren().add(oversigt);
         oversigt.setOnAction(Event -> opretOversigt());
 
+        Button omhæld = new Button("Omhældning");
+        hBoxButtons.getChildren().add(omhæld);
+        omhæld.setOnAction(Event -> omhældning());
+
         Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/gui/billeder/img.png")));
         ImageView imageView = new ImageView(image);
         pane.add(imageView,0,0);
@@ -106,6 +110,11 @@ public class GUI extends Application {
 
     public void opretOversigt(){
         OpretOversigtWindow dia = new OpretOversigtWindow("Oversigt");
+        dia.showAndWait();
+    }
+
+    public void omhældning(){
+        OpretOmhældningWindow dia = new OpretOmhældningWindow("Omhældning");
         dia.showAndWait();
     }
 
