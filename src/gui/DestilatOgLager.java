@@ -156,6 +156,14 @@ public class DestilatOgLager extends Stage {
 
     }
 
+    private void ShowAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(message);
+        alert.setHeight(400);
+        alert.setWidth(400);
+        alert.showAndWait();
+    }
+
     public void vælgFad() {
         selectedFad = lwlFade.getSelectionModel().getSelectedItem();
         if (selectedFad == null) {
@@ -179,66 +187,37 @@ public class DestilatOgLager extends Stage {
     public void vælgBatch() {
 
         if (selectedFad == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeight(400);
-            alert.setWidth(400);
-            alert.setContentText("Husk at udføre step 1 først");
-            alert.showAndWait();
-
+            ShowAlert("Husk at udføre step 1 først");
         }
         //Får info fra batch (hvilket batch og hvor meget der ønskes tappes fra brugergrænsefladen)
         Batch selectedBatch = lwlBatch.getSelectionModel().getSelectedItem();
         String mængdeValgt = txfBatchMængdeValgt.getText().trim();
 
         if (selectedBatch == null && mængdeValgt.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeight(400);
-            alert.setWidth(400);
-            alert.setContentText("Du skal huske at vælge den batch du vil tappe fra og hvor mange liter du vil tappe");
-            alert.showAndWait();
+            ShowAlert("Du skal huske at vælge den batch du vil tappe fra og hvor mange liter du vil tappe");
         }
         if (selectedBatch == null && !mængdeValgt.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeight(400);
-            alert.setWidth(400);
-            alert.setContentText(" Du skal huske at vælge den batch du vil tappe fra");
-            alert.showAndWait();
+            ShowAlert(" Du skal huske at vælge den batch du vil tappe fra");
         }
         if (selectedBatch != null && mængdeValgt.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeight(400);
-            alert.setWidth(400);
-            alert.setContentText("Du skal huske at skrive hvor mange liter du vil tappe");
-            alert.showAndWait();
+            ShowAlert("Du skal huske at skrive hvor mange liter du vil tappe");
         }
 
         if (selectedBatch != null && !mængdeValgt.isEmpty()) {
             if (!mængdeValgt.matches("\\d+")) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeight(400);
-                alert.setWidth(400);
-                alert.setContentText("Mængde væske ønsket tappes skal være et tal");
-                alert.showAndWait();
+                ShowAlert("Mængde væske ønsket tappes skal være et tal");
                 return;
             }
             double mængdeFraBatch = Double.parseDouble(txfBatchMængdeValgt.getText().trim());
             double væskeTilbagePåfad = Double.parseDouble(txfFadMængdeTilbage.getText().trim());
 
             if (mængdeFraBatch > Controller.getMængdeVæske(selectedBatch)) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeight(400);
-                alert.setWidth(400);
-                alert.setContentText("Du kan ikke tappe flere liter end der er på batchet");
-                alert.showAndWait();
+                ShowAlert("Du kan ikke tappe flere liter end der er på batchet");
             }
             if (mængdeFraBatch > væskeTilbagePåfad) {
                 System.out.println(mængdeFraBatch);
                 System.out.println(Controller.getFadStørrelse(selectedFad));
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeight(400);
-                alert.setWidth(400);
-                alert.setContentText("Du kan ikke tappe flere liter end der er plads til på fadet");
-                alert.showAndWait();
+                ShowAlert("Du kan ikke tappe flere liter end der er plads til på fadet");
             }
             if (mængdeFraBatch <= Controller.getMængdeVæske(selectedBatch) && mængdeFraBatch <= væskeTilbagePåfad && isVælgFadButtonPressed) {
                 //Batchmængden bliver oprettet efter overstående info
