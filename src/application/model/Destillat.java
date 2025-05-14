@@ -45,7 +45,7 @@ public class Destillat implements Serializable {
     }
 
     public void setSvind(double svind) {
-        this.svind = svind;
+        this.svind += svind;
         System.out.println("svind" + svind);
     }
 
