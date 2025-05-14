@@ -124,7 +124,7 @@ public class Destillat implements Serializable {
 
     @Override
     public String toString() {
-        return  "Antal liter " + getSamletMængde() + "\nSamlet alkoholprocenten i Distillat " + beregnalkoholprocent() + "\nInfo omkirng indkluderet batches " + udskrivBatches();
+        return  "Antal liter " + getSamletMængde() + "\nSamlet alkoholprocenten i destillat indtilvidere " + beregnalkoholprocent() + "\nInfo omkirng indkluderet batches " + udskrivBatches();
     }
 
 
