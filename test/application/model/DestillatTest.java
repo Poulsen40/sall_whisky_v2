@@ -107,8 +107,6 @@ class DestillatTest {
         double result = d.beregnalkoholprocent();
         assertTrue(Double.isNaN(result), "Alkohol pct. skal være NaN for en tom liste");
         System.out.println("TC43: PASSED " + result);
-
-
     }
 
     @Test
@@ -124,29 +122,29 @@ class DestillatTest {
         assertEquals(0.0, result, "Alkohol pct. skal være 0%, da batchmængden ikke indeholder noget alkohol");
         System.out.println("TC44 PASSED: " + result);
     }
-
+//---------------------------------------------------------------------
     @Test
     void addBatchMængde_TC47() {
         Destillat d = new Destillat(LocalDateTime.of(2022, 1, 1, 2, 2), f);
-        Batch b1 = new Batch("Malt1", "Sort1", "Mark1", 100, 40, "ingen", Rygemateriale.GLØD);
-        BatchMængde bm1 = new BatchMængde(100, d, b1);
+        Batch b = new Batch("Malt1", "Sort1", "Mark1", 100, 40, "ingen", Rygemateriale.GLØD);
+        BatchMængde bm = new BatchMængde(100, d, b);
 
         //Tilføjer bm1 til destillat
-        d.addBatchMængde(bm1);
+        d.addBatchMængde(bm);
         assertEquals(1, d.getBatchMængder().size(), "Batchmængderne skal være 1 efter tilføjelse.");
-        assertTrue(d.getBatchMængder().contains(bm1), "Batchmængden skal være i listen.");
+        assertTrue(d.getBatchMængder().contains(bm), "Batchmængden skal være i listen.");
         System.out.println("TC47 PASSED: Batchmængde tilføjet korrekt.");
     }
 
     @Test
     void addBatchMængde_TC48() {
         Destillat d = new Destillat(LocalDateTime.of(2022, 1, 1, 2, 2),f );
-        Batch b1 = new Batch("Malt1", "Sort1", "Mark1", 0, 20, "ingen", Rygemateriale.GLØD);
-        BatchMængde bm1 = new BatchMængde(0, d, b1);
+        Batch b = new Batch("Malt1", "Sort1", "Mark1", 0, 20, "ingen", Rygemateriale.GLØD);
+        BatchMængde bm = new BatchMængde(0, d, b);
 
-        d.addBatchMængde(bm1);
+        d.addBatchMængde(bm);
         assertEquals(1, d.getBatchMængder().size(), "Batchmængderne skal være 1 efter tilføjelse.");
-        assertTrue(d.getBatchMængder().contains(bm1), "Batchmængden skal være i listen.");
+        assertTrue(d.getBatchMængder().contains(bm), "Batchmængden skal være i listen.");
         System.out.println("TC49 PASSED: Batchmængde tilføjet korrekt.");
 
     }
@@ -154,12 +152,12 @@ class DestillatTest {
     @Test
     void addBatchMængde_TC49() {
         Destillat d = new Destillat(LocalDateTime.of(2022, 1, 1, 2, 2), f);
-        Batch b1 = new Batch("Malt1", "Sort1", "Mark1", -100, -40, "ingen", Rygemateriale.GLØD);
-        BatchMængde bm1 = new BatchMængde(-100, d, b1);
+        Batch b = new Batch("Malt1", "Sort1", "Mark1", -100, -40, "ingen", Rygemateriale.GLØD);
+        BatchMængde bm = new BatchMængde(-100, d, b);
 
-        d.addBatchMængde(bm1);
+        d.addBatchMængde(bm);
         assertEquals(1, d.getBatchMængder().size(), "Batchmængderne skal være 1 efter tilføjelse.");
-        assertTrue(d.getBatchMængder().contains(bm1), "Batchmængden skal være i listen.");
+        assertTrue(d.getBatchMængder().contains(bm), "Batchmængden skal være i listen.");
         System.out.println("TC49 PASSED: Batchmængde tilføjet korrekt.");
     }
 
@@ -167,9 +165,9 @@ class DestillatTest {
     @Test
     void getBatchMængder_TC50() {
         //Destillat uden batches
-        Destillat destillat = new Destillat(LocalDateTime.now(), f);
+        Destillat d = new Destillat(LocalDateTime.now(), f);
 
-        List<BatchMængde> batchMængder = destillat.getBatchMængder();
+        List<BatchMængde> batchMængder = d.getBatchMængder();
         System.out.println("Batchmængder i destillat (forventet tom liste): " + batchMængder);
 
         assertNotNull(batchMængder, "Listen må ikke være null.");
@@ -178,38 +176,35 @@ class DestillatTest {
 
 
     }
-
     @Test
     void getBatchMængder_TC51() {
         Destillat destillat = new Destillat(LocalDateTime.now(), f);
-        Batch batch = new Batch("Malt1", "Sort1", "Mark1", 100, 40.0, "ingen", Rygemateriale.GLØD);
-        BatchMængde batchMængde = new BatchMængde(100, destillat, batch);
+        Batch b = new Batch("Malt1", "Sort1", "Mark1", 100, 40.0, "ingen", Rygemateriale.GLØD);
+        BatchMængde bm = new BatchMængde(100, destillat, b);
 
 
         //Tilføjer batchmængden til destillatet
-        destillat.addBatchMængde(batchMængde);
+        destillat.addBatchMængde(bm);
         List<BatchMængde> batchMængder = destillat.getBatchMængder();
 
         System.out.println("Batchmængder i destillat: " + batchMængder);
         assertNotNull(batchMængder, "Listen må ikke være null.");
         assertEquals(1, batchMængder.size(), "Forventet én batchmængde, men listen indeholder ikke præcis én.");
-        assertTrue(batchMængder.contains(batchMængde), "Batchmængden skal være i listen.");
+        assertTrue(batchMængder.contains(bm), "Batchmængden skal være i listen.");
         System.out.println("TC51 PASSED: Returnerer batchmængde i liste");
     }
-
-
     @Test
     void getBatchMængder_TC52() {
-        Destillat destillat = new Destillat(LocalDateTime.now(), f);
-        Batch batch1 = new Batch("Malt1", "Sort1", "Mark1", 100, 40.0, "ingen", Rygemateriale.GLØD);
-        Batch batch2 = new Batch("Malt2", "Sort2", "Mark2", 200, 20.0, "ingen", Rygemateriale.GLØD);
-        BatchMængde batchMængde1 = new BatchMængde(100, destillat, batch1);
-        BatchMængde batchMængde2 = new BatchMængde(200, destillat, batch2);
+        Destillat d = new Destillat(LocalDateTime.now(), f);
+        Batch b1 = new Batch("Malt1", "Sort1", "Mark1", 100, 40.0, "ingen", Rygemateriale.GLØD);
+        Batch b2 = new Batch("Malt2", "Sort2", "Mark2", 200, 20.0, "ingen", Rygemateriale.GLØD);
+        BatchMængde bm1 = new BatchMængde(100, d, b1);
+        BatchMængde bm2 = new BatchMængde(200, d, b2);
 
-        destillat.addBatchMængde(batchMængde1);
-        destillat.addBatchMængde(batchMængde2);
+        d.addBatchMængde(bm1);
+        d.addBatchMængde(bm2);
 
-        List<BatchMængde> batchMængder = destillat.getBatchMængder();
+        List<BatchMængde> batchMængder = d.getBatchMængder();
 
         System.out.println("Batchmængder i destillat: " + batchMængder);
         assertNotNull(batchMængder, "Listen må ikke være null.");
@@ -217,24 +212,22 @@ class DestillatTest {
         assertEquals(2, batchMængder.size(), "Forventet to batchmængder, men listen indeholder ikke præcis to.");
 
         //Tester at batchmængderne findes i listen
-        assertTrue(batchMængder.contains(batchMængde1), "Batchmængde1 skal være i listen.");
-        assertTrue(batchMængder.contains(batchMængde2), "Batchmængde2 skal være i listen.");
+        assertTrue(batchMængder.contains(bm1), "Batchmængde1 skal være i listen.");
+        assertTrue(batchMængder.contains(bm2), "Batchmængde2 skal være i listen.");
         System.out.println("TC52 PASSED: Returnerer batchmængde i liste");
 
     }
 
     //--------------------------------------------------
-
-
     @Test
     void RemoveBatchMængde_TC53() {
         Destillat d = new Destillat(LocalDateTime.now(), f);
-        Batch batch = new Batch("Malt1", "Sort1", "Mark1", 100, 40.0, "ingen", Rygemateriale.GLØD);
-        BatchMængde bm = new BatchMængde(100, d, batch);
+        Batch b = new Batch("Malt1", "Sort1", "Mark1", 100, 40.0, "ingen", Rygemateriale.GLØD);
+        BatchMængde bm = new BatchMængde(100, d, b);
 
         d.addBatchMængde(bm);
         System.out.println("Batchmængder før fjernelse: " + d.getBatchMængder());
-        d.removeBatchMængde(bm);d.removeBatchMængde(bm);
+        d.removeBatchMængde(bm);
         System.out.println("Batchmængder efter fjernelse: " + d.getBatchMængder());
 
         assertFalse(d.getBatchMængder().contains(bm), "Batchmængden skal være fjernet fra listen.");
@@ -242,18 +235,16 @@ class DestillatTest {
         System.out.println("TC52 PASSED: Returnerer batchmængde");
 
     }
-
     @Test
     public void RemoveBatchMængde_TC54() {
         Destillat d = new Destillat(LocalDateTime.now(), f);
-        Batch batch = new Batch("Malt1", "Sort1", "Mark1", 100, 40.0, "ingen", Rygemateriale.GLØD);
-        BatchMængde bm = new BatchMængde(100, d, batch);
+        Batch b = new Batch("Malt1", "Sort1", "Mark1", 100, 40.0, "ingen", Rygemateriale.GLØD);
+        BatchMængde bm = new BatchMængde(100, d, b);
 
         d.removeBatchMængde(bm);
         assertFalse(d.getBatchMængder().contains(bm), "Batchmængden skal ikke være i listen.");
         System.out.println("TC54: ingen batchmængder ");
     }
-
     @Test
     public void RemoveBatchMængde_TC55() {
         Destillat d = new Destillat(LocalDateTime.now(), f);
@@ -263,11 +254,8 @@ class DestillatTest {
         assertTrue(batchMængder.isEmpty(), "Batchmængder listen skal være tom.");
         assertFalse(batchMængder.contains(null), "Listen må ikke indeholde null-værdier.");
         System.out.println("TC55: ingen batchmængder ");
-
     }
-
 //_________________________________
-
     @Test
     public void getDestillatMængder_TC56() {
         Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
@@ -284,9 +272,6 @@ class DestillatTest {
         System.out.println("TC56: Returnerer korrekte destillatmængde");
 
     }
-
-
-
     @Test
     void getDestillatMængder_TC57() {
         Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
@@ -304,8 +289,6 @@ class DestillatTest {
         System.out.println("TC57: Returnerer batchmængder ");
 
     }
-
-
     @Test
     void getDestillatMængder_TC58() {
         Destillat d = new Destillat(LocalDateTime.now(), f);
@@ -315,39 +298,33 @@ class DestillatTest {
         assertNotNull(destillatMængder, "Listen må ikke være null.");
         assertEquals(0, destillatMængder.size(), "Der forventedes 0 destillatMængder, men listen var ikke tom.");
         System.out.println("TC58: Returner tom liste");
-
     }
-
-
 //____________________________--
-
     @Test
     void testCreateDestillatMængde_TC59() {
         Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
-        Destillat destillat = new Destillat(LocalDateTime.now(), f);
-        DestillatMængde destillatMængde = destillat.createDestillatMængde(150, w);
+        Destillat d = new Destillat(LocalDateTime.now(), f);
+        DestillatMængde dm = d.createDestillatMængde(150, w);
 
-        System.out.println("Oprettet destillatmængde: " + destillatMængde.getMængde() + "L i whiskyserien: " + w.getSerieNavn());
-        System.out.println("Antal destillatmængder i destillat: " + destillat.getDestillatMængder().size());
+        System.out.println("Oprettet destillatmængde: " + dm.getMængde() + "L i whiskyserien: " + w.getSerieNavn());
+        System.out.println("Antal destillatmængder i destillat: " + d.getDestillatMængder().size());
 
-        assertNotNull(destillatMængde);
-        assertEquals(150, destillatMængde.getMængde());
+        assertNotNull(dm);
+        assertEquals(150, dm.getMængde());
         System.out.println("TC59: Opretter destillatmægnde");
     }
-
     @Test
     void testCreateDestillatMængde_TC60() {
         Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
-        Destillat destillat = new Destillat(LocalDateTime.now(), f);
-        DestillatMængde destillatMængde = destillat.createDestillatMængde(0, w);
+        Destillat d = new Destillat(LocalDateTime.now(), f);
+        DestillatMængde dm = d.createDestillatMængde(0, w);
 
         System.out.println("Oprettet destillatmængde med 0L i whiskyserien: " + w.getSerieNavn());
-        System.out.println("Antal destillatmængder i destillat: " + destillat.getDestillatMængder().size());
+        System.out.println("Antal destillatmængder i destillat: " + d.getDestillatMængder().size());
 
-        assertNotNull(destillatMængde);
-        assertEquals(0, destillatMængde.getMængde());
+        assertNotNull(dm);
+        assertEquals(0, dm.getMængde());
     }
-
     @Test
     void testCreateDestillatMængde_TC61() {
         // Testen forventer en NullPointerException, da whiskyserie er null
@@ -361,58 +338,51 @@ class DestillatTest {
         System.out.println("TC61: NullPointerException kastes.");
     }
     //-------------------------------------------------------------------------------------------
-
     @Test
     void testRemoveDestillatMængde_TC62() {
         Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
-        Destillat destillat = new Destillat(LocalDateTime.now(), f);
-        DestillatMængde destillatMængde = new DestillatMængde(200, w, destillat);
+        Destillat d = new Destillat(LocalDateTime.now(), f);
+        DestillatMængde dm = new DestillatMængde(200, w, d);
 
-        System.out.println("Forsøger at fjerne destillatmængde, som aldrig blev tilføjet: " + destillatMængde.getMængde() + "L");
-        destillat.removeDestillatMængde(destillatMængde);
-        System.out.println("Antal destillatmængder efter fjernelse: " + destillat.getDestillatMængder().size());
+        System.out.println("Forsøger at fjerne destillatmængde, som aldrig blev tilføjet: " + dm.getMængde() + "L");
+        d.removeDestillatMængde(dm);
+        System.out.println("Antal destillatmængder efter fjernelse: " + d.getDestillatMængder().size());
 
-        assertFalse(destillat.getDestillatMængder().contains(destillatMængde));
+        assertFalse(d.getDestillatMængder().contains(dm));
         System.out.println("TC62: Fjerner destillatmængde");
     }
-
     @Test
     void testRemoveDestillatMængde_TC63() {
-        Destillat destillat = new Destillat(LocalDateTime.now(), f);
+        Destillat d = new Destillat(LocalDateTime.now(), f);
 
         System.out.println("Forsøger at fjerne null fra destillatmængder.");
-        destillat.removeDestillatMængde(null);
-        System.out.println("Antal destillatmængder efter fjernelse: " + destillat.getDestillatMængder().size());
+        d.removeDestillatMængde(null);
+        System.out.println("Antal destillatmængder efter fjernelse: " + d.getDestillatMængder().size());
 
-        assertTrue(destillat.getDestillatMængder().isEmpty());
+        assertTrue(d.getDestillatMængder().isEmpty());
         System.out.println("TC63: Fjerner destillatmængde");
 
     }
-
     @Test
     void testRemoveDestillatMængde_TC64() {
         Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
-        Destillat destillat = new Destillat(LocalDateTime.now(), f);
-        DestillatMængde destillatMængde = destillat.createDestillatMængde(150, w);
+        Destillat d = new Destillat(LocalDateTime.now(), f);
+        DestillatMængde dm = d.createDestillatMængde(150, w);
 
-        System.out.println("Fjerner destillatmængde: " + destillatMængde.getMængde() + "L fra whiskyserien: " + w.getSerieNavn());
-        destillat.removeDestillatMængde(destillatMængde);
-        System.out.println("Antal destillatmængder efter fjernelse: " + destillat.getDestillatMængder().size());
+        System.out.println("Fjerner destillatmængde: " + dm.getMængde() + "L fra whiskyserien: " + w.getSerieNavn());
+        d.removeDestillatMængde(dm);
+        System.out.println("Antal destillatmængder efter fjernelse: " + d.getDestillatMængder().size());
 
-        assertFalse(destillat.getDestillatMængder().contains(destillatMængde));
+        assertFalse(d.getDestillatMængder().contains(dm));
         System.out.println("TC64: Fjerner destillatmængde");
-
-
     }
-
     //----------------------------------
-
     @Test
     void testGetSamletMængde_TC65() {
-        Destillat destillat = new Destillat(LocalDateTime.now(), f);
+        Destillat d = new Destillat(LocalDateTime.now(), f);
 
-        System.out.println("Samlet mængde uden batchmængder: " + destillat.getSamletMængde());
-        assertEquals(0, destillat.getSamletMængde(), "Forventet samlet mængde: 0L");
+        System.out.println("Samlet mængde uden batchmængder: " + d.getSamletMængde());
+        assertEquals(0, d.getSamletMængde(), "Forventet samlet mængde: 0L");
         System.out.println("TC65: Får korrekte samlet mængde");
 
 
@@ -420,48 +390,43 @@ class DestillatTest {
     @Test
     void testGetSamletMængde_TC66() {
         Batch b = new Batch("Malt1", "Sort1", "Mark1", 100, 40.0, "ingen", Rygemateriale.GLØD);
-        Destillat destillat = new Destillat(LocalDateTime.now(), f);
-        BatchMængde batchMængde = new BatchMængde(100, destillat, b);
-        destillat.addBatchMængde(batchMængde);
+        Destillat d = new Destillat(LocalDateTime.now(), f);
+        BatchMængde bm = new BatchMængde(100, d, b);
+        d.addBatchMængde(bm);
 
-        System.out.println("Samlet mængde efter tilføjelse af batchmængde: " + destillat.getSamletMængde());
-        assertEquals(100, destillat.getSamletMængde(), "Forventet samlet mængde: 100L");
+        System.out.println("Samlet mængde efter tilføjelse af batchmængde: " + d.getSamletMængde());
+        assertEquals(100, d.getSamletMængde(), "Forventet samlet mængde: 100L");
         System.out.println("TC66: Får korrekte samlet mængde");
     }
-
     @Test
     void testGetSamletMængde_TC67() {
-        Whiskyserie whiskyserie = new Whiskyserie("Serie1", LocalDate.now());
+        Whiskyserie w = new Whiskyserie("Serie1", LocalDate.now());
         Batch b1 = new Batch("Malt1", "Sort1", "Mark1", 100, 40.0, "ingen", Rygemateriale.GLØD);
         Batch b2 = new Batch("Malt2", "Sort2", "Mark2", 200, 20.0, "ingen", Rygemateriale.GLØD);
-        Destillat destillat = new Destillat(LocalDateTime.now(), f);
+        Destillat d = new Destillat(LocalDateTime.now(), f);
 
-        BatchMængde batchMængde1 = new BatchMængde(100, destillat, b1);
-        BatchMængde batchMængde2 = new BatchMængde(200, destillat, b2);
-        destillat.addBatchMængde(batchMængde1);
-        destillat.addBatchMængde(batchMængde2);
+        BatchMængde bm1 = new BatchMængde(100, d, b1);
+        BatchMængde bm2 = new BatchMængde(200, d, b2);
+        d.addBatchMængde(bm1);
+        d.addBatchMængde(bm2);
 
         //Opretter destillatmængde og tilføjer den til destillatet
-        DestillatMængde destillatMængde = destillat.createDestillatMængde(50, whiskyserie);
-        System.out.println("Samlet mængde efter tilføjelse af to batchmængder: " + destillat.getSamletMængde());
-        assertEquals(250, destillat.getSamletMængde(), "Forventet samlet mængde: 300L");
+        DestillatMængde destillatMængde = d.createDestillatMængde(50, w);
+        System.out.println("Samlet mængde efter tilføjelse af to batchmængder: " + d.getSamletMængde());
+        assertEquals(250, d.getSamletMængde(), "Forventet samlet mængde: 300L");
         System.out.println("TC67: Får korrekte samlet mængde");
     }
-
     //----------------------------------
-
-
     @Test
     void testGetDatoForPåfyldning_TC68() {
         LocalDateTime dato = LocalDateTime.of(2023, 5, 12, 14, 30);
-        Destillat destillat = new Destillat(dato, f);
+        Destillat d = new Destillat(dato, f);
 
-        System.out.println("Dato for påfyldning: " + destillat.getDatoForPåfyldning());
-        assertEquals(dato, destillat.getDatoForPåfyldning());
+        System.out.println("Dato for påfyldning: " + d.getDatoForPåfyldning());
+        assertEquals(dato, d.getDatoForPåfyldning());
         System.out.println("TC68: Får korrekte dato");
 
     }
-
     @Test
     void testGetDatoForPåfyldning_TC69() {
         Destillat destillat = new Destillat(null, f);
@@ -469,18 +434,15 @@ class DestillatTest {
         System.out.println("Dato for påfyldning er null.");
         assertNull(destillat.getDatoForPåfyldning());
         System.out.println("TC69: Returnerer null");
-
     }
-
     //--------------------------------------------
-
     @Test
     void testGetFad_TC70() {
-        Fad fad = new Fad(100, "TestLeverandør", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 1);
-        Destillat destillat = new Destillat(LocalDateTime.now(), fad);
+        Fad f = new Fad(100, "TestLeverandør", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 1);
+        Destillat d = new Destillat(LocalDateTime.now(), f);
 
-        System.out.println("Fad tilknyttet destillat: " + destillat.getFad());
-        assertEquals(fad, destillat.getFad());
+        System.out.println("Fad tilknyttet destillat: " + d.getFad());
+        assertEquals(f, d.getFad());
         System.out.println("TC70: Returnerer det korrekte fad");
 
 
@@ -489,35 +451,33 @@ class DestillatTest {
     void testGetFad_TC71() {
 
         assertThrows(NullPointerException.class, () -> {
-            Destillat destillat = new Destillat(LocalDateTime.now(), null);
+            Destillat d = new Destillat(LocalDateTime.now(), null);
 
             // Kalder getFad(), hvilket forventes at kaste en NullPointerException
-            destillat.getFad();
+            d.getFad();
         });
 
         // Hvis exceptionen ikke kastes, fejler testen automatisk
         System.out.println("TC71: NullPointerException kastes.");
     }
-
-
+//------------------------------------------------------
     @Test
     void testToString_TC72() {
         LocalDateTime dato = LocalDateTime.of(2023, 5, 12, 14, 30);
-        Destillat destillat = new Destillat(dato, f);
-        String result = destillat.toString();
+        Destillat d = new Destillat(dato, f);
+        String result = d.toString();
 
         System.out.println("Destillat toString output:\n" + result);
         assertNotNull(result);
         assertTrue(result.contains("Antal liter"));
         System.out.println("TC72: Returnerer info om destillat");
-
     }
 
     @Test
     void testToString_TC73() {
         assertThrows(NullPointerException.class, () -> { //forventer nullpointer
-            Destillat destillat = new Destillat(null, null);
-            destillat.toString();
+            Destillat d = new Destillat(null, null);
+            d.toString();
         });
         System.out.println("TC73: NullPointerException kastes.");
     }
