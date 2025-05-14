@@ -21,7 +21,7 @@ public class Batch implements Serializable {
     //Linkattribut
     private List<BatchMængde> batchMængder = new ArrayList<>();
 
-    public Batch(String maltBach, String kornSort, String mark, double mængdeVæske, double alkoholPct, String kommentar, Rygemateriale rygemateriale) {
+    public Batch(String maltBach, String kornSort, String mark, double mængdeVæske, double alkoholPct, String kommentar, Rygemateriale rygemateriale, LocalDate slutDato) {
         this.maltBach = maltBach;
         this.kornSort = kornSort;
         this.mark = mark;
@@ -30,6 +30,7 @@ public class Batch implements Serializable {
         this.kommentar = kommentar;
         this.rygemateriale = rygemateriale;
         startDato = LocalDate.now();
+        this.slutDato = slutDato;
         batchID = batchNr++;
     }
 
