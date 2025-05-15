@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Destillat implements Serializable {
     private LocalDateTime datoForPåfyldning;
@@ -180,6 +181,26 @@ public class Destillat implements Serializable {
 
         }
         return sb;
+    }
+
+    public Set<Fad> hentAlleFade(){
+        Set<Fad> alleFade = new HashSet<>();
+        alleFade.add(fad);
+        for(Destillat destillat : destillater){
+            alleFade.addAll(destillat.hentAlleFade());
+        }
+        return alleFade;
+    }
+
+    public Set<Batch> hentAlleBatch(){
+        Set<Batch> alleBatch = new HashSet<>();
+        for(BatchMængde batchMængde : batchMængder){
+            alleBatch.add(batchMængde.getBatch());
+        }
+        for(Destillat destillat : destillater) {
+            alleBatch.addAll(destillat.hentAlleBatch());
+        }
+        return alleBatch;
     }
 
 
