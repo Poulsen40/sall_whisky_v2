@@ -174,11 +174,7 @@ public class OpretOmhældningWindow extends Stage {
                 Controller.setDestillatFad(fad1,null);
                 Controller.fjernDestillat(d);
                 Controller.fjernFadFraLager(fad1);
-
             }
-
-
-            System.out.println("fad tjej" + fad.getDestillat());
 
             lwlDestillat.getItems().setAll(Controller.destillaterPåLager(Controller.getDestillater()));
             lwlFrieFad.getItems().setAll(Controller.frieFadeTilDestillat(Controller.getFade()));

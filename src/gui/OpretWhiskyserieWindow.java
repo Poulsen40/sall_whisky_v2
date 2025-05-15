@@ -247,7 +247,7 @@ public class OpretWhiskyserieWindow extends Stage {
         GridPane.setColumnSpan(hBoxStep3_3, 2);
 
         Button btnAfbryd = new Button("Afbryd");
-        btnAfbryd.setOnAction(event -> afbryd());
+//        btnAfbryd.setOnAction(event -> afbryd());
 
         HBox hboxAfbryd = new HBox();
         hboxAfbryd.getChildren().add(btnAfbryd);
