@@ -3,6 +3,7 @@ package application.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class Destillat implements Serializable {
@@ -10,12 +11,20 @@ public class Destillat implements Serializable {
     private double svind = 0;
     private double måltAlkoholprocent = -1;
 
+    //omhældning
+    private LocalDateTime datoForOmhældning;
+
+    private HashSet<Fad> tidligereFade = new HashSet<>();
+
+
 
     //Linkattribut
     private List<BatchMængde> batchMængder = new ArrayList<>();
     private Fad fad;
 
     private List<DestillatMængde> destillatMængder = new ArrayList<>();
+    private List<Destillat> destillater = new ArrayList<>();
+
 
 
     public Destillat(LocalDateTime datoForPåfyldning, Fad fad) {
@@ -24,14 +33,44 @@ public class Destillat implements Serializable {
         fad.setDestillat(this);
     }
 
+    public Destillat(LocalDateTime datoForOmhældning, LocalDateTime datoForPåfyldning, Fad fad, List<Destillat> destillater){
+        this.datoForOmhældning = datoForOmhældning;
+        this.fad = fad;
+        this.destillater = destillater;
+        this.datoForPåfyldning = datoForPåfyldning;
+        this.tidligereFade.add(fad);
+
+    }
+
+
+
+
     public ArrayList<BatchMængde> getBatchMængder() {
         return new ArrayList<>(batchMængder);
+    }
+
+    public HashSet<Fad> getTidligereFade() {
+        return new HashSet<>(tidligereFade);
+    }
+
+    public ArrayList<Destillat> getDestillater() {
+        return new ArrayList<>(destillater);
+    }
+
+    public void addDestillat(Destillat destillat) {
+        if (!destillater.contains(destillat)) {
+            destillater.add(destillat);
+        }
     }
 
     public void addBatchMængde(BatchMængde batchMængde) {
         if (!batchMængder.contains(batchMængde)) {
             batchMængder.add(batchMængde);
         }
+    }
+
+    public void addFad(HashSet<Fad> fade) {
+        tidligereFade.addAll(fade);
     }
 
     public void removeBatchMængde(BatchMængde batchMængde) {
@@ -45,8 +84,7 @@ public class Destillat implements Serializable {
     }
 
     public void setSvind(double svind) {
-        this.svind += svind;
-        System.out.println("svind" + svind);
+        this.svind = svind;
     }
 
     public double getMåltAlkoholProcent() {
@@ -77,8 +115,8 @@ public class Destillat implements Serializable {
 
         if(måltAlkoholprocent == -1) {
 
-        double samletrentalkoholprocent = 0;
-        double samletmængde = 0;
+            double samletrentalkoholprocent = 0;
+            double samletmængde = 0;
 
             for (BatchMængde batchMængde : batchMængder) {
                 double alkopct = batchMængde.getBatch().getAlkoholPct();
@@ -100,6 +138,9 @@ public class Destillat implements Serializable {
             mængde -= destillatMængde.getMængde();
 
         }
+        for (Destillat destillat: destillater){
+            mængde += destillat.getSamletMængde();
+        }
         return mængde - svind;
     }
 
@@ -112,6 +153,10 @@ public class Destillat implements Serializable {
         return fad;
     }
 
+    public LocalDateTime getDatoForOmhældning() {
+        return datoForOmhældning;
+    }
+
     private StringBuilder udskrivBatches(){
         StringBuilder sb  = new StringBuilder();
         for (BatchMængde batchMængde : batchMængder) {
@@ -121,12 +166,22 @@ public class Destillat implements Serializable {
         return sb;
     }
 
+    public StringBuilder udskrivFad(){
+        StringBuilder sb  = new StringBuilder();
+        for (Fad fad1 : tidligereFade) {
+            sb.append("Tidligere fade: ");
+            sb.append("fadnr: "+ fad1.getFadNr() + ", fadtype: " + fad1.getFadtype() + "\n");
+
+        }
+        return sb;
+    }
+
+
 
     @Override
     public String toString() {
-        return  "Antal liter " + getSamletMængde() + "\nSamlet alkoholprocenten i destillat indtilvidere " + beregnalkoholprocent() + "\nInfo omkirng indkluderet batches " + udskrivBatches();
+        return  "Antal liter " + getSamletMængde() + "\nSamlet alkoholprocenten i destillat indtilvidere " + beregnalkoholprocent() + "\nInfo omkirng indkluderet batches " + udskrivBatches() + "INFOOO FAD TJEJ" + udskrivFad();
     }
-
 
 
 }

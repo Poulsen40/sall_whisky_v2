@@ -3,6 +3,7 @@ package gui;
 import application.controller.Controller;
 import application.model.Destillat;
 import application.model.Fad;
+import application.model.Lager;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
@@ -15,6 +16,8 @@ import javafx.stage.StageStyle;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 public class OpretOmhældningWindow extends Stage {
     public OpretOmhældningWindow(String title) {
@@ -33,9 +36,10 @@ public class OpretOmhældningWindow extends Stage {
     }
 
 
-    private static ListView<Fad> lwlFad;
+    private static ListView<Destillat> lwlDestillat;
     private static ListView<Fad> lwlFrieFad;
-
+    private static LocalDateTime mindsteDato;
+    private static ListView<Lager> lwlLager;
 
 
     private void initContent(GridPane pane) {
@@ -48,36 +52,39 @@ public class OpretOmhældningWindow extends Stage {
         Label lblFadMedDestillat = new Label("Fade med destillater");
 
 
-        lwlFad = new ListView<>();
-        pane.add(lwlFad,0,0);
-        lwlFad.setPrefWidth(500);
-        lwlFad.setPrefHeight(500);
-        lwlFad.getItems().setAll();
-        lwlFad.getItems().setAll(Controller.fyldteFadePåLager(Controller.getFade()));
-        lwlFad.setCellFactory(listView -> new ListCell<Fad>() {
+        lwlDestillat = new ListView<>();
+        pane.add(lwlDestillat, 0, 0);
+        lwlDestillat.setPrefWidth(400);
+        lwlDestillat.setPrefHeight(400);
+        lwlDestillat.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        lwlDestillat.getItems().setAll(Controller.destillaterPåLager(Controller.getDestillater()));
+        lwlDestillat.setCellFactory(listView -> new ListCell<Destillat>() {
             @Override
-            protected void updateItem(Fad fad, boolean empty) {
-                super.updateItem(fad, empty);
-                if (empty || fad == null) {
+            protected void updateItem(Destillat destillat, boolean empty) {
+                super.updateItem(destillat, empty);
+                if (empty || destillat == null) {
                     setText(null);
                 } else {
-                    setText("Fad nr: " + fad.getFadNr()  +", fadtype:" + fad.getFadtype() + ", fadstørrelse: "+ fad.getFadStørrelse() + "\nDestillat på fad: " + fad.getDestillat());
+                    long år = ChronoUnit.YEARS.between(Controller.getDatoForPåfyldning(destillat), LocalDateTime.now());
+                    long måneder = ChronoUnit.MONTHS.between(Controller.getDatoForPåfyldning(destillat).plusYears(år), LocalDateTime.now());
+                    long dage = ChronoUnit.DAYS.between(Controller.getDatoForPåfyldning(destillat).plusYears(år).plusMonths(måneder), LocalDateTime.now());
+                    setText("Alder på destillat: " + år + " år " + måneder + " måneder " + dage + " dage" +
+                            "\nDestillat mængde: " + destillat.getSamletMængde() + "\n" + destillat.udskrivFad() + "\nFad nr: " + destillat.getFad().getFadNr() + ", fadstørrelse " + destillat.getFad().getFadStørrelse() +
+                            ", fadtype: " + destillat.getFad().getFadtype() + ",\nantal gange brugt:" + destillat.getFad().getAntalGangeBrugt() + ", lager: " + destillat.getFad().getLager() );
                 }
             }
         });
 
-        VBox fadeMedDesillat = new VBox();
-        fadeMedDesillat.getChildren().add(lblFadMedDestillat);
-        fadeMedDesillat.getChildren().add(lwlFad);
-        pane.add(fadeMedDesillat,0,0);
-
+        VBox destillatPåLager = new VBox();
+        destillatPåLager.getChildren().add(lblFadMedDestillat);
+        destillatPåLager.getChildren().add(lwlDestillat);
+        pane.add(destillatPåLager, 1, 0);
 
 
         lwlFrieFad = new ListView<>();
-        pane.add(lwlFrieFad,1,0);
-        lwlFrieFad.setPrefWidth(500);
-        lwlFrieFad.setPrefHeight(500);
-        lwlFrieFad.getItems().setAll();
+        lwlFrieFad.setPrefWidth(400);
+        lwlFrieFad.setPrefHeight(400);
+        lwlFrieFad.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         lwlFrieFad.getItems().setAll(Controller.frieFadeTilDestillat(Controller.getFade()));
         lwlFrieFad.setCellFactory(listView -> new ListCell<Fad>() {
             @Override
@@ -86,7 +93,7 @@ public class OpretOmhældningWindow extends Stage {
                 if (empty || fad == null) {
                     setText(null);
                 } else {
-                    setText("Fad nr: " + fad.getFadNr()  +", fadtype:" + fad.getFadtype() + ", fadstørrelse: "+ fad.getFadStørrelse() + "\nDestillat på fad: " + fad.getDestillat());
+                    setText("Fad nr: " + fad.getFadNr() + ", fadtype:" + fad.getFadtype() + ", fadstørrelse: " + fad.getFadStørrelse() + ", antal gange brugt: " + fad.getAntalGangeBrugt() + ", lager: " + fad.getLager() + "\nDestillat på fad: " + fad.getDestillat());
                 }
             }
         });
@@ -96,13 +103,94 @@ public class OpretOmhældningWindow extends Stage {
         VBox frieFde = new VBox();
         frieFde.getChildren().add(lblFrieFade);
         frieFde.getChildren().add(lwlFrieFad);
-        pane.add(frieFde,1,0);
+        pane.add(frieFde, 0, 0);
+
+        Label lblLager = new Label("Lagere");
+
+        lwlLager = new ListView<>();
+        lwlLager.setPrefWidth(300);
+        lwlLager.setPrefHeight(400);
+        lwlLager.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        lwlLager.getItems().setAll(Controller.getlagere());
+
+        VBox lager = new VBox();
+        lager.getChildren().add(lblLager);
+        lager.getChildren().add(lwlLager);
+        pane.add(lager, 2, 0);
 
         Button btnOmhæld = new Button("Omhæld");
-        pane.add(btnOmhæld,2,0);
-
-
-
+        btnOmhæld.setOnAction(event -> omhæld());
+        pane.add(btnOmhæld, 3, 0);
 
     }
+
+    public void omhæld() {
+        int samletmængde = 0;
+        Fad fad = lwlFrieFad.getSelectionModel().getSelectedItem();
+        ArrayList<Destillat> destillat = new ArrayList<>(lwlDestillat.getSelectionModel().getSelectedItems());
+        Lager lager = lwlLager.getSelectionModel().getSelectedItem();
+
+        if (fad == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Du skal vælge et fad at omhælde på");
+            alert.showAndWait();
+            return;
+        }
+        if (lager == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Du skal vælge et lager at ligge det nye fad på");
+            alert.showAndWait();
+            return;
+        }
+        if (destillat.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Du skal vælge minimun et destillat at omhælde");
+            alert.showAndWait();
+            return;
+        }
+
+        for (Destillat destillat1 : destillat) {
+            samletmængde += Controller.getSamletMængde(destillat1);
+        }
+        if (samletmængde > fad.getFadStørrelse()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Mængden af væske er for stor til det valgte fad");
+            alert.showAndWait();
+            return;
+
+        } else {
+            LocalDateTime mindsteDato = destillat.get(0).getDatoForPåfyldning();
+            for (Destillat destillat1 : destillat) {
+                if (destillat1.getDatoForPåfyldning().isAfter(mindsteDato)) {
+                    mindsteDato = destillat1.getDatoForPåfyldning();
+                }
+            }
+
+            Destillat omhældtDestilat = Controller.createOmhældtDestilat(LocalDateTime.now(), mindsteDato, fad, destillat);
+            Controller.setDestillatFad(fad, omhældtDestilat);
+            Controller.addFadTilLager(fad, lager);
+
+            HashSet<Fad> fade = new HashSet<>();
+            for (Destillat d : destillat) {
+                fade.addAll(d.getTidligereFade());
+                fade.add(d.getFad());
+            }
+            omhældtDestilat.addFad(fade);
+
+
+            for (Destillat d : destillat) {
+                Fad fad1 = d.getFad();
+                Controller.setDestillatFad(fad1,null);
+                Controller.fjernDestillat(d);
+            }
+
+            System.out.println("fad tjej" + fad.getDestillat());
+
+            lwlDestillat.getItems().setAll(Controller.destillaterPåLager(Controller.getDestillater()));
+            lwlFrieFad.getItems().setAll(Controller.frieFadeTilDestillat(Controller.getFade()));
+            lwlLager.refresh();
+        }
+
+    }
+
 }

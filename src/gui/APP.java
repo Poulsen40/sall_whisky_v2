@@ -49,17 +49,22 @@ public class APP {
         Fad f4 = Controller.createFad(100, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
         Fad f5 = Controller.createFad(78, "Spanien", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 1);
 
+        Fad f6 = Controller.createFad(1000, "Spanien", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 1);
+        Fad f7 = Controller.createFad(228, "Spanien", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 1);
+        Fad f8 = Controller.createFad(110, "Spanien", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 1);
+        Fad f9 = Controller.createFad(1300, "Spanien", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 1);
+
         //test med småt lager
-        Controller.addFadTilLager(f1, lilleLager);
-        Controller.addFadTilLager(f2, lilleLager);
+//        Controller.addFadTilLager(f1, lilleLager);
+//        Controller.addFadTilLager(f2, lilleLager);
 
 
         //tilføjer fad til lager
-//        Controller.addFadTilLager(f1, lager);
-//        Controller.addFadTilLager(f2, lager);
+        Controller.addFadTilLager(f1, lager);
+        Controller.addFadTilLager(f2, lager);
         Controller.addFadTilLager(f3, lager);
-        Controller.addFadTilLager(f4, lager1);
-        Controller.addFadTilLager(f5, lager1);
+//        Controller.addFadTilLager(f4, lager1);
+//        Controller.addFadTilLager(f5, lager1);
 
 
         Destillat d1 = Controller.createDestilat(LocalDateTime.of(2022, 1, 1, 2, 2), f1);

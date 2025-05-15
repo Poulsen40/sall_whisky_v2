@@ -56,6 +56,12 @@ public class Controller {
         }
     }
 
+    public static Destillat createOmhældtDestilat(LocalDateTime datoForOmhældning,LocalDateTime datoForPåfyldning,  Fad fad, List<Destillat> destillater) {
+        Destillat destillat = new Destillat(datoForOmhældning, datoForPåfyldning, fad, destillater);
+        storage.addDestillat(destillat);
+        return destillat;
+    }
+
     public static Whiskyserie createWhiskyserie(String serieNavn, LocalDate dato) {
         if (serieNavn == null) {
             throw new IllegalArgumentException("Du skal give din whisky serie et navn");
@@ -521,6 +527,15 @@ public class Controller {
             }
         }
         return batchesMedVæske;
+    }
+
+    public static ArrayList<Destillat> destillaterPåLager(ArrayList<Destillat> destillater) {
+        ArrayList<Destillat> destillaterPåFad = new ArrayList<>();
+        for (Destillat d : Controller.getDestillater()) {
+            destillaterPåFad.add(d);
+
+        }
+        return destillaterPåFad;
     }
 
     //Beregn metoder
