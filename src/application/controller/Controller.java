@@ -611,8 +611,30 @@ public class Controller {
         StringBuilder sb = new StringBuilder();
         StringBuilder sbfad = new StringBuilder();
         for (DestillatMængde destillatMængde : whiskyserie.getDestillatMængder()) {
-            sbfad.append("FadInfo: \n Antal DestillatMængde: " + destillatMængde.getMængde() + " har lagt på dette fad: Fadtype:" + destillatMængde.getDestillat().getFad().getFadtype() + " Træsort: "
-                    + destillatMængde.getDestillat().getFad().getTræsort() + " Oprindelse: " + destillatMængde.getDestillat().getFad().getLevarandør() + "\n");
+            sbfad.append("FadInfo: \n Antal DestillatMængde: " + destillatMængde.getMængde() + "\n");
+            if(destillatMængde.getDestillat().getDestillater().isEmpty()){
+                sbfad.append( "har lagt på dette fad: Fadtype: " + destillatMængde.getDestillat().getFad().getFadtype() + " Træsort: "
+                        + destillatMængde.getDestillat().getFad().getTræsort() + " Oprindelse: " + destillatMængde.getDestillat().getFad().getLevarandør() + "\n");
+            }
+            else {
+                List<Fad> fade = new ArrayList<>();
+
+                    Destillat d1 = destillatMængde.getDestillat();
+
+                for (Fad fad : d1.getTidligereFade()) {
+                    if (!fade.contains(fad)) {
+                        fade.add(fad);
+                    }
+                }
+
+                if (!fade.contains(d1.getFad())) {
+                    fade.add(d1.getFad());
+                }
+                    for (Fad fad : fade) {
+                        sbfad.append(" har lagt på dette fad: Fadtype:" + fad.getFadtype() + " Træsort: "
+                                + fad.getTræsort() + " Oprindelse: " + fad.getLevarandør() + "\n");
+                    }
+                }
         }
 
         StringBuilder sbbatch = new StringBuilder();

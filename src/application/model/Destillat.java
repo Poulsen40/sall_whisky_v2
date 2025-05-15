@@ -58,7 +58,8 @@ public class Destillat implements Serializable {
     }
 
     public HashSet<Fad> getTidligereFade() {
-        return new HashSet<>(tidligereFade);
+//        return new HashSet<>(tidligereFade)
+    return tidligereFade;
     }
 
     public ArrayList<Destillat> getDestillater() {
