@@ -38,7 +38,12 @@ public class Destillat implements Serializable {
         this.fad = fad;
         this.destillater = destillater;
         this.datoForPåfyldning = datoForPåfyldning;
-        this.tidligereFade.add(fad);
+        HashSet<Fad> fade = new HashSet<>();
+        for (Destillat d : destillater) {
+            fade.addAll(d.getTidligereFade());
+            fade.add(d.getFad());
+        }
+        this.addFad(fade);
 
     }
 

@@ -56,7 +56,7 @@ public class Controller {
         }
     }
 
-    public static Destillat createOmhældtDestilat(LocalDateTime datoForOmhældning,LocalDateTime datoForPåfyldning,  Fad fad, List<Destillat> destillater) {
+    public static Destillat createOmhældtDestilat(LocalDateTime datoForOmhældning, LocalDateTime datoForPåfyldning, Fad fad, List<Destillat> destillater) {
         Destillat destillat = new Destillat(datoForOmhældning, datoForPåfyldning, fad, destillater);
         storage.addDestillat(destillat);
         return destillat;
@@ -324,24 +324,21 @@ public class Controller {
         System.out.println(whiskyserie.getWhiskyType());
     }
 
-    public static void registerSvind(Destillat destillat, Double svind){
-        if(svind < 0) {
+    public static void registerSvind(Destillat destillat, Double svind) {
+        if (svind < 0) {
             throw new RuntimeException("Tallet er negativt");
-        }
-        else if (svind > destillat.getSamletMængde() + destillat.getSvind()) {
+        } else if (svind > destillat.getSamletMængde() + destillat.getSvind()) {
             throw new RuntimeException("Svindet er støre ind mængden");
-        }
-        else if(destillat.getSamletMængde() <= 0) {
+        } else if (destillat.getSamletMængde() <= 0) {
             throw new RuntimeException("Der er ikke mere af det valgte destillat");
         }
         destillat.setSvind(svind);
     }
 
     public static void setMåltAlkoholprocent(Destillat destillat, double alkoholprocent) {
-        if(alkoholprocent < 0) {
+        if (alkoholprocent < 0) {
             throw new RuntimeException("Tallet er negativt");
-        }
-        else if(alkoholprocent > 100) {
+        } else if (alkoholprocent > 100) {
             throw new RuntimeException("Tallet er over 100");
         }
         destillat.setMåltAlkoholProcent(alkoholprocent);
@@ -420,8 +417,14 @@ public class Controller {
         h.append("Fad nr: " + fad.getFadNr() + ", fadstørrelse: " + fad.getFadStørrelse() + ", fadtype: " + fad.getFadtype() + ", leverandør: " + fad.getLevarandør() + ", gange brugt: " + fad.getAntalGangeBrugt());
         h.append("\nDestilat alkoholpct: " + fad.getDestillat().beregnalkoholprocent() + ", samlet mængde væske: " + Controller.getSamletMængde(fad.getDestillat()));
         h.append("\nBatches brugt i destillat:");
-        for (BatchMængde batchMængde : destillat.getBatchMængder()) {
-            h.append(" id: " + batchMængde.getBatch().getBatchID() + " mængde: " + batchMængde.getMængde());
+        if (destillat.getDestillater() == null) {
+            for (BatchMængde batchMængde : destillat.getBatchMængder()) {
+                h.append(" id: " + batchMængde.getBatch().getBatchID() + " mængde: " + batchMængde.getMængde());
+            }
+        }
+        if (destillat.getDestillater()!= null){
+
+
         }
         return h.toString();
     }
@@ -667,9 +670,9 @@ public class Controller {
         List<Fadtype> fadtypes = new ArrayList<>();
         for (DestillatMængde dm : whiskyserie.getDestillatMængder()) {
 
-            if(!fadtypes.contains(dm.getDestillat().getFad().getFadtype())){
+            if (!fadtypes.contains(dm.getDestillat().getFad().getFadtype())) {
                 fadtypes.add(dm.getDestillat().getFad().getFadtype());
-                if(fadtypes.size() > 1){
+                if (fadtypes.size() > 1) {
                     sb.append(" and ");
                 }
                 sb.append(dm.getDestillat().getFad().getFadtype());
@@ -679,8 +682,6 @@ public class Controller {
 
         // Her finder jeg ud af hvad år det Whisky er kommet på flaske
         sb.append(" over three years. Bottled in " + whiskyserie.getDato());
-
-
 
 
         return sb;
