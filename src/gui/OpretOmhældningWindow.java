@@ -169,7 +169,6 @@ public class OpretOmhældningWindow extends Stage {
             Destillat omhældtDestilat = Controller.createOmhældtDestilat(LocalDateTime.now(), mindsteDato, fad, destillat);
             Controller.setDestillatFad(fad, omhældtDestilat);
             Controller.addFadTilLager(fad, lager);
-
             for (Destillat d : destillat) {
                 Fad fad1 = d.getFad();
                 Controller.setDestillatFad(fad1,null);

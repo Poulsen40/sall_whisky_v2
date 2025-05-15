@@ -11,11 +11,12 @@ public class Destillat implements Serializable {
     private double svind = 0;
     private double måltAlkoholprocent = -1;
 
+    private LocalDateTime slutdato;
+
     //omhældning
     private LocalDateTime datoForOmhældning;
 
     private HashSet<Fad> tidligereFade = new HashSet<>();
-
 
 
     //Linkattribut
@@ -44,7 +45,13 @@ public class Destillat implements Serializable {
         }
     }
 
+    public LocalDateTime getSlutdato() {
+        return slutdato;
+    }
 
+    public void setSlutdato(LocalDateTime slutdato) {
+        this.slutdato = slutdato;
+    }
 
     public ArrayList<BatchMængde> getBatchMængder() {
         return new ArrayList<>(batchMængder);

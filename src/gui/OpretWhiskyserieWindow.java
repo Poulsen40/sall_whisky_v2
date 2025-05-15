@@ -369,37 +369,37 @@ public class OpretWhiskyserieWindow extends Stage {
         txaInfo.appendText("\nAlkohol procent: " + Controller.beregnAlkoholProcentPåWhiskyserie(whiskyserie.getDestillatMængder(), mængdeVand));
     }
 
-    public void afbryd() {
-        Alert yseOrNo = new Alert(Alert.AlertType.CONFIRMATION);
-        yseOrNo.setTitle("Bekræft afbrydelse");
-        yseOrNo.setHeaderText("Er du sikker på, at du vil afbryde?");
-        yseOrNo.setContentText("Alle ikke gemte ændringer går tabt.");
-
-        Optional<ButtonType> result = yseOrNo.showAndWait();
-
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-
-            if (whiskyserie != null) {
-                ArrayList<DestillatMængde> destillatMængder = new ArrayList<>(Controller.getDestillatmængder(whiskyserie));
-                Controller.removeDestilatMængderFraWhiskyserie(whiskyserie, whiskyserie.getDestillatMængder());
-
-
-                for (DestillatMængde d : destillatMængder) {
-                    Destillat destillat = d.getDestillat();
-                    Controller.removeDestillatMængdeFraDestillat(destillat, d);
-                }
-
-
-                Controller.fjernWhiskyserie(whiskyserie);
-                lwlDestillat.refresh();
-            }
-
-            close();
-
-        } else {
-            yseOrNo.close();
-
-        }
-
-    }
+//    public void afbryd() {
+//        Alert yseOrNo = new Alert(Alert.AlertType.CONFIRMATION);
+//        yseOrNo.setTitle("Bekræft afbrydelse");
+//        yseOrNo.setHeaderText("Er du sikker på, at du vil afbryde?");
+//        yseOrNo.setContentText("Alle ikke gemte ændringer går tabt.");
+//
+//        Optional<ButtonType> result = yseOrNo.showAndWait();
+//
+//        if (result.isPresent() && result.get() == ButtonType.OK) {
+//
+//            if (whiskyserie != null) {
+//                ArrayList<DestillatMængde> destillatMængder = new ArrayList<>(Controller.getDestillatmængder(whiskyserie));
+//                Controller.removeDestilatMængderFraWhiskyserie(whiskyserie, whiskyserie.getDestillatMængder());
+//
+//
+//                for (DestillatMængde d : destillatMængder) {
+//                    Destillat destillat = d.getDestillat();
+//                    Controller.removeDestillatMængdeFraDestillat(destillat, d);
+//                }
+//
+//
+//                Controller.fjernWhiskyserie(whiskyserie);
+//                lwlDestillat.refresh();
+//            }
+//
+//            close();
+//
+//        } else {
+//            yseOrNo.close();
+//
+//        }
+//
+//    }
 }
