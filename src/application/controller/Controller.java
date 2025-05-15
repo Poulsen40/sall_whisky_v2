@@ -413,18 +413,24 @@ public class Controller {
     public static String toStringFadOgDestillat(Destillat destillat) {
         StringBuilder h = new StringBuilder();
         Fad fad = destillat.getFad();
+        ArrayList<Destillat> destillats = destillat.getDestillater();
 
         h.append("Fad nr: " + fad.getFadNr() + ", fadstørrelse: " + fad.getFadStørrelse() + ", fadtype: " + fad.getFadtype() + ", leverandør: " + fad.getLevarandør() + ", gange brugt: " + fad.getAntalGangeBrugt());
         h.append("\nDestilat alkoholpct: " + fad.getDestillat().beregnalkoholprocent() + ", samlet mængde væske: " + Controller.getSamletMængde(fad.getDestillat()));
-        h.append("\nBatches brugt i destillat:");
-        if (destillat.getDestillater() == null) {
+
+        if (destillat.getDatoForOmhældning() == null) {
+            h.append("\nBatches brugt i destillat:");
             for (BatchMængde batchMængde : destillat.getBatchMængder()) {
                 h.append(" id: " + batchMængde.getBatch().getBatchID() + " mængde: " + batchMængde.getMængde());
+
             }
         }
-        if (destillat.getDestillater()!= null){
-
-
+        if (destillat.getDatoForOmhældning() != null) {
+            h.append("\nAntal destillater på omhældt destillat: " + destillats.size());
+            h.append("\nDestilattermængder i omhældt destillat: ");
+            for (Destillat destillat1 : destillats) {
+                h.append(destillat1.getSamletMængde() + ", ");
+            }
         }
         return h.toString();
     }
@@ -603,17 +609,53 @@ public class Controller {
     public static StringBuilder info(Whiskyserie whiskyserie) {
         StringBuilder sb = new StringBuilder();
         StringBuilder sbfad = new StringBuilder();
+
+
+//        for (DestillatMængde destillatMængde : whiskyserie.getDestillatMængder()) {
+//            sbfad.append("FadInfo: \n Antal DestillatMængde: " + destillatMængde.getMængde() + "\n");
+//            if(destillatMængde.getDestillat().getDestillater().isEmpty()){
+//                sbfad.append( "har lagt på dette fad: Fadtype: " + destillatMængde.getDestillat().getFad().getFadtype() + " Træsort: "
+//                        + destillatMængde.getDestillat().getFad().getTræsort() + " Oprindelse: " + destillatMængde.getDestillat().getFad().getLevarandør() + "\n");
+//            }
+//            else {
+//                List<Fad> fade = new ArrayList<>();
+//
+//                    Destillat d1 = destillatMængde.getDestillat();
+//
+//                for (Fad fad : d1.getTidligereFade()) {
+//                    if (!fade.contains(fad)) {
+//                        fade.add(fad);
+//                    }
+//                }
+//
+//                if (!fade.contains(d1.getFad())) {
+//                    fade.add(d1.getFad());
+//                }
+//                    for (Fad fad : fade) {
+//                        sbfad.append(" har lagt på dette fad:  Fad nr: " + fad.getFadNr() + " Fadtype:"  + fad.getFadtype() + " Træsort: "
+//                                + fad.getTræsort() + " Oprindelse: " + fad.getLevarandør() + "\n");
+//                    }
+//                }
+//        }
+
+        Set<Fad> fade = new HashSet<>();
         for (DestillatMængde destillatMængde : whiskyserie.getDestillatMængder()) {
-            sbfad.append("FadInfo: \n Antal DestillatMængde: " + destillatMængde.getMængde() + " har lagt på dette fad: Fadtype:" + destillatMængde.getDestillat().getFad().getFadtype() + " Træsort: "
-                    + destillatMængde.getDestillat().getFad().getTræsort() + " Oprindelse: " + destillatMængde.getDestillat().getFad().getLevarandør() + "\n");
+            sbfad.append("Fad Information: \nDestillatMængde: " + destillatMængde.getMængde() + "L\nHar ligget på fade:\n");
+            fade.addAll(destillatMængde.getDestillat().hentAlleFade());
+        }
+        for (Fad fad : fade) {
+            sbfad.append("Fad nr: " + fad.getFadNr() + " Fadtype:" + fad.getFadtype() + " Træsort: "
+                    + fad.getTræsort() + " Oprindelse: " + fad.getLevarandør() + "\n");
         }
 
         StringBuilder sbbatch = new StringBuilder();
+        Set<Batch> batchMængder = new HashSet<>();
         for (DestillatMængde destillatMængde : whiskyserie.getDestillatMængder()) {
-            for (BatchMængde batchMængde : destillatMængde.getDestillat().getBatchMængder()) {
-                sbbatch.append("BatchInformationer: " + "ID: " + batchMængde.getBatch().getBatchID() + " \n Opdyrket mark" + batchMængde.getBatch().getMark() + "\nKornsort:" +
-                        " " + batchMængde.getBatch().getKornSort() + "\nMaltBach: " + batchMængde.getBatch().getMaltBach() + "\nrygemateriale:  " + batchMængde.getBatch().getRygemateriale() + "\n \n");
-            }
+            batchMængder.addAll(destillatMængde.getDestillat().hentAlleBatch());
+        }
+        for (Batch batch : batchMængder) {
+            sbbatch.append("BatchInformationer: " + "ID: " + batch.getBatchID() + " \n Opdyrket mark" + batch.getMark() + "\nKornsort:" +
+                    " " + batch.getKornSort() + "\nMaltBach: " + batch.getMaltBach() + "\nrygemateriale:  " + batch.getRygemateriale() + "\n \n");
         }
         sb.append("WhiskySerieoinfo: \nNavn: " + whiskyserie.getSerieNavn() + "\nType: " + whiskyserie.getWhiskyType() + " \nAlkoholpct: " + whiskyserie.getAlkoholPct() + " \nAntalFlasker:" +
                 whiskyserie.getAntalFlasker() + " \nTilsat vand: " + whiskyserie.getVandMængde() + " \nÅrgang: " + whiskyserie.getDato()

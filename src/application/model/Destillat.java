@@ -5,17 +5,19 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Destillat implements Serializable {
     private LocalDateTime datoForPåfyldning;
     private double svind = 0;
     private double måltAlkoholprocent = -1;
 
+    private LocalDateTime slutdato;
+
     //omhældning
     private LocalDateTime datoForOmhældning;
 
     private HashSet<Fad> tidligereFade = new HashSet<>();
-
 
 
     //Linkattribut
@@ -38,24 +40,27 @@ public class Destillat implements Serializable {
         this.fad = fad;
         this.destillater = destillater;
         this.datoForPåfyldning = datoForPåfyldning;
-        HashSet<Fad> fade = new HashSet<>();
         for (Destillat d : destillater) {
-            fade.addAll(d.getTidligereFade());
-            fade.add(d.getFad());
+            tidligereFade.addAll(d.getTidligereFade());
+            tidligereFade.add(d.getFad());
         }
-        this.addFad(fade);
-
     }
 
+    public LocalDateTime getSlutdato() {
+        return slutdato;
+    }
 
-
+    public void setSlutdato(LocalDateTime slutdato) {
+        this.slutdato = slutdato;
+    }
 
     public ArrayList<BatchMængde> getBatchMængder() {
         return new ArrayList<>(batchMængder);
     }
 
     public HashSet<Fad> getTidligereFade() {
-        return new HashSet<>(tidligereFade);
+//        return new HashSet<>(tidligereFade)
+    return tidligereFade;
     }
 
     public ArrayList<Destillat> getDestillater() {
@@ -74,9 +79,6 @@ public class Destillat implements Serializable {
         }
     }
 
-    public void addFad(HashSet<Fad> fade) {
-        tidligereFade.addAll(fade);
-    }
 
     public void removeBatchMængde(BatchMængde batchMængde) {
         if (batchMængder.contains(batchMængde)) {
@@ -179,6 +181,26 @@ public class Destillat implements Serializable {
 
         }
         return sb;
+    }
+
+    public Set<Fad> hentAlleFade(){
+        Set<Fad> alleFade = new HashSet<>();
+        alleFade.add(fad);
+        for(Destillat destillat : destillater){
+            alleFade.addAll(destillat.hentAlleFade());
+        }
+        return alleFade;
+    }
+
+    public Set<Batch> hentAlleBatch(){
+        Set<Batch> alleBatch = new HashSet<>();
+        for(BatchMængde batchMængde : batchMængder){
+            alleBatch.add(batchMængde.getBatch());
+        }
+        for(Destillat destillat : destillater) {
+            alleBatch.addAll(destillat.hentAlleBatch());
+        }
+        return alleBatch;
     }
 
 

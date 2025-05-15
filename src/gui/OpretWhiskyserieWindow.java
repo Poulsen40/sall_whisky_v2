@@ -64,6 +64,8 @@ public class OpretWhiskyserieWindow extends Stage {
     private static LocalDate dato;
     private static ListView<Destillat> lwlDestillat;
 
+    private ArrayList<Destillat> valgeDestillater = new ArrayList<>();
+
 
     private void initContent(GridPane pane) {
         pane.setPadding(new Insets(10));
@@ -143,7 +145,9 @@ public class OpretWhiskyserieWindow extends Stage {
         GridPane.setValignment(lwlDestillat, VPos.BOTTOM);
 
         txaDestilatInfo = new TextArea();
-        txaDestilatInfo.setPrefHeight(75);
+        txaDestilatInfo.setPrefHeight(100);
+        txaDestilatInfo.setPrefWidth(100);
+
         txaDestilatInfo.setEditable(false);
 
         lwlDestillat.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -278,6 +282,7 @@ public class OpretWhiskyserieWindow extends Stage {
 
     public void tapMængdeFraDestilat() {
         selectedDestillat = lwlDestillat.getSelectionModel().getSelectedItem();
+        valgeDestillater.add(selectedDestillat);
         if (whiskyserie == null) {
             ShowAlert("Du skal udføre step 1 først");
         } else if (selectedDestillat == null) {
@@ -299,13 +304,12 @@ public class OpretWhiskyserieWindow extends Stage {
                     //Controller.addDestillatMængde(destillatMængde, whiskyserie);
                     txaDestilatInfo.setText(Controller.toStringFadOgDestillat(selectedDestillat));
 
-                    txfTapMængde.clear();
                     if (Controller.getSamletMængde(selectedDestillat) == 0) {
-                        Controller.fjernFadFraLager(selectedDestillat.getFad());
-                        Controller.fjernDestillat(selectedDestillat);
                         lwlDestillat.getItems().remove(selectedDestillat);
-
                     }
+
+                    txfTapMængde.clear();
+
                     setInfoBox();
 
                 }
@@ -316,11 +320,9 @@ public class OpretWhiskyserieWindow extends Stage {
     public void fortynd() {
         if (whiskyserie == null) {
             ShowAlert("Du skal udføre step 1 først");
-        }
-        else if(whiskyserie.getDestillatMængder().isEmpty()) {
+        } else if (whiskyserie.getDestillatMængder().isEmpty()) {
             ShowAlert("Du skal vælge et fad, indtaste en mængde og trykke 'Tap', før du kan fortynde.");
-        }
-        else if(!txfVand.getText().trim().isEmpty() && whiskyserie != null) {
+        } else if (!txfVand.getText().trim().isEmpty() && whiskyserie != null) {
             mængdeVand += Double.parseDouble(txfVand.getText().trim());
             txfVand.clear();
             setInfoBox();
@@ -332,7 +334,7 @@ public class OpretWhiskyserieWindow extends Stage {
             ShowAlert("Du skal udføre step 1 først");
         } else if (whiskyserie.getDestillatMængder().isEmpty()) {
             ShowAlert("Du skal udføre step 2 først");
-        }else{
+        } else {
             //Beregner samlet mængde whisky med vand inkluderet
             double samletMængdeWhisky = Controller.samletMængdeWhiskySerie(whiskyserie, mængdeVand);
 
@@ -346,10 +348,19 @@ public class OpretWhiskyserieWindow extends Stage {
                 Controller.createWhiskyprodukt(whiskyserie, 70);
             }
 
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("Whisky tappet på " + antalFlasker + " flasker af " + mængdePrFlaske + " cl pr flaske");
             alert.showAndWait();
             close();
+
+            for (Destillat d : valgeDestillater) {
+                if (Controller.getSamletMængde(d) == 0) {
+                    Controller.fjernFadFraLager(d.getFad());
+                    Controller.setDestillatFad(d.getFad(),null);
+                    Controller.fjernDestillat(d);
+                    lwlDestillat.getItems().remove(d);
+                }
+            }
 
             Controller.setWhiskyInfo(whiskyserie.getDestillatMængder(), whiskyserie, mængdeVand, antalFlasker);
 
@@ -379,17 +390,20 @@ public class OpretWhiskyserieWindow extends Stage {
 
             if (whiskyserie != null) {
                 ArrayList<DestillatMængde> destillatMængder = new ArrayList<>(Controller.getDestillatmængder(whiskyserie));
+                System.out.println("alle destilalnænger på whiskyerie" + destillatMængder);
+
+
                 Controller.removeDestilatMængderFraWhiskyserie(whiskyserie, whiskyserie.getDestillatMængder());
 
-
                 for (DestillatMængde d : destillatMængder) {
+                    System.out.println("destillat tjek" + d);
                     Destillat destillat = d.getDestillat();
                     Controller.removeDestillatMængdeFraDestillat(destillat, d);
                 }
 
 
                 Controller.fjernWhiskyserie(whiskyserie);
-                lwlDestillat.refresh();
+                lwlDestillat.getItems().setAll(Controller.destilatWhiskySerieUdenFilter(Controller.getDestillater()));
             }
 
             close();
