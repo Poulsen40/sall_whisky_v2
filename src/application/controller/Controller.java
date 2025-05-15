@@ -637,7 +637,6 @@ public class Controller {
 //        }
 
         Set<Fad> fade = new HashSet<>();
-//        sbfad.append("Fad Information:" + whiskyserie.get lagt på dette fad: ")
         for (DestillatMængde destillatMængde : whiskyserie.getDestillatMængder()) {
             sbfad.append("Fad Information: \nDestillatMængde: " + destillatMængde.getMængde() + "L\nHar ligget på fade:\n");
             fade.addAll(destillatMængde.getDestillat().hentAlleFade());
