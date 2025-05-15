@@ -554,7 +554,7 @@ public class OpretOversigtWindow extends Stage {
         btnOpdaterDestillat.setOnAction(Event -> OpdaterDestillat());
 
         VBox vBoxFadeKnapper = new VBox();
-        vBoxFadeKnapper.getChildren().setAll(btnFiltrerMedValg, btnOpdaterDestillat);
+        vBoxFadeKnapper.getChildren().setAll(btnFiltrerFade, btnOpdaterDestillat);
         vBoxFadeKnapper.setSpacing(10);
         pane.add(vBoxFadeKnapper,1,1);
 

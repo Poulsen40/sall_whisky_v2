@@ -229,7 +229,7 @@ class ControllerTest {
     void TC32() {
         Fad f = new Fad(65, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
         Destillat d = new Destillat( LocalDateTime.of(2022, 1, 1, 2, 2), f);
-        Batch b = new Batch("Malt1", "Sort1", "Mark1", 300, 40, "ingen", Rygemateriale.GLØD);
+        Batch b = new Batch("Malt1", "Sort1", "Mark1", 300, 40, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,5,8));
         Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
 
         BatchMængde bm = Controller.createBatchMængde(100, d, b);
@@ -249,8 +249,8 @@ class ControllerTest {
         Fad f = new Fad(65, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
         Destillat d = new Destillat( LocalDateTime.of(2022, 1, 1, 2, 2), f);
         Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
-        Batch b1 = new Batch("Malt1", "Sort1", "Mark1", 280, 55, "ingen", Rygemateriale.GLØD);
-        Batch b2 = new Batch("Malt2", "Sort2", "Mark2", 100, 71, "ingen", Rygemateriale.GLØD);
+        Batch b1 = new Batch("Malt1", "Sort1", "Mark1", 280, 55, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,5,8));
+        Batch b2 = new Batch("Malt2", "Sort2", "Mark2", 100, 71, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,5,8));
 
         BatchMængde bm1 = Controller.createBatchMængde(280, d, b1);
         BatchMængde bm2 = Controller.createBatchMængde(100, d, b2);
@@ -272,7 +272,7 @@ class ControllerTest {
     void TC34() {
         Fad f = new Fad(65, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
         Destillat d = new Destillat( LocalDateTime.of(2022, 1, 1, 2, 2), f);
-        Batch b = new Batch("Malt1", "Sort1", "Mark1", 50, 100, "ingen", Rygemateriale.GLØD);
+        Batch b = new Batch("Malt1", "Sort1", "Mark1", 50, 100, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,5,8));
         Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
 
         BatchMængde bm = Controller.createBatchMængde(50, d, b);
@@ -292,7 +292,7 @@ class ControllerTest {
         Fad f = new Fad(65, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
         Destillat d = new Destillat( LocalDateTime.of(2022, 1, 1, 2, 2), f);
         Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
-        Batch b = new Batch("Malt1", "Sort1", "Mark1", -4, 50, "ingen", Rygemateriale.GLØD);
+        Batch b = new Batch("Malt1", "Sort1", "Mark1", -4, 50, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,5,8));
 
         BatchMængde bm = Controller.createBatchMængde(-4, d, b);
         DestillatMængde dm = Controller.createDestillatMængde(-4, w, d);
@@ -311,7 +311,7 @@ class ControllerTest {
         Fad f = new Fad(65, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
         Destillat d = new Destillat( LocalDateTime.of(2022, 1, 1, 2, 2), f);
         Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
-        Batch b = new Batch("Malt1", "Sort1", "Mark1", 500, 20, "ingen", Rygemateriale.GLØD);
+        Batch b = new Batch("Malt1", "Sort1", "Mark1", 500, 20, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,5,8));
 
         BatchMængde bm = Controller.createBatchMængde(500, d, b);
         DestillatMængde dm = Controller.createDestillatMængde(500, w, d);
@@ -330,8 +330,8 @@ class ControllerTest {
         Fad f = new Fad(65, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
         Destillat d = new Destillat( LocalDateTime.of(2022, 1, 1, 2, 2), f);
         Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
-        Batch b1 = new Batch("Malt1", "Sort1", "Mark1", 300, 60, "ingen", Rygemateriale.GLØD);
-        Batch b2 = new Batch("Malt2", "Sort2", "Mark2", 200, 10, "ingen", Rygemateriale.GLØD);
+        Batch b1 = new Batch("Malt1", "Sort1", "Mark1", 300, 60, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,5,8));
+        Batch b2 = new Batch("Malt2", "Sort2", "Mark2", 200, 10, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,5,8));
 
         BatchMængde bm1 = Controller.createBatchMængde(300, d, b1);
         BatchMængde bm2 = Controller.createBatchMængde(200, d, b2);
@@ -354,7 +354,7 @@ class ControllerTest {
         Fad f = new Fad(65, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
         Destillat d = new Destillat( LocalDateTime.of(2022, 1, 1, 2, 2), f);
         Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
-        Batch b = new Batch("Malt1", "Sort1", "Mark1", 0, 35, "ingen", Rygemateriale.GLØD);
+        Batch b = new Batch("Malt1", "Sort1", "Mark1", 0, 35, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,5,8));
 
         BatchMængde bm = Controller.createBatchMængde(0, d, b);
         DestillatMængde dm = Controller.createDestillatMængde(0, w, d);

@@ -72,7 +72,7 @@ public class GUI extends Application {
         pane.add(imageView,0,0);
         GridPane.setColumnSpan(imageView,3);
         imageView.setFitHeight(450);
-        imageView.setFitWidth(800);
+        imageView.setFitWidth(900);
 
         BackgroundFill backgroundFill = new BackgroundFill(Color.WHITE,CornerRadii.EMPTY,Insets.EMPTY);
         pane.setBackground(new Background(backgroundFill));
