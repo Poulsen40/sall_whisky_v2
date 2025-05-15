@@ -38,15 +38,11 @@ public class Destillat implements Serializable {
         this.fad = fad;
         this.destillater = destillater;
         this.datoForPåfyldning = datoForPåfyldning;
-        HashSet<Fad> fade = new HashSet<>();
         for (Destillat d : destillater) {
-            fade.addAll(d.getTidligereFade());
-            fade.add(d.getFad());
+            tidligereFade.addAll(d.getTidligereFade());
+            tidligereFade.add(d.getFad());
         }
-        this.addFad(fade);
-
     }
-
 
 
 
@@ -74,9 +70,6 @@ public class Destillat implements Serializable {
         }
     }
 
-    public void addFad(HashSet<Fad> fade) {
-        tidligereFade.addAll(fade);
-    }
 
     public void removeBatchMængde(BatchMængde batchMængde) {
         if (batchMængder.contains(batchMængde)) {
