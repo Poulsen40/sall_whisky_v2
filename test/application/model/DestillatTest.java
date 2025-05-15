@@ -172,24 +172,24 @@ class DestillatTest {
 
         assertNotNull(batchMængder, "Listen må ikke være null.");
         assertEquals(0, batchMængder.size(), "Forventet tom liste, men listen var ikke tom.");
-        System.out.println("TC50 PASSED: returnerer tom liste .");
+        System.out.println("TC50 PASSED: returnerer tom liste");
 
 
     }
     @Test
     void getBatchMængder_TC51() {
-        Destillat destillat = new Destillat(LocalDateTime.now(), f);
+        Destillat d = new Destillat(LocalDateTime.now(), f);
         Batch b = new Batch("Malt1", "Sort1", "Mark1", 100, 40.0, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,10,10));
-        BatchMængde bm = new BatchMængde(100, destillat, b);
+        BatchMængde bm = new BatchMængde(100, d, b);
 
 
         //Tilføjer batchmængden til destillatet
-        destillat.addBatchMængde(bm);
-        List<BatchMængde> batchMængder = destillat.getBatchMængder();
+        d.addBatchMængde(bm);
+        List<BatchMængde> batchMængder = d.getBatchMængder();
 
         System.out.println("Batchmængder i destillat: " + batchMængder);
-        assertNotNull(batchMængder, "Listen må ikke være null.");
-        assertEquals(1, batchMængder.size(), "Forventet én batchmængde, men listen indeholder ikke præcis én.");
+        assertNotNull(batchMængder, "Listen må ikke være null");
+        assertEquals(1, batchMængder.size(), "Forventet én batchmængde, men listen indeholder ikke præcis én");
         assertTrue(batchMængder.contains(bm), "Batchmængden skal være i listen.");
         System.out.println("TC51 PASSED: Returnerer batchmængde i liste");
     }
@@ -251,6 +251,7 @@ class DestillatTest {
 
         List<BatchMængde> batchMængder = d.getBatchMængder();
         System.out.println("batchMængder " + batchMængder);
+
         assertTrue(batchMængder.isEmpty(), "Batchmængder listen skal være tom.");
         assertFalse(batchMængder.contains(null), "Listen må ikke indeholde null-værdier.");
         System.out.println("TC55: ingen batchmængder ");
@@ -270,18 +271,18 @@ class DestillatTest {
         assertEquals(1, destillatMængder.size(), "Der skal være én destillatmængde.");
         assertTrue(destillatMængder.contains(dm), "DestillatMængde skal findes i destillatets liste.");
         System.out.println("TC56: Returnerer korrekte destillatmængde");
-
     }
     @Test
     void getDestillatMængder_TC57() {
         Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
         Destillat d = new Destillat(LocalDateTime.now(), f);
 
-        DestillatMængde dm1 = d.createDestillatMængde(150, w);
-        DestillatMængde dm2 = d.createDestillatMængde(200, w);
+        d.createDestillatMængde(150, w);
+        d.createDestillatMængde(200, w);
 
         List<DestillatMængde> destillatMængder = d.getDestillatMængder();
         System.out.println("DestillatMængder i destillat: " + destillatMængder);
+
         assertNotNull(destillatMængder, "Listen må ikke være null.");
         assertEquals(2, destillatMængder.size(), "Der skal være to destillatmængder.");
         assertEquals(150, destillatMængder.get(0).getMængde(), 0.01);
@@ -295,6 +296,7 @@ class DestillatTest {
 
         List<DestillatMængde> destillatMængder = d.getDestillatMængder();
         System.out.println("liste " + destillatMængder);
+
         assertNotNull(destillatMængder, "Listen må ikke være null.");
         assertEquals(0, destillatMængder.size(), "Der forventedes 0 destillatMængder, men listen var ikke tom.");
         System.out.println("TC58: Returner tom liste");
@@ -329,12 +331,10 @@ class DestillatTest {
     void testCreateDestillatMængde_TC61() {
         // Testen forventer en NullPointerException, da whiskyserie er null
         assertThrows(NullPointerException.class, () -> {
-            Destillat destillat = new Destillat(LocalDateTime.now(), f);
+            Destillat d = new Destillat(LocalDateTime.now(), f);
 
-            destillat.createDestillatMængde(-100, null);
+            d.createDestillatMængde(-100, null);
         });
-
-        //tjekker om testen fejler
         System.out.println("TC61: NullPointerException kastes.");
     }
     //-------------------------------------------------------------------------------------------
@@ -361,7 +361,6 @@ class DestillatTest {
 
         assertTrue(d.getDestillatMængder().isEmpty());
         System.out.println("TC63: Fjerner destillatmængde");
-
     }
     @Test
     void testRemoveDestillatMængde_TC64() {
@@ -384,8 +383,6 @@ class DestillatTest {
         System.out.println("Samlet mængde uden batchmængder: " + d.getSamletMængde());
         assertEquals(0, d.getSamletMængde(), "Forventet samlet mængde: 0L");
         System.out.println("TC65: Får korrekte samlet mængde");
-
-
     }
     @Test
     void testGetSamletMængde_TC66() {
@@ -410,8 +407,9 @@ class DestillatTest {
         d.addBatchMængde(bm1);
         d.addBatchMængde(bm2);
 
-        //Opretter destillatmængde og tilføjer den til destillatet
-        DestillatMængde destillatMængde = d.createDestillatMængde(50, w);
+        //Destillatmængde oprettes tilføjes til destillatet
+        d.createDestillatMængde(50, w);
+
         System.out.println("Samlet mængde efter tilføjelse af to batchmængder: " + d.getSamletMængde());
         assertEquals(250, d.getSamletMængde(), "Forventet samlet mængde: 300L");
         System.out.println("TC67: Får korrekte samlet mængde");
@@ -429,10 +427,10 @@ class DestillatTest {
     }
     @Test
     void testGetDatoForPåfyldning_TC69() {
-        Destillat destillat = new Destillat(null, f);
+        Destillat d = new Destillat(null, f);
 
         System.out.println("Dato for påfyldning er null.");
-        assertNull(destillat.getDatoForPåfyldning());
+        assertNull(d.getDatoForPåfyldning());
         System.out.println("TC69: Returnerer null");
     }
     //--------------------------------------------
@@ -453,7 +451,7 @@ class DestillatTest {
         assertThrows(NullPointerException.class, () -> {
             Destillat d = new Destillat(LocalDateTime.now(), null);
 
-            // Kalder getFad(), hvilket forventes at kaste en NullPointerException
+            //Kalder getFad() hvilket forventes at kaste en NullPointerException
             d.getFad();
         });
 
