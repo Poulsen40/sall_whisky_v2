@@ -57,11 +57,14 @@ public class Fad implements Serializable {
     }
 
     public void fjernFraLager() {
-        if (destillat.getSamletMængde() == 0 && this.getLager() != null) {
-            lager.fjernFadFraObevaringsplads(this);
-            placeringPåLager = "";
-        } else {
-            throw new RuntimeException("Fadet kan ikke fjernes fra lageret da der stadig er noget destilliatmængde på den");
+        if(this.getLager() != null) {
+            if (destillat == null || destillat.getSamletMængde() == 0) {
+                lager.fjernFadFraObevaringsplads(this);
+                placeringPåLager = "";
+                lager = null;
+            } else {
+                throw new RuntimeException("Fadet kan ikke fjernes fra lageret da der stadig er noget destilliatmængde på den");
+            }
         }
     }
 

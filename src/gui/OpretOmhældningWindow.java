@@ -182,6 +182,8 @@ public class OpretOmhældningWindow extends Stage {
                 Fad fad1 = d.getFad();
                 Controller.setDestillatFad(fad1,null);
                 Controller.fjernDestillat(d);
+                Controller.fjernFadFraLager(fad1);
+
             }
 
             System.out.println("fad tjej" + fad.getDestillat());

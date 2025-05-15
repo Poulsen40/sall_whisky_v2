@@ -111,7 +111,7 @@ public class Controller {
         if (fad != null && fad.getLager() != null) {
             System.out.println("tjek før metode " + fad.getLager().toString());
             fad.fjernFraLager();
-            System.out.println("tjek efter metode " + fad.getLager().toString());
+            System.out.println("tjek efter metode " + fad.getLager());
 
         } else {
             throw new NoSuchElementException("Du skal vælge et fad eller fadet er ikke på lager");
