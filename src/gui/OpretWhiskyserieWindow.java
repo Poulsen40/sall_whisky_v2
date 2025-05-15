@@ -143,7 +143,9 @@ public class OpretWhiskyserieWindow extends Stage {
         GridPane.setValignment(lwlDestillat, VPos.BOTTOM);
 
         txaDestilatInfo = new TextArea();
-        txaDestilatInfo.setPrefHeight(75);
+        txaDestilatInfo.setPrefHeight(100);
+        txaDestilatInfo.setPrefWidth(100);
+
         txaDestilatInfo.setEditable(false);
 
         lwlDestillat.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {

@@ -3,6 +3,7 @@ package application.controller;
 import application.model.*;
 import storage.Storage;
 
+import javax.swing.event.DocumentEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -413,18 +414,24 @@ public class Controller {
     public static String toStringFadOgDestillat(Destillat destillat) {
         StringBuilder h = new StringBuilder();
         Fad fad = destillat.getFad();
+        ArrayList<Destillat> destillats = destillat.getDestillater();
 
         h.append("Fad nr: " + fad.getFadNr() + ", fadstørrelse: " + fad.getFadStørrelse() + ", fadtype: " + fad.getFadtype() + ", leverandør: " + fad.getLevarandør() + ", gange brugt: " + fad.getAntalGangeBrugt());
         h.append("\nDestilat alkoholpct: " + fad.getDestillat().beregnalkoholprocent() + ", samlet mængde væske: " + Controller.getSamletMængde(fad.getDestillat()));
-        h.append("\nBatches brugt i destillat:");
-        if (destillat.getDestillater() == null) {
+
+        if (destillat.getDatoForOmhældning() == null) {
+            h.append("\nBatches brugt i destillat:");
             for (BatchMængde batchMængde : destillat.getBatchMængder()) {
                 h.append(" id: " + batchMængde.getBatch().getBatchID() + " mængde: " + batchMængde.getMængde());
+
             }
         }
-        if (destillat.getDestillater()!= null){
-
-
+        if (destillat.getDatoForOmhældning() != null) {
+            h.append("\nAntal destillater på omhældt destillat: " + destillats.size());
+            h.append("\nDestilattermængder i omhældt destillat: ");
+            for (Destillat destillat1 : destillats) {
+                h.append(destillat1.getSamletMængde() + ", ");
+            }
         }
         return h.toString();
     }
