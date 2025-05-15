@@ -609,6 +609,8 @@ public class Controller {
     public static StringBuilder info(Whiskyserie whiskyserie) {
         StringBuilder sb = new StringBuilder();
         StringBuilder sbfad = new StringBuilder();
+
+
 //        for (DestillatMængde destillatMængde : whiskyserie.getDestillatMængder()) {
 //            sbfad.append("FadInfo: \n Antal DestillatMængde: " + destillatMængde.getMængde() + "\n");
 //            if(destillatMængde.getDestillat().getDestillater().isEmpty()){
