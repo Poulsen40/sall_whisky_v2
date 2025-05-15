@@ -127,7 +127,7 @@ public class OpretOmhældningWindow extends Stage {
     public void omhæld() {
         int samletmængde = 0;
         Fad fad = lwlFrieFad.getSelectionModel().getSelectedItem();
-        ArrayList<Destillat> destillat = new ArrayList<>(lwlDestillat.getSelectionModel().getSelectedItems());
+        ArrayList<Destillat> destillater = new ArrayList<>(lwlDestillat.getSelectionModel().getSelectedItems());
         Lager lager = lwlLager.getSelectionModel().getSelectedItem();
 
         if (fad == null) {
@@ -142,14 +142,14 @@ public class OpretOmhældningWindow extends Stage {
             alert.showAndWait();
             return;
         }
-        if (destillat.isEmpty()) {
+        if (destillater.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Du skal vælge minimun et destillat at omhælde");
+            alert.setContentText("Du skal vælge minimun et destillater at omhælde");
             alert.showAndWait();
             return;
         }
 
-        for (Destillat destillat1 : destillat) {
+        for (Destillat destillat1 : destillater) {
             samletmængde += Controller.getSamletMængde(destillat1);
         }
         if (samletmængde > fad.getFadStørrelse()) {
@@ -159,18 +159,18 @@ public class OpretOmhældningWindow extends Stage {
             return;
 
         } else {
-            LocalDateTime mindsteDato = destillat.get(0).getDatoForPåfyldning();
-            for (Destillat destillat1 : destillat) {
+            LocalDateTime mindsteDato = destillater.get(0).getDatoForPåfyldning();
+            for (Destillat destillat1 : destillater) {
                 if (destillat1.getDatoForPåfyldning().isAfter(mindsteDato)) {
                     mindsteDato = destillat1.getDatoForPåfyldning();
                 }
             }
 
-            Destillat omhældtDestilat = Controller.createOmhældtDestilat(LocalDateTime.now(), mindsteDato, fad, destillat);
+            Destillat omhældtDestilat = Controller.createOmhældtDestilat(LocalDateTime.now(), mindsteDato, fad, destillater);
             Controller.setDestillatFad(fad, omhældtDestilat);
             Controller.addFadTilLager(fad, lager);
 
-            for (Destillat d : destillat) {
+            for (Destillat d : destillater) {
                 Fad fad1 = d.getFad();
                 Controller.setDestillatFad(fad1,null);
                 Controller.fjernDestillat(d);
