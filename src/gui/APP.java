@@ -37,10 +37,10 @@ public class APP {
         Lager lilleLager = Controller.createLager(2, 1, 2, "Lille lager");
 
         //Batch
-        Batch b1 = Controller.createBatch("Malt2", "Sort", "Sorte mark", 85, 10, "ingen", Rygemateriale.GLØD, LocalDate.of(2022,11,11));
-        Batch b2 = Controller.createBatch("Malt2", "Sort", "Sorte mark", 100, 20, "ingen", Rygemateriale.GLØD, LocalDate.of(2022,12,12));
-        Batch b3 = Controller.createBatch("Malt2", "Sort", "Sorte mark", 25, 63, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,10,10));
-        Batch b4 = Controller.createBatch("Malt2", "Sort", "Sorte mark", 45, 63, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,5,8));
+        Batch b1 = Controller.createBatch("Malt2", "Sort", "Sorte mark", 85, 10, "ingen", Rygemateriale.GLØD, LocalDate.of(2019,11,29));
+        Batch b2 = Controller.createBatch("Malt2", "Sort", "Sorte mark", 100, 20, "ingen", Rygemateriale.GLØD, LocalDate.of(2021,9,28));
+        Batch b3 = Controller.createBatch("Malt2", "Sort", "Sorte mark", 25, 63, "ingen", Rygemateriale.GLØD, LocalDate.of(2017,11,10));
+        Batch b4 = Controller.createBatch("Malt2", "Sort", "Sorte mark", 45, 63, "ingen", Rygemateriale.GLØD, LocalDate.of(2022,8,21));
 
         //Fad
         Fad f1 = Controller.createFad(65, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
