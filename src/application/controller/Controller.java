@@ -637,11 +637,13 @@ public class Controller {
 //        }
 
         Set<Fad> fade = new HashSet<>();
+//        sbfad.append("Fad Information:" + whiskyserie.get lagt på dette fad: ")
         for (DestillatMængde destillatMængde : whiskyserie.getDestillatMængder()) {
+            sbfad.append("Fad Information: \nDestillatMængde: " + destillatMængde.getMængde() + "L\nHar ligget på fade:\n");
             fade.addAll(destillatMængde.getDestillat().hentAlleFade());
         }
         for (Fad fad : fade) {
-            sbfad.append(" har lagt på dette fad:  Fad nr: " + fad.getFadNr() + " Fadtype:" + fad.getFadtype() + " Træsort: "
+            sbfad.append("Fad nr: " + fad.getFadNr() + " Fadtype:" + fad.getFadtype() + " Træsort: "
                     + fad.getTræsort() + " Oprindelse: " + fad.getLevarandør() + "\n");
         }
 
