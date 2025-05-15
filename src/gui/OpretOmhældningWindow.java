@@ -170,14 +170,6 @@ public class OpretOmhældningWindow extends Stage {
             Controller.setDestillatFad(fad, omhældtDestilat);
             Controller.addFadTilLager(fad, lager);
 
-            HashSet<Fad> fade = new HashSet<>();
-            for (Destillat d : destillat) {
-                fade.addAll(d.getTidligereFade());
-                fade.add(d.getFad());
-            }
-            omhældtDestilat.addFad(fade);
-
-
             for (Destillat d : destillat) {
                 Fad fad1 = d.getFad();
                 Controller.setDestillatFad(fad1,null);
@@ -185,6 +177,7 @@ public class OpretOmhældningWindow extends Stage {
                 Controller.fjernFadFraLager(fad1);
 
             }
+
 
             System.out.println("fad tjej" + fad.getDestillat());
 
