@@ -225,7 +225,6 @@ public class DestilatOgLager extends Stage {
                 //Batchmængden bliver added til det oprettede destillat
                 Controller.addBatchMængde(batchMængde,destillat);
 
-
                 //Udregning der ændrer tal på grænsefladen - mængdetilbage på det fad der er valgt
                 double mængdeTilbageFørTapningFraBatch = Double.parseDouble(txfFadMængdeTilbage.getText().trim());
                 double mængdeValgtTappetFraBatch = Controller.getMængdeVæske(batchMængde);
@@ -238,8 +237,13 @@ public class DestilatOgLager extends Stage {
                 double nyBatchInfo = Controller.getMængdeVæske(selectedBatch) - Controller.getMængdeVæske(batchMængde);
                 Controller.setMængdeVæske(selectedBatch,nyBatchInfo);
                 txfBatchInfo.setText(String.valueOf(nyBatchInfo));
+
+                if (selectedBatch.getMængdeVæske() == 0){
+                    lwlBatch.getItems().remove(selectedBatch);
+                }
                 lwlBatch.refresh();
 
+                
                 System.out.println(Controller.getBatchMængder(destillat));
             }
 
