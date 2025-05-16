@@ -2,6 +2,7 @@ package application.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -44,6 +45,7 @@ public class Destillat implements Serializable {
             tidligereFade.addAll(d.getTidligereFade());
             tidligereFade.add(d.getFad());
         }
+        this.slutdato = datoForOmhældning;
     }
 
     public LocalDateTime getSlutdato() {
@@ -51,7 +53,7 @@ public class Destillat implements Serializable {
     }
 
     public void setSlutdato(LocalDateTime slutdato) {
-        this.slutdato = slutdato;
+        this.slutdato = datoForOmhældning;
     }
 
     public ArrayList<BatchMængde> getBatchMængder() {
@@ -191,6 +193,16 @@ public class Destillat implements Serializable {
         }
         return alleFade;
     }
+    public Set<Destillat> hentalleDestillater(){
+        Set<Destillat> alledestillater = new HashSet<>();
+
+        alledestillater.add(this);
+
+        for(Destillat destillat : destillater) {
+            alledestillater.addAll(destillat.hentalleDestillater());
+        }
+        return alledestillater;
+    }
 
     public Set<Batch> hentAlleBatch(){
         Set<Batch> alleBatch = new HashSet<>();
@@ -202,6 +214,12 @@ public class Destillat implements Serializable {
         }
         return alleBatch;
     }
+    public Period getTidPåNuværendeFad() {
+        LocalDateTime startdato = datoForOmhældning != null ? datoForOmhældning : datoForPåfyldning;
+        LocalDateTime slutdato = this.slutdato != null ? this.slutdato : LocalDateTime.now();
+        return Period.between(startdato.toLocalDate(), slutdato.toLocalDate());
+    }
+
 
 
 
