@@ -668,35 +668,33 @@ public class Controller {
         StringBuilder sb = new StringBuilder();
 
         sb.append("Handcrafted from organic ");
-        // Her adder jeg aller batches til en ny ArrayList
-        List<Batch> Batches = new ArrayList<>();
+
+        // Hent alle batches via rekursiv metode
+        Set<Batch> batches = new HashSet<>();
         for (DestillatMængde dm : whiskyserie.getDestillatMængder()) {
-            for (BatchMængde bm : dm.getDestillat().getBatchMængder()) {
-                if (!Batches.contains(bm.getBatch())) {
-                    Batches.add(bm.getBatch());
-                }
-            }
+            batches.addAll(dm.getDestillat().hentAlleBatch());
         }
-        // Her adder jeg kornsort til Sb
-        List<String> kornsort = new ArrayList<>();
-        for (Batch batch : Batches) {
-            if (!kornsort.contains(batch.getKornSort())) {
-                kornsort.add(batch.getKornSort());
-                if (kornsort.size() > 1) {
+
+        // Kornsorter
+        List<String> kornsorter = new ArrayList<>();
+        for (Batch batch : batches) {
+            if (!kornsorter.contains(batch.getKornSort())) {
+                kornsorter.add(batch.getKornSort());
+
+                if(kornsorter.size() > 1){
                     sb.append(" and ");
                 }
                 sb.append(batch.getKornSort());
             }
         }
-
         sb.append("\nharvested from our fields ");
 
-        // Her adder jeg marker til vores label
+        // Marker
         List<String> marker = new ArrayList<>();
-        for (Batch batch : Batches) {
+        for (Batch batch : batches) {
             if (!marker.contains(batch.getMark())) {
                 marker.add(batch.getMark());
-                if (marker.size() > 1) {
+                if(marker.size() > 1){
                     sb.append(" and ");
                 }
                 sb.append(batch.getMark());
@@ -707,28 +705,31 @@ public class Controller {
                 "in copper pot stills. Matured in \n" +
                 "carefully selected ");
 
-        //Her finder jeg ud af hvad fadtype de har lagt i
-
-        List<Fadtype> fadtypes = new ArrayList<>();
+        // Henter alle fade via rekursiv metode
+        Set<Fad> fade = new HashSet<>();
         for (DestillatMængde dm : whiskyserie.getDestillatMængder()) {
+            fade.addAll(dm.getDestillat().hentAlleFade());
+        }
 
-            if (!fadtypes.contains(dm.getDestillat().getFad().getFadtype())) {
-                fadtypes.add(dm.getDestillat().getFad().getFadtype());
-                if (fadtypes.size() > 1) {
+        // Fadtyper
+        List<Fadtype> fadtyper = new ArrayList<>();
+        for (Fad f : fade) {
+            if (!fadtyper.contains(f.getFadtype())) {
+                fadtyper.add(f.getFadtype());
+
+                if(fade.size() > 1){
                     sb.append(" and ");
                 }
-                sb.append(dm.getDestillat().getFad().getFadtype());
+                sb.append(f.getFadtype());
             }
         }
 
-
-        // Her finder jeg ud af hvad år det Whisky er kommet på flaske
-        sb.append(" over three years. Bottled in " + whiskyserie.getDato());
-
+        sb.append(" over three years. Bottled in ").append(whiskyserie.getDato());
 
         return sb;
-
     }
+
+
 
     public static void printTilFil(Whiskyserie whiskyserie) {
 

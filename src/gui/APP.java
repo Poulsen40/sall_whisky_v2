@@ -37,10 +37,14 @@ public class APP {
         Lager lilleLager = Controller.createLager(2, 1, 2, "Lille lager");
 
         //Batch
-        Batch b1 = Controller.createBatch("Malt2", "Sort", "Sorte mark", 85, 10, "ingen", Rygemateriale.GLØD, LocalDate.of(2019,11,29));
-        Batch b2 = Controller.createBatch("Malt2", "Sort", "Sorte mark", 100, 20, "ingen", Rygemateriale.GLØD, LocalDate.of(2021,9,28));
-        Batch b3 = Controller.createBatch("Malt2", "Sort", "Sorte mark", 25, 63, "ingen", Rygemateriale.GLØD, LocalDate.of(2017,11,10));
-        Batch b4 = Controller.createBatch("Malt2", "Sort", "Sorte mark", 45, 63, "ingen", Rygemateriale.GLØD, LocalDate.of(2022,8,21));
+        Batch b1 = Controller.createBatch("Malt1", "Byg", "John's mark", 85, 10, "ingen", Rygemateriale.GLØD, LocalDate.of(2019,11,29));
+        Batch b2 = Controller.createBatch("Malt2", "Havre", "mark 1", 100, 20, "ingen", Rygemateriale.GLØD, LocalDate.of(2021,9,28));
+        Batch b3 = Controller.createBatch("Malt3", "kornpis", "mark 4", 25, 63, "ingen", Rygemateriale.GLØD, LocalDate.of(2017,11,10));
+        Batch b4 = Controller.createBatch("Malt4", "havr1", "Makr 4", 45, 63, "ingen", Rygemateriale.GLØD, LocalDate.of(2022,8,21));
+
+        Batch b5 = Controller.createBatch("Malt2", "Havre", "mark 1", 100, 20, "ingen", Rygemateriale.GLØD, LocalDate.of(2021,9,28));
+        Batch b6 = Controller.createBatch("Malt3", "kornpis", "mark 4", 25, 63, "ingen", Rygemateriale.GLØD, LocalDate.of(2017,11,10));
+        Batch b7 = Controller.createBatch("Malt4", "havr1", "Makr 4", 45, 63, "ingen", Rygemateriale.GLØD, LocalDate.of(2022,8,21));
 
         //Fad
         Fad f1 = Controller.createFad(65, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
@@ -71,6 +75,12 @@ public class APP {
         BatchMængde bb = b1.createBatchMængde(200, d1);
         BatchMængde bbb = b2.createBatchMængde(200, d1);
         BatchMængde bbbb = b3.createBatchMængde(200, d1);
+
+        Destillat d10 = Controller.createDestilat(LocalDateTime.of(2020,12,12,12,12,12),f9);
+        Destillat d4 = Controller.createDestilat(LocalDateTime.of(2010,12,12,12,12,12),f8);
+        BatchMængde b8 = Controller.createBatchMængde(50,d10,b5);
+        BatchMængde b9 = Controller.createBatchMængde(25,d10,b6);
+        BatchMængde b10 = Controller.createBatchMængde(10,d4,b7);
 
 
         System.out.println("samlet mængde d1" + d1.getSamletMængde());
