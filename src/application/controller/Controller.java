@@ -717,14 +717,14 @@ public class Controller {
             if (!fadtyper.contains(f.getFadtype())) {
                 fadtyper.add(f.getFadtype());
 
-                if(fade.size() > 1){
+                if(fadtyper.size() > 1){
                     sb.append(" and ");
                 }
                 sb.append(f.getFadtype());
             }
         }
 
-        sb.append(" over three years. Bottled in ").append(whiskyserie.getDato());
+        sb.append(" cask over three years. Bottled in ").append(whiskyserie.getDato());
 
         return sb;
     }
