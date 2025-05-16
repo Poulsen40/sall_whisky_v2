@@ -63,6 +63,7 @@ public class APP {
         Controller.addFadTilLager(f1, lager);
         Controller.addFadTilLager(f2, lager);
         Controller.addFadTilLager(f3, lager);
+        Controller.addFadTilLager(f4,lager);
 
 
 
@@ -78,6 +79,10 @@ public class APP {
 
         Destillat d3 = Controller.createDestilat(LocalDateTime.of(2020, 1, 1, 2, 2), f3);
         BatchMængde bbbbb = b1.createBatchMængde(200, d3);
+
+        Destillat d4 = Controller.createDestilat(LocalDateTime.of(2022, 1, 1, 2, 2), f4);
+        BatchMængde bbbbbb = b5.createBatchMængde(200, d4);
+
 
 
 

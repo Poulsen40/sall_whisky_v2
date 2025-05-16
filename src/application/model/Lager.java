@@ -134,6 +134,7 @@ public class Lager implements Serializable {
         if (fadI != -1) {
             obevaringsplads[fadI][fadJ][fadK] = null;
             antalledigepladser++;
+            erFyldt = false;
 
             // Kun hvis det var det sidste fad, skal vi opdatere næste ledige plads
             if (fadI == sidsteI && fadJ == sidsteJ && fadK == sidsteK) {
