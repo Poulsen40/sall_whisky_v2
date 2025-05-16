@@ -352,7 +352,6 @@ public class OpretWhiskyserieWindow extends Stage {
             alert.setContentText("Whisky tappet på " + antalFlasker + " flasker af " + mængdePrFlaske + " cl pr flaske");
             alert.showAndWait();
             close();
-
             for (Destillat d : valgeDestillater) {
                 if (Controller.getSamletMængde(d) == 0) {
                     Controller.fjernFadFraLager(d.getFad());

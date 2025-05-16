@@ -70,7 +70,7 @@ public class OpretOmhældningWindow extends Stage {
                     long dage = ChronoUnit.DAYS.between(Controller.getDatoForPåfyldning(destillat).plusYears(år).plusMonths(måneder), LocalDateTime.now());
                     setText("Alder på destillat: " + år + " år " + måneder + " måneder " + dage + " dage" +
                             "\nDestillat mængde: " + destillat.getSamletMængde() + "\n" + destillat.udskrivFad() + "\nFad nr: " + destillat.getFad().getFadNr() + ", fadstørrelse " + destillat.getFad().getFadStørrelse() +
-                            ", fadtype: " + destillat.getFad().getFadtype() + ",\nantal gange brugt:" + destillat.getFad().getAntalGangeBrugt() + ", lager: " + destillat.getFad().getLager() );
+                            ", fadtype: " + destillat.getFad().getFadtype() + ",\nantal gange brugt:" + destillat.getFad().getAntalGangeBrugt() + ", lager: " + destillat.getFad().getLager().getNavn());
                 }
             }
         });
