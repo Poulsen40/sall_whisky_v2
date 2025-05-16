@@ -154,6 +154,8 @@ public class DestilatOgLager extends Stage {
         hBox.getChildren().addAll(afbryd,opretDestillat);
         pane.add(hBox,0,5);
 
+        this.setOnCloseRequest(Event -> afbryd());
+
     }
 
     private void ShowAlert(String message) {
@@ -308,7 +310,6 @@ public class DestilatOgLager extends Stage {
             Controller.fjernDestillat(destillat);
 
             lwlFade.getSelectionModel().clearSelection();
-
         }
     }
 
