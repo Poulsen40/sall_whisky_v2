@@ -58,17 +58,12 @@ public class APP {
         Fad f8 = Controller.createFad(110, "Spanien", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 1);
         Fad f9 = Controller.createFad(1300, "Spanien", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 1);
 
-        //test med småt lager
-//        Controller.addFadTilLager(f1, lilleLager);
-//        Controller.addFadTilLager(f2, lilleLager);
-
 
         //tilføjer fad til lager
         Controller.addFadTilLager(f1, lager);
         Controller.addFadTilLager(f2, lager);
         Controller.addFadTilLager(f3, lager);
-//        Controller.addFadTilLager(f4, lager1);
-//        Controller.addFadTilLager(f5, lager1);
+
 
 
         Destillat d1 = Controller.createDestilat(LocalDateTime.of(2022, 1, 1, 2, 2), f1);
@@ -76,28 +71,15 @@ public class APP {
         BatchMængde bbb = b2.createBatchMængde(200, d1);
         BatchMængde bbbb = b3.createBatchMængde(200, d1);
 
-        Destillat d10 = Controller.createDestilat(LocalDateTime.of(2020,12,12,12,12,12),f9);
-        Destillat d4 = Controller.createDestilat(LocalDateTime.of(2010,12,12,12,12,12),f8);
-        BatchMængde b8 = Controller.createBatchMængde(50,d10,b5);
-        BatchMængde b9 = Controller.createBatchMængde(25,d10,b6);
-        BatchMængde b10 = Controller.createBatchMængde(10,d4,b7);
+        Destillat d2 = Controller.createDestilat(LocalDateTime.of(2020,12,12,12,12,12),f2);
+        BatchMængde b8 = Controller.createBatchMængde(50,d2,b5);
+        BatchMængde b9 = Controller.createBatchMængde(25,d2,b6);
+        BatchMængde b10 = Controller.createBatchMængde(10,d2,b7);
+
+        Destillat d3 = Controller.createDestilat(LocalDateTime.of(2020, 1, 1, 2, 2), f3);
+        BatchMængde bbbbb = b1.createBatchMængde(200, d3);
 
 
-        System.out.println("samlet mængde d1" + d1.getSamletMængde());
-        System.out.println("efter tjek d1 " + d1.getSamletMængde());
-
-
-        Destillat d2 = Controller.createDestilat(LocalDateTime.of(2020, 1, 1, 2, 2), f2);
-        BatchMængde bbbbb = b1.createBatchMængde(200, d2);
-        System.out.println("d2 alko" + d2.beregnalkoholprocent());
-
-        Whiskyserie ws1 = Controller.createWhiskyserie("Hej", LocalDate.now());
-
-        DestillatMængde dm = Controller.createDestillatMængde(40, ws1, d2);
-
-
-        Destillat d3 = Controller.createDestilat(LocalDateTime.of(2018, 1, 1, 2, 2), f3);
-        BatchMængde bhnbbb = b3.createBatchMængde(200, d3);
 
 
 //        Whiskyserie whiskyserie = Controller.createWhiskyserie("Hej", LocalDate.now());
