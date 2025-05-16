@@ -87,9 +87,13 @@ public class APP {
 
 
 
-//        Whiskyserie whiskyserie = Controller.createWhiskyserie("Hej", LocalDate.now());
-//        DestillatMængde destillatMængde = d1.createDestillatMængde(100,whiskyserie);
-//        DestillatMængde destillatMængde1 = d2.createDestillatMængde(100,whiskyserie);
+        Whiskyserie whiskyserie = Controller.createWhiskyserie("Hej", LocalDate.now());
+        DestillatMængde destillatMængde = d1.createDestillatMængde(100,whiskyserie);
+        DestillatMængde destillatMængde1 = d2.createDestillatMængde(100,whiskyserie);
+
+        Controller.tidpåhverfad(whiskyserie);
+
+
 //        DestillatMængde destillatMængde2 = d3.createDestillatMængde(100,whiskyserie);
 //        whiskyserie.addDestillatMængde(destillatMængde);
 //        whiskyserie.addDestillatMængde(destillatMængde1);

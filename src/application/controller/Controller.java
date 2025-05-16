@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -716,6 +717,36 @@ public class Controller {
         return sb;
     }
 
+    public static StringBuilder tidpåhverfad(Whiskyserie whiskyserie){
+        StringBuilder sb = new StringBuilder();
+        for (DestillatMængde dm : whiskyserie.getDestillatMængder()) {
+//            System.out.println("TID: " + dm.getDestillat().getTidPåNuværendeFad());
+            for(Destillat d : dm.getDestillat().hentalleDestillater()){
+                sb.append("Fad: " + d.getFad().getFadNr() + " Type " + d.getFad().getFadtype() + " Træsort: " + d.getFad().getTræsort() + " Leverandør: " + d.getFad().getLevarandør() + " Tid: " + formatPeriod(d.getTidPåNuværendeFad()) + "\n");
+                System.out.println("Fad: " + d.getFad().getFadNr() + "Type " + d.getFad().getFadtype() + "Tid: " + formatPeriod(d.getTidPåNuværendeFad()));
+            }
+        }
+        return sb;
+    }
+
+    private static String formatPeriod(Period period) {
+        if (period == null) return "Ukendt";
+
+        StringBuilder sb = new StringBuilder();
+        if (period.getYears() > 0) {
+            sb.append(period.getYears()).append(" år");
+        }
+        if (period.getMonths() > 0) {
+            if (sb.length() > 0) sb.append(", ");
+            sb.append(period.getMonths()).append(" måneder");
+        }
+        if (period.getDays() > 0) {
+            if (sb.length() > 0) sb.append(", ");
+            sb.append(period.getDays()).append(" dage");
+        }
+
+        return sb.length() > 0 ? sb.toString() : "0 dage";
+    }
 
 
     public static void printTilFil(Whiskyserie whiskyserie) {
