@@ -477,6 +477,19 @@ public class Controller {
     }
 
     //Liste metoder til GUI
+
+    public static  ArrayList<Lager> lagerMedPlads(ArrayList<Lager> lagere){
+        ArrayList<Lager> lagerMedPlads = new ArrayList<>();
+        for (Lager l : lagere){
+            if (!l.getErFyldt()){
+                lagerMedPlads.add(l);
+            }
+        }
+        return  lagerMedPlads;
+
+    }
+
+
     public static ArrayList<Destillat> destilatWhiskySerieUdenFilter(ArrayList<Destillat> destillater) {
         ArrayList<Destillat> alleklarDestillater = new ArrayList<>();
 

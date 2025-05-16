@@ -70,7 +70,7 @@ public class OpretOmhældningWindow extends Stage {
                     long dage = ChronoUnit.DAYS.between(Controller.getDatoForPåfyldning(destillat).plusYears(år).plusMonths(måneder), LocalDateTime.now());
                     setText("Alder på destillat: " + år + " år " + måneder + " måneder " + dage + " dage" +
                             "\nDestillat mængde: " + destillat.getSamletMængde() + "\n" + destillat.udskrivFad() + "\nFad nr: " + destillat.getFad().getFadNr() + ", fadstørrelse " + destillat.getFad().getFadStørrelse() +
-                            ", fadtype: " + destillat.getFad().getFadtype() + ",\nantal gange brugt:" + destillat.getFad().getAntalGangeBrugt() + ", lager: " + destillat.getFad().getLager().getNavn());
+                            ", fadtype: " + destillat.getFad().getFadtype() + ",\nantal gange brugt:" + destillat.getFad().getAntalGangeBrugt() + ", lager: " + destillat.getFad().getLager());
                 }
             }
         });
@@ -111,7 +111,7 @@ public class OpretOmhældningWindow extends Stage {
         lwlLager.setPrefWidth(300);
         lwlLager.setPrefHeight(400);
         lwlLager.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        lwlLager.getItems().setAll(Controller.getlagere());
+        lwlLager.getItems().setAll(Controller.lagerMedPlads(Controller.getlagere()));
 
         VBox lager = new VBox();
         lager.getChildren().add(lblLager);
@@ -168,18 +168,21 @@ public class OpretOmhældningWindow extends Stage {
 
             Destillat omhældtDestilat = Controller.createOmhældtDestilat(LocalDateTime.now(), mindsteDato, fad, destillater);
             Controller.setDestillatFad(fad, omhældtDestilat);
+            System.out.println("Fad tjek" + omhældtDestilat.getFad());
             Controller.addFadTilLager(fad, lager);
+            System.out.println("Fad tjek 2 " + omhældtDestilat.getFad().getLager());
 
             for (Destillat d : destillater) {
                 Fad fad1 = d.getFad();
                 Controller.setDestillatFad(fad1,null);
                 Controller.fjernDestillat(d);
                 Controller.fjernFadFraLager(fad1);
+                System.out.println("Fadtjek på lager:" + fad1.getLager());
             }
 
             lwlDestillat.getItems().setAll(Controller.destillaterPåLager(Controller.getDestillater()));
             lwlFrieFad.getItems().setAll(Controller.frieFadeTilDestillat(Controller.getFade()));
-            lwlLager.refresh();
+            lwlLager.getItems().setAll(Controller.lagerMedPlads(Controller.getlagere()));
         }
 
     }
