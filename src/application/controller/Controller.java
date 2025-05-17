@@ -630,10 +630,7 @@ public class Controller {
 //            sbfad.append("Fad Information: \n" + "\nHar ligget på fade:\n");
             fade.addAll(destillatMængde.getDestillat().hentAlleFade());
         }
-        for (Fad fad : fade) {
-            sbfad.append("Fad nr: " + fad.getFadNr() + " Fadtype: " + fad.getFadtype() + " Træsort: "
-                    + fad.getTræsort() + " Oprindelse: " + fad.getLevarandør() + "\n");
-        }
+        sbfad.append(tidpåhverfad(whiskyserie));
 
 
         StringBuilder sbbatch = new StringBuilder();

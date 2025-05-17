@@ -37,6 +37,8 @@ public class FadPåLagerWindow extends Stage {
         this.setOnCloseRequest(event -> {
             event.consume(); // Forhindrer vinduet i at lukke
         });
+
+
     }
 
 

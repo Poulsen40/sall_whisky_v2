@@ -40,6 +40,7 @@ public class OpretOmhældningWindow extends Stage {
     private static ListView<Fad> lwlFrieFad;
     private static LocalDateTime mindsteDato;
     private static ListView<Lager> lwlLager;
+    private static Button btnAfbryd;
 
 
     private void initContent(GridPane pane) {
@@ -122,6 +123,10 @@ public class OpretOmhældningWindow extends Stage {
         btnOmhæld.setOnAction(event -> omhæld());
         pane.add(btnOmhæld, 3, 0);
 
+        btnAfbryd = new Button("Afbryd");
+        pane.add(btnAfbryd,0,1);
+        btnAfbryd.setOnAction(Event -> close());
+
     }
 
     public void omhæld() {
@@ -186,5 +191,4 @@ public class OpretOmhældningWindow extends Stage {
         }
 
     }
-
 }

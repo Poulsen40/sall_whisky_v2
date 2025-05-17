@@ -255,7 +255,7 @@ public class OpretWhiskyserieWindow extends Stage {
         hboxAfbryd.getChildren().add(btnAfbryd);
         pane.add(hboxAfbryd, 0, 2);
 
-
+        this.setOnCloseRequest(Event -> afbryd());
     }
 
     private void ShowAlert(String message) {
