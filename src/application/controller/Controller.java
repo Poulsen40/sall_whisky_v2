@@ -44,6 +44,14 @@ public class Controller {
         return batchMængde;
     }
 
+    /**
+     * Opretter nyt destillat og tilføjer det til systemets storage.
+     * Pre: fad er ikke null; fad er tomt.
+     * @param datoForPåfyldning datoen for påfyldning af destillat
+     * @param fad fadet det pågældende destillat skal påfyldes i
+     * @return det oprettede destillat
+     * @throws IllegalArgumentException hvis fad er null eller allerede er fyldt.
+     */
     public static Destillat createDestilat(LocalDateTime datoForPåfyldning, Fad fad) {
         if (fad == null) {
             throw new IllegalArgumentException("Du skal vælge et fad");
