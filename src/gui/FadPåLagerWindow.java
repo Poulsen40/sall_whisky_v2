@@ -135,7 +135,6 @@ public class FadPåLagerWindow extends Stage {
         System.out.println("Før fjernelse af destillat: " + fad.getAntalGangeBrugt());
         Controller.setDestillatFad(fad,null);
         Controller.fjernDestillat(destillat);
-        System.out.println("Efter fjernelse af destillat: " + fad.getAntalGangeBrugt());
     }
 }
 

@@ -25,10 +25,6 @@ public class Lager implements Serializable {
         return navn;
     }
 
-    public void setNavn(String navn) {
-        this.navn = navn;
-    }
-
     public int getAntalledigepladser() {
         return antalledigepladser;
     }
@@ -41,40 +37,8 @@ public class Lager implements Serializable {
         return obevaringsplads;
     }
 
-    public void setObevaringsplads(Fad[][][] obevaringsplads) {
-        this.obevaringsplads = obevaringsplads;
-    }
-
-    public int getNæsteLedigePlads() {
-        return næsteLedigePlads;
-    }
-
-    public void setNæsteLedigePlads(int næsteLedigePlads) {
-        this.næsteLedigePlads = næsteLedigePlads;
-    }
-
-    public int getAktuelleHylde() {
-        return aktuelleHylde;
-    }
-
-    public void setAktuelleHylde(int aktuelleHylde) {
-        this.aktuelleHylde = aktuelleHylde;
-    }
-
-    public int getAktuelleReol() {
-        return aktuelleReol;
-    }
-
-    public void setAktuelleReol(int aktuelleReol) {
-        this.aktuelleReol = aktuelleReol;
-    }
-
     public boolean getErFyldt() {
         return erFyldt;
-    }
-
-    public void setErFyldt(boolean erFyldt) {
-        this.erFyldt = erFyldt;
     }
 
     /**

@@ -230,7 +230,6 @@ public class OpretOversigtWindow extends Stage {
 
         sliderminAlderForWhiskeyserien = new Slider(0, 20, 0);
         sliderminAlderForWhiskeyserien.setShowTickLabels(true);
-        // sliderminAlderForWhiskeyserien.setShowTickMarks(true);
         sliderminAlderForWhiskeyserien.setMajorTickUnit(1);
         sliderminAlderForWhiskeyserien.setMinorTickCount(0);
         sliderminAlderForWhiskeyserien.setSnapToTicks(true);
@@ -242,7 +241,6 @@ public class OpretOversigtWindow extends Stage {
 
         slidermaxAlderForWhiskySerien = new Slider(0, 20, 20);
         slidermaxAlderForWhiskySerien.setShowTickLabels(true);
-        // slidermaxAlderForWhiskySerien.setShowTickMarks(true);
         slidermaxAlderForWhiskySerien.setMajorTickUnit(1);
         slidermaxAlderForWhiskySerien.setMinorTickCount(0);
         slidermaxAlderForWhiskySerien.setSnapToTicks(true);
@@ -459,8 +457,6 @@ public class OpretOversigtWindow extends Stage {
                 lwlValgteLeverandører.getItems().clear();
                 valgteLeverandører.clear();
                 txfLeverandør.clear();
-
-
             }
         });
 
@@ -708,8 +704,6 @@ public class OpretOversigtWindow extends Stage {
         }
 
         lwlWhiskeyserier.getItems().setAll(Controller.whiskeySøgning(minAlkoholpct, maxAlkoholpct, minMægnde, maxMægnde, minAntalflasker, maxAntalFlaser, minAlder, maxAlder, valgteWhiskyTyper));
-
-
     }
 
     public void visHistorie() {

@@ -197,7 +197,6 @@ public class OpretBatchWindow extends Stage {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setContentText("Dit batch er nu oprettet");
                     alert.showAndWait();
-                    System.out.println(b1);
                     hide();
                 }
             } catch (NumberFormatException e) {

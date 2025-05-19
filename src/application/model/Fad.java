@@ -42,12 +42,6 @@ public class Fad implements Serializable {
         this.destillat = destillat;
     }
 
-        /*Der skal laves en metode til at tømme et fad når Use case med at lave wiskey laves.
-        Det er nok noget med at destilatklassen har en metode som kader den der er her som så
-        fjerner destilatet på fadet. -André
-         */
-
-
     //Metoder til Lager
 
     public void setLager(Lager lager) {
@@ -93,24 +87,12 @@ public class Fad implements Serializable {
         return fadStørrelse;
     }
 
-    public void setFadStørrelse(double fadStørrelse) {
-        this.fadStørrelse = fadStørrelse;
-    }
-
     public String getLevarandør() {
         return levarandør;
     }
 
-    public void setLevarandør(String levarandør) {
-        this.levarandør = levarandør;
-    }
-
     public boolean isErBrugt() {
         return erBrugt;
-    }
-
-    public void setErBrugt(boolean erBrugt) {
-        this.erBrugt = erBrugt;
     }
 
     public Fadtype getFadtype() {
@@ -123,10 +105,6 @@ public class Fad implements Serializable {
 
     public Træsort getTræsort() {
         return træsort;
-    }
-
-    public void setTræsort(Træsort træsort) {
-        this.træsort = træsort;
     }
 
     public int getAntalGangeBrugt() {

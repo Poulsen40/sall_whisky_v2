@@ -275,7 +275,6 @@ public class OpretWhiskyserieWindow extends Stage {
             txfNavn.setDisable(true);
             datePicker.setDisable(true);
             btnOpretWhiskySerieObjekt.setDisable(true);
-            System.out.println(whiskyserie);
         }
 
     }
@@ -301,7 +300,6 @@ public class OpretWhiskyserieWindow extends Stage {
                     ShowAlert("Du kan ikke tappe mere væske end der er tilbage på destillatet");
                 } else {
                     destillatMængde = Controller.createDestillatMængde(mængde, whiskyserie, selectedDestillat);
-                    //Controller.addDestillatMængde(destillatMængde, whiskyserie);
                     txaDestilatInfo.setText(Controller.toStringFadOgDestillat(selectedDestillat));
 
                     if (Controller.getSamletMængde(selectedDestillat) == 0) {
@@ -365,8 +363,6 @@ public class OpretWhiskyserieWindow extends Stage {
 
             whiskyserie = null;
             mængdeVand = 0;
-
-
         }
     }
 
@@ -395,7 +391,6 @@ public class OpretWhiskyserieWindow extends Stage {
                 Controller.removeDestilatMængderFraWhiskyserie(whiskyserie, whiskyserie.getDestillatMængder());
 
                 for (DestillatMængde d : destillatMængder) {
-                    System.out.println("destillat tjek" + d);
                     Destillat destillat = d.getDestillat();
                     Controller.removeDestillatMængdeFraDestillat(destillat, d);
                 }
@@ -411,6 +406,5 @@ public class OpretWhiskyserieWindow extends Stage {
             yseOrNo.close();
 
         }
-
     }
 }

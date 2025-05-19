@@ -118,10 +118,7 @@ public class Controller {
 
     public static void fjernFadFraLager(Fad fad) {
         if (fad != null && fad.getLager() != null) {
-            System.out.println("tjek før metode " + fad.getLager().toString());
             fad.fjernFraLager();
-            System.out.println("tjek efter metode " + fad.getLager());
-
         } else {
             throw new NoSuchElementException("Du skal vælge et fad eller fadet er ikke på lager");
         }
@@ -299,9 +296,7 @@ public class Controller {
     }
 
     public static void setDestillatFad(Fad fad, Destillat destillat) {
-        System.out.println("antal gange før opdatering: " + fad.getAntalGangeBrugt());
         fad.setDestillat(destillat);
-        System.out.println("antal gange før opdatering: " + fad.getAntalGangeBrugt());
     }
 
     public static void setWhiskyInfo(ArrayList<DestillatMængde> destillatMængder, Whiskyserie whiskyserie, double vandmængde, double antalFlasker) {
@@ -330,7 +325,6 @@ public class Controller {
         if (vandmængde > 0 && antalFad == 1) {
             whiskyserie.setWhiskyType(WhiskyType.SINGLECASK);
         }
-        System.out.println(whiskyserie.getWhiskyType());
     }
 
     public static void registerSvind(Destillat destillat, Double svind) {
@@ -523,7 +517,6 @@ public class Controller {
         for (Destillat destillat1 : alleklarDestillater) {
             if (ChronoUnit.YEARS.between(destillat1.getDatoForPåfyldning(), LocalDateTime.now()) >= år) {
                 destillaterEfterFiltrering.add(destillat1);
-
             }
         }
 
@@ -603,7 +596,6 @@ public class Controller {
     public static void tælAntalGangeBrugt(Fad fad) {
         if (fad != null) {
             fad.setAntalGangeBrugt(fad.getAntalGangeBrugt() + 1);
-
         }
     }
 
@@ -635,7 +627,6 @@ public class Controller {
 
         Set<Fad> fade = new HashSet<>();
         for (DestillatMængde destillatMængde : whiskyserie.getDestillatMængder()) {
-//            sbfad.append("Fad Information: \n" + "\nHar ligget på fade:\n");
             fade.addAll(destillatMængde.getDestillat().hentAlleFade());
         }
         sbfad.append(tidpåhverfad(whiskyserie));
@@ -725,10 +716,8 @@ public class Controller {
     public static StringBuilder tidpåhverfad(Whiskyserie whiskyserie){
         StringBuilder sb = new StringBuilder();
         for (DestillatMængde dm : whiskyserie.getDestillatMængder()) {
-//            System.out.println("TID: " + dm.getDestillat().getTidPåNuværendeFad());
             for(Destillat d : dm.getDestillat().hentalleDestillater()){
                 sb.append("Fad: " + d.getFad().getFadNr() + " Type " + d.getFad().getFadtype() + " Træsort: " + d.getFad().getTræsort() + " Leverandør: " + d.getFad().getLevarandør() + " Tid: " + formatPeriod(d.getTidPåNuværendeFad()) + "\n");
-                System.out.println("Fad: " + d.getFad().getFadNr() + "Type " + d.getFad().getFadtype() + "Tid: " + formatPeriod(d.getTidPåNuværendeFad()));
             }
         }
         return sb;

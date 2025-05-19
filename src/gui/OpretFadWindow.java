@@ -200,7 +200,6 @@ public class OpretFadWindow extends Stage {
             alert.setContentText("Fad er oprettet");
             alert.showAndWait();
             hide();
-            System.out.println(fad);
         }
     }
 }

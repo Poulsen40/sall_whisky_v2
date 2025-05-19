@@ -37,26 +37,26 @@ public class APP {
         Lager lilleLager = Controller.createLager(2, 1, 2, "Lille lager");
 
         //Batch
-        Batch b1 = Controller.createBatch("Malt1", "Byg", "John's mark", 85, 10, "ingen", Rygemateriale.GLØD, LocalDate.of(2019,11,29));
-        Batch b2 = Controller.createBatch("Malt2", "Havre", "mark 1", 100, 20, "ingen", Rygemateriale.GLØD, LocalDate.of(2021,9,28));
-        Batch b3 = Controller.createBatch("Malt3", "kornpis", "mark 4", 25, 63, "ingen", Rygemateriale.GLØD, LocalDate.of(2017,11,10));
-        Batch b4 = Controller.createBatch("Malt4", "havr1", "Makr 4", 45, 63, "ingen", Rygemateriale.GLØD, LocalDate.of(2022,8,21));
+        Batch b1 = Controller.createBatch("Malt1", "Byg", "John's mark", 85, 65, "ingen", Rygemateriale.GLØD, LocalDate.of(2019,11,29));
+        Batch b2 = Controller.createBatch("Malt2", "Havre", "Mark 1", 100, 70, "ingen", Rygemateriale.GLØD, LocalDate.of(2021,9,28));
+        Batch b3 = Controller.createBatch("Malt3", "Byg", "Mark 4", 25, 63, "ingen", Rygemateriale.GLØD, LocalDate.of(2017,11,10));
+        Batch b4 = Controller.createBatch("Malt4", "Havre", "Mark 4", 45, 63, "ingen", Rygemateriale.GLØD, LocalDate.of(2022,8,21));
 
-        Batch b5 = Controller.createBatch("Malt2", "Havre", "mark 1", 100, 20, "ingen", Rygemateriale.GLØD, LocalDate.of(2021,9,28));
-        Batch b6 = Controller.createBatch("Malt3", "kornpis", "mark 4", 25, 63, "ingen", Rygemateriale.GLØD, LocalDate.of(2017,11,10));
-        Batch b7 = Controller.createBatch("Malt4", "havr1", "Makr 4", 45, 63, "ingen", Rygemateriale.GLØD, LocalDate.of(2022,8,21));
+        Batch b5 = Controller.createBatch("Malt2", "Havre", "Mark 1", 100, 73, "ingen", Rygemateriale.GLØD, LocalDate.of(2021,9,28));
+        Batch b6 = Controller.createBatch("Malt3", "Byg", "Mark 4", 25, 63, "ingen", Rygemateriale.GLØD, LocalDate.of(2017,11,10));
+        Batch b7 = Controller.createBatch("Malt4", "Havre", "Mark 4", 45, 63, "ingen", Rygemateriale.GLØD, LocalDate.of(2022,8,21));
 
         //Fad
         Fad f1 = Controller.createFad(65, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
         Fad f2 = Controller.createFad(30, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
         Fad f3 = Controller.createFad(12, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
         Fad f4 = Controller.createFad(100, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
-        Fad f5 = Controller.createFad(78, "Spanien", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 1);
+        Fad f5 = Controller.createFad(78, "USA", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 1);
 
-        Fad f6 = Controller.createFad(1000, "Spanien", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 1);
+        Fad f6 = Controller.createFad(600, "Spanien", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 1);
         Fad f7 = Controller.createFad(228, "Spanien", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 1);
         Fad f8 = Controller.createFad(110, "Spanien", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 1);
-        Fad f9 = Controller.createFad(1300, "Spanien", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 1);
+        Fad f9 = Controller.createFad(650, "Spanien", true, Fadtype.EXOLOROSOSHERRY, Træsort.EGETRÆ, 1);
 
 
         //tilføjer fad til lager
@@ -64,8 +64,6 @@ public class APP {
         Controller.addFadTilLager(f2, lager);
         Controller.addFadTilLager(f3, lager);
         Controller.addFadTilLager(f4,lager);
-
-
 
         Destillat d1 = Controller.createDestilat(LocalDateTime.of(2022, 1, 1, 2, 2), f1);
         BatchMængde bb = b1.createBatchMængde(200, d1);
@@ -83,25 +81,11 @@ public class APP {
         Destillat d4 = Controller.createDestilat(LocalDateTime.of(2022, 1, 1, 2, 2), f4);
         BatchMængde bbbbbb = b5.createBatchMængde(200, d4);
 
-
-
-
-
-        Whiskyserie whiskyserie = Controller.createWhiskyserie("Hej", LocalDate.now());
+        Whiskyserie whiskyserie = Controller.createWhiskyserie("SALL 1.0", LocalDate.now());
         DestillatMængde destillatMængde = d1.createDestillatMængde(100,whiskyserie);
-        DestillatMængde destillatMængde1 = d2.createDestillatMængde(100,whiskyserie);
+        DestillatMængde destillatMængde1 = d2.createDestillatMængde(70,whiskyserie);
 
         Controller.tidpåhverfad(whiskyserie);
-
-
-//        DestillatMængde destillatMængde2 = d3.createDestillatMængde(100,whiskyserie);
-//        whiskyserie.addDestillatMængde(destillatMængde);
-//        whiskyserie.addDestillatMængde(destillatMængde1);
-//        whiskyserie.addDestillatMængde(destillatMængde1);
-
-
-        //
-
 
     }
 

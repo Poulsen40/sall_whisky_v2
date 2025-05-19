@@ -60,40 +60,20 @@ public class Batch implements Serializable {
         return startDato;
     }
 
-    public void setStartDato(LocalDate startDato) {
-        this.startDato = startDato;
-    }
-
     public LocalDate getSlutDato() {
         return slutDato;
-    }
-
-    public void setSlutDato(LocalDate slutDato) {
-        this.slutDato = slutDato;
     }
 
     public String getMaltBach() {
         return maltBach;
     }
 
-    public void setMaltBach(String maltBach) {
-        this.maltBach = maltBach;
-    }
-
     public String getKornSort() {
         return kornSort;
     }
 
-    public void setKornSort(String kornSort) {
-        this.kornSort = kornSort;
-    }
-
     public String getMark() {
         return mark;
-    }
-
-    public void setMark(String mark) {
-        this.mark = mark;
     }
 
     public double getMængdeVæske() {
@@ -106,18 +86,6 @@ public class Batch implements Serializable {
 
     public double getAlkoholPct() {
         return alkoholPct;
-    }
-
-    public void setAlkoholPct(double alkoholPct) {
-        this.alkoholPct = alkoholPct;
-    }
-
-    public String getKommentar() {
-        return kommentar;
-    }
-
-    public void setKommentar(String kommentar) {
-        this.kommentar = kommentar;
     }
 
     public int getBatchID() {

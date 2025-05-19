@@ -77,11 +77,6 @@ public class Whiskyserie implements Serializable {
         this.antalFlasker = antalFlasker;
     }
 
-
-    public void setSerieNavn(String serieNavn) {
-        this.serieNavn = serieNavn;
-    }
-
     public void setAlkoholPct(double alkoholPct) {
         this.alkoholPct = alkoholPct;
     }
@@ -92,10 +87,6 @@ public class Whiskyserie implements Serializable {
 
     public void setVandMængde(double vandMængde) {
         this.vandMængde = vandMængde;
-    }
-
-    public void setDato(LocalDate dato) {
-        this.dato = dato;
     }
 
     public LocalDate getDato() {

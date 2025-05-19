@@ -173,22 +173,18 @@ public class OpretOmhældningWindow extends Stage {
 
             Destillat omhældtDestilat = Controller.createOmhældtDestilat(LocalDateTime.now(), mindsteDato, fad, destillater);
             Controller.setDestillatFad(fad, omhældtDestilat);
-            System.out.println("Fad tjek" + omhældtDestilat.getFad());
             Controller.addFadTilLager(fad, lager);
-            System.out.println("Fad tjek 2 " + omhældtDestilat.getFad().getLager());
 
             for (Destillat d : destillater) {
                 Fad fad1 = d.getFad();
                 Controller.setDestillatFad(fad1,null);
                 Controller.fjernDestillat(d);
                 Controller.fjernFadFraLager(fad1);
-                System.out.println("Fadtjek på lager:" + fad1.getLager());
             }
 
             lwlDestillat.getItems().setAll(Controller.destillaterPåLager(Controller.getDestillater()));
             lwlFrieFad.getItems().setAll(Controller.frieFadeTilDestillat(Controller.getFade()));
             lwlLager.getItems().setAll(Controller.lagerMedPlads(Controller.getlagere()));
         }
-
     }
 }

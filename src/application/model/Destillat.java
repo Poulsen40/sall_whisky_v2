@@ -48,20 +48,11 @@ public class Destillat implements Serializable {
         this.slutdato = datoForOmhældning;
     }
 
-    public LocalDateTime getSlutdato() {
-        return slutdato;
-    }
-
-    public void setSlutdato(LocalDateTime slutdato) {
-        this.slutdato = datoForOmhældning;
-    }
-
     public ArrayList<BatchMængde> getBatchMængder() {
         return new ArrayList<>(batchMængder);
     }
 
     public HashSet<Fad> getTidligereFade() {
-//        return new HashSet<>(tidligereFade)
     return tidligereFade;
     }
 
@@ -94,10 +85,6 @@ public class Destillat implements Serializable {
 
     public void setSvind(double svind) {
         this.svind = svind;
-    }
-
-    public double getMåltAlkoholProcent() {
-        return måltAlkoholprocent;
     }
 
     public void setMåltAlkoholProcent(double måltAlkoholProcent) {
@@ -219,9 +206,6 @@ public class Destillat implements Serializable {
         LocalDateTime slutdato = this.slutdato != null ? this.slutdato : LocalDateTime.now();
         return Period.between(startdato.toLocalDate(), slutdato.toLocalDate());
     }
-
-
-
 
     @Override
     public String toString() {

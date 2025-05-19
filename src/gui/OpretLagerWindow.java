@@ -117,7 +117,6 @@ public class OpretLagerWindow extends Stage {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setContentText("Lageret er nu oprettet");
                     alert.showAndWait();
-                    System.out.println(lager1);
                     Txfrækker.setStyle(""); // nulstiller til standard
                     Txfhylder.setStyle(""); // nulstiller til standard
                     TxfPladser.setStyle(""); // nulstiller til standard

@@ -217,8 +217,6 @@ public class DestilatOgLager extends Stage {
                 ShowAlert("Du kan ikke tappe flere liter end der er på batchet");
             }
             if (mængdeFraBatch > væskeTilbagePåfad) {
-                System.out.println(mængdeFraBatch);
-                System.out.println(Controller.getFadStørrelse(selectedFad));
                 ShowAlert("Du kan ikke tappe flere liter end der er plads til på fadet");
             }
             if (mængdeFraBatch <= Controller.getMængdeVæske(selectedBatch) && mængdeFraBatch <= væskeTilbagePåfad && isVælgFadButtonPressed) {
@@ -244,14 +242,8 @@ public class DestilatOgLager extends Stage {
                     lwlBatch.getItems().remove(selectedBatch);
                 }
                 lwlBatch.refresh();
-
-                
-                System.out.println(Controller.getBatchMængder(destillat));
             }
-
         }
-
-
     }
 
     public void opretDestillat() {

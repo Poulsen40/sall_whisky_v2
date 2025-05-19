@@ -117,7 +117,4 @@ public class GUI extends Application {
         OpretOmhældningWindow dia = new OpretOmhældningWindow("Omhældning");
         dia.showAndWait();
     }
-
-
-
 }
