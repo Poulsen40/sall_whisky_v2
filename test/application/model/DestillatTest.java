@@ -44,6 +44,7 @@ class DestillatTest {
         d.addBatchMængde(bm1);
         d.addBatchMængde(bm2);
 
+        d.setMåltAlkoholProcent(-1);
         double result = d.beregnalkoholprocent();
         assertEquals(30.0, result, "Alkoholprocenten skal være 30%");
         System.out.println("TC39: PASSED " + result);
@@ -57,6 +58,7 @@ class DestillatTest {
         bm1 = new BatchMængde(200, d, b3); //opdaterer bm1 ved at sige new Batchmængde
         d.addBatchMængde(bm1);
 
+        d.setMåltAlkoholProcent(-1);
         double result = d.beregnalkoholprocent();
         assertEquals(50.0, result, "Alkoholprocenten skal være 50%");
         System.out.println("TC40: PASSED " + result);
@@ -78,6 +80,8 @@ class DestillatTest {
         d.addBatchMængde(bm1);
         d.addBatchMængde(bm2);
         d.addBatchMængde(bm3);
+
+        d.setMåltAlkoholProcent(-1);
         double result = d.beregnalkoholprocent();
         assertEquals(44.57, result, 0.1, "Alkoholprocenten skal være 44.57%");
         System.out.println("TC41: PASSED " + result);
@@ -85,7 +89,6 @@ class DestillatTest {
 
     @Test
     void testBeregnAlkoholProcent_TC42() {
-        //Batchmængde 1: 120, 43%, Batchmængde 2: 43, 20%
         d = new Destillat(LocalDateTime.of(2022, 1, 1, 2, 2), f);
 
         b1 = new Batch("Malt1", "Sort1", "Mark1", 120, 43.0, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,10,10));
@@ -94,8 +97,9 @@ class DestillatTest {
         BatchMængde bigB = new BatchMængde(120, d, b1);
         BatchMængde lilB = new BatchMængde(43, d, b2);
 
+        d.setMåltAlkoholProcent(35.0); //returnerer den direkte værdi, selvom det ikke nødvendigvis er korrekt
         double result = d.beregnalkoholprocent();
-        assertEquals(36.93, result, 0.01, "Alkohol pct. skal være 36.93%");
+        assertEquals(35.0, result, 0.01, "Skal returnere den mål alkoholprocent direkte: 35.0");
         System.out.println("TC42: PASSED " + result);
     }
 
@@ -104,6 +108,7 @@ class DestillatTest {
         //ingen batchmængder tilføjes til destillat
         d = new Destillat(LocalDateTime.of(2022, 1, 1, 2, 2), f);
 
+        d.setMåltAlkoholProcent(-1);
         double result = d.beregnalkoholprocent();
         assertTrue(Double.isNaN(result), "Alkohol pct. skal være NaN for en tom liste");
         System.out.println("TC43: PASSED " + result);
@@ -117,6 +122,7 @@ class DestillatTest {
         b1 = new Batch("Malt1", "Sort1", "Mark1", 100, 0.0, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,10,10));
         bm1 = new BatchMængde(100, d, b1);
 
+        d.setMåltAlkoholProcent(-1);
         d.addBatchMængde(bm1);
         double result = d.beregnalkoholprocent();
         assertEquals(0.0, result, "Alkohol pct. skal være 0%, da batchmængden ikke indeholder noget alkohol");
@@ -145,7 +151,7 @@ class DestillatTest {
         d.addBatchMængde(bm);
         assertEquals(1, d.getBatchMængder().size(), "Batchmængderne skal være 1 efter tilføjelse.");
         assertTrue(d.getBatchMængder().contains(bm), "Batchmængden skal være i listen.");
-        System.out.println("TC49 PASSED: Batchmængde tilføjet korrekt.");
+        System.out.println("TC48 PASSED: Batchmængde tilføjet korrekt.");
 
     }
 
@@ -254,7 +260,7 @@ class DestillatTest {
 
         assertTrue(batchMængder.isEmpty(), "Batchmængder listen skal være tom.");
         assertFalse(batchMængder.contains(null), "Listen må ikke indeholde null-værdier.");
-        System.out.println("TC55: ingen batchmængder ");
+        System.out.println("TC55 PASSED: ingen batchmængder ");
     }
 //_________________________________
     @Test
@@ -270,7 +276,7 @@ class DestillatTest {
         assertNotNull(destillatMængder, "Listen må ikke være null.");
         assertEquals(1, destillatMængder.size(), "Der skal være én destillatmængde.");
         assertTrue(destillatMængder.contains(dm), "DestillatMængde skal findes i destillatets liste.");
-        System.out.println("TC56: Returnerer korrekte destillatmængde");
+        System.out.println("TC56 PASSED: Returnerer korrekte destillatmængde");
     }
     @Test
     void getDestillatMængder_TC57() {
@@ -287,7 +293,7 @@ class DestillatTest {
         assertEquals(2, destillatMængder.size(), "Der skal være to destillatmængder.");
         assertEquals(150, destillatMængder.get(0).getMængde(), 0.01);
         assertEquals(200, destillatMængder.get(1).getMængde(), 0.01);
-        System.out.println("TC57: Returnerer batchmængder ");
+        System.out.println("TC57 PASSED: Returnerer batchmængder ");
 
     }
     @Test
@@ -299,7 +305,7 @@ class DestillatTest {
 
         assertNotNull(destillatMængder, "Listen må ikke være null.");
         assertEquals(0, destillatMængder.size(), "Der forventedes 0 destillatMængder, men listen var ikke tom.");
-        System.out.println("TC58: Returner tom liste");
+        System.out.println("TC58 PASSED: Returner tom liste");
     }
 //____________________________--
     @Test
@@ -313,7 +319,7 @@ class DestillatTest {
 
         assertNotNull(dm);
         assertEquals(150, dm.getMængde());
-        System.out.println("TC59: Opretter destillatmægnde");
+        System.out.println("TC59 PASSED: Opretter destillatmægnde");
     }
     @Test
     void testCreateDestillatMængde_TC60() {
@@ -326,6 +332,8 @@ class DestillatTest {
 
         assertNotNull(dm);
         assertEquals(0, dm.getMængde());
+        System.out.println("TC60 PASSED: Opretter destillatmængde.");
+
     }
     @Test
     void testCreateDestillatMængde_TC61() {
@@ -335,7 +343,7 @@ class DestillatTest {
 
             d.createDestillatMængde(-100, null);
         });
-        System.out.println("TC61: NullPointerException kastes.");
+        System.out.println("TC61 PASSED: NullPointerException kastes.");
     }
     //-------------------------------------------------------------------------------------------
     @Test
@@ -349,7 +357,7 @@ class DestillatTest {
         System.out.println("Antal destillatmængder efter fjernelse: " + d.getDestillatMængder().size());
 
         assertFalse(d.getDestillatMængder().contains(dm));
-        System.out.println("TC62: Fjerner destillatmængde");
+        System.out.println("TC62 PASSED: Fjerner destillatmængde");
     }
     @Test
     void testRemoveDestillatMængde_TC63() {
@@ -360,7 +368,7 @@ class DestillatTest {
         System.out.println("Antal destillatmængder efter fjernelse: " + d.getDestillatMængder().size());
 
         assertTrue(d.getDestillatMængder().isEmpty());
-        System.out.println("TC63: Fjerner destillatmængde");
+        System.out.println("TC63 PASSED: Fjerner destillatmængde");
     }
     @Test
     void testRemoveDestillatMængde_TC64() {
@@ -373,7 +381,7 @@ class DestillatTest {
         System.out.println("Antal destillatmængder efter fjernelse: " + d.getDestillatMængder().size());
 
         assertFalse(d.getDestillatMængder().contains(dm));
-        System.out.println("TC64: Fjerner destillatmængde");
+        System.out.println("TC64 PASSED: Fjerner destillatmængde");
     }
     //----------------------------------
     @Test
@@ -382,7 +390,7 @@ class DestillatTest {
 
         System.out.println("Samlet mængde uden batchmængder: " + d.getSamletMængde());
         assertEquals(0, d.getSamletMængde(), "Forventet samlet mængde: 0L");
-        System.out.println("TC65: Får korrekte samlet mængde");
+        System.out.println("TC65 PASSED: Får korrekte samlet mængde");
     }
     @Test
     void testGetSamletMængde_TC66() {
@@ -390,10 +398,12 @@ class DestillatTest {
         Destillat d = new Destillat(LocalDateTime.now(), f);
         BatchMængde bm = new BatchMængde(100, d, b);
         d.addBatchMængde(bm);
+        d.setSvind(5);
 
-        System.out.println("Samlet mængde efter tilføjelse af batchmængde: " + d.getSamletMængde());
-        assertEquals(100, d.getSamletMængde(), "Forventet samlet mængde: 100L");
-        System.out.println("TC66: Får korrekte samlet mængde");
+
+        System.out.println("Samlet mængde efter tilføjelse af batchmængde  med svind på 5: " + d.getSamletMængde());
+        assertEquals(95, d.getSamletMængde(), "Forventet samlet mængde: 95L");
+        System.out.println("TC66 PASSED: Får korrekte samlet mængde");
     }
     @Test
     void testGetSamletMængde_TC67() {
@@ -409,10 +419,11 @@ class DestillatTest {
 
         //Destillatmængde oprettes tilføjes til destillatet
         d.createDestillatMængde(50, w);
+        d.setSvind(15);
 
         System.out.println("Samlet mængde efter tilføjelse af to batchmængder: " + d.getSamletMængde());
-        assertEquals(250, d.getSamletMængde(), "Forventet samlet mængde: 300L");
-        System.out.println("TC67: Får korrekte samlet mængde");
+        assertEquals(235, d.getSamletMængde(), "Forventet samlet mængde: 235L");
+        System.out.println("TC67 PASSED: Får korrekte samlet mængde");
     }
     //----------------------------------
     @Test
@@ -422,8 +433,7 @@ class DestillatTest {
 
         System.out.println("Dato for påfyldning: " + d.getDatoForPåfyldning());
         assertEquals(dato, d.getDatoForPåfyldning());
-        System.out.println("TC68: Får korrekte dato");
-
+        System.out.println("TC68 PASSED: Får korrekte dato");
     }
     @Test
     void testGetDatoForPåfyldning_TC69() {
@@ -431,7 +441,7 @@ class DestillatTest {
 
         System.out.println("Dato for påfyldning er null.");
         assertNull(d.getDatoForPåfyldning());
-        System.out.println("TC69: Returnerer null");
+        System.out.println("TC69 PASSED: Returnerer null");
     }
     //--------------------------------------------
     @Test
@@ -441,7 +451,7 @@ class DestillatTest {
 
         System.out.println("Fad tilknyttet destillat: " + d.getFad());
         assertEquals(f, d.getFad());
-        System.out.println("TC70: Returnerer det korrekte fad");
+        System.out.println("TC70 PASSED: Returnerer det korrekte fad");
 
 
     }
@@ -456,7 +466,7 @@ class DestillatTest {
         });
 
         // Hvis exceptionen ikke kastes, fejler testen automatisk
-        System.out.println("TC71: NullPointerException kastes.");
+        System.out.println("TC71 PASSED: NullPointerException kastes.");
     }
 //------------------------------------------------------
     @Test

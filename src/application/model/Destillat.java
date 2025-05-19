@@ -13,7 +13,7 @@ public class Destillat implements Serializable {
     private double svind = 0;
     private double måltAlkoholprocent = -1;
 
-    private LocalDateTime slutdato;
+    private LocalDateTime slutDato;
 
     //omhældning
     private LocalDateTime datoForOmhældning;
@@ -45,15 +45,15 @@ public class Destillat implements Serializable {
             tidligereFade.addAll(d.getTidligereFade());
             tidligereFade.add(d.getFad());
         }
-        this.slutdato = datoForOmhældning;
+        this.slutDato = datoForOmhældning;
     }
 
-    public LocalDateTime getSlutdato() {
-        return slutdato;
+    public LocalDateTime getSlutDato() {
+        return slutDato;
     }
 
-    public void setSlutdato(LocalDateTime slutdato) {
-        this.slutdato = datoForOmhældning;
+    public void setSlutDato(LocalDateTime slutDato) {
+        this.slutDato = datoForOmhældning;
     }
 
     public ArrayList<BatchMængde> getBatchMængder() {
@@ -216,7 +216,7 @@ public class Destillat implements Serializable {
     }
     public Period getTidPåNuværendeFad() {
         LocalDateTime startdato = datoForOmhældning != null ? datoForOmhældning : datoForPåfyldning;
-        LocalDateTime slutdato = this.slutdato != null ? this.slutdato : LocalDateTime.now();
+        LocalDateTime slutdato = this.slutDato != null ? this.slutDato : LocalDateTime.now();
         return Period.between(startdato.toLocalDate(), slutdato.toLocalDate());
     }
 

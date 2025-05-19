@@ -272,7 +272,7 @@ class ControllerTest {
     void TC34() {
         Fad f = new Fad(65, "Spanien", false, Fadtype.EXBOURBON, Træsort.EGETRÆ, 0);
         Destillat d = new Destillat( LocalDateTime.of(2022, 1, 1, 2, 2), f);
-        Batch b = new Batch("Malt1", "Sort1", "Mark1", 50, 100, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,5,8));
+        Batch b = new Batch("Malt1", "Sort1", "Mark1", 50, 95, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,5,8));
         Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
 
         BatchMængde bm = Controller.createBatchMængde(50, d, b);
@@ -282,7 +282,7 @@ class ControllerTest {
         dmList.add(dm);
 
         double result = Controller.beregnAlkoholProcentPåWhiskyserie(dmList, 50);
-        assertEquals(50.0, result);
+        assertEquals(47.5, result);
 
         System.out.println("TC32 PASSED " + result);
     }
