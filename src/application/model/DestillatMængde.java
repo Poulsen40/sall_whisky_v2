@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 public class DestillatMængde implements Serializable {
     private double mængde;
     private Destillat destillat;
-    private LocalDateTime slutdato;
+    private LocalDateTime slutDato;
 
     DestillatMængde(double mængde, Whiskyserie whiskyserie, Destillat destillat) {
         this.mængde = mængde;
@@ -16,7 +16,7 @@ public class DestillatMængde implements Serializable {
     }
 
     public void setSlutdato(LocalDateTime slutdato) {
-        this.slutdato = slutdato;
+        this.slutDato = slutdato;
     }
 
 
