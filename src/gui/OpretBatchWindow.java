@@ -182,13 +182,16 @@ public class OpretBatchWindow extends Stage {
                     isValid = false;
                     ShowAlert("Du mangler at vælge et rygematerialle");
 
-                } else if (mængdeVæske1 == 0 || alkoholPct1 == 0) { //Hvis mængde og procent er 0
+                } else if (mængdeVæske1 == 0 || alkoholPct1 == 0 || alkoholPct1 > 95) { //Hvis mængde og procent er 0
                     isValid = false; //markedes som false
                     if (mængdeVæske1 == 0) {
                         ShowAlert("Mængdevæske skal minimum være 1");
                     }
                     if (alkoholPct1 == 0) {
                         ShowAlert("Alkoholprocent må ikke være 0");
+                    }
+                    if (alkoholPct1 > 95) {
+                        ShowAlert("Alkoholprocent må ikke være over 95");
                     }
                 }
                 if (isValid) { //Tjekker om brugerens input stadig er gyldigt

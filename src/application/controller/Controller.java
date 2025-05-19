@@ -341,8 +341,8 @@ public class Controller {
     public static void setMåltAlkoholprocent(Destillat destillat, double alkoholprocent) {
         if (alkoholprocent < 0) {
             throw new RuntimeException("Tallet er negativt");
-        } else if (alkoholprocent > 100) {
-            throw new RuntimeException("Tallet er over 100");
+        } else if (alkoholprocent > 95) {
+            throw new RuntimeException("Tallet er over 95");
         }
         destillat.setMåltAlkoholProcent(alkoholprocent);
     }

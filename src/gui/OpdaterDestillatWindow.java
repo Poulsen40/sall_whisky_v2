@@ -92,9 +92,9 @@ public class OpdaterDestillatWindow extends Stage {
                 alert.setContentText("Tallet skal være positivet");
                 alert.showAndWait();
             }
-            else if(e.getMessage() != null && e.getMessage().contains("Tallet er over 100")) {
+            else if(e.getMessage() != null && e.getMessage().contains("Tallet er over 95")) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Alkoholprocenten kan ikke være over 100");
+                alert.setContentText("Alkoholprocent må ikke være over 95");
                 alert.showAndWait();
             }
             else if(e.getMessage() != null && e.getMessage().contains("Svindet er støre ind mængden")) {
