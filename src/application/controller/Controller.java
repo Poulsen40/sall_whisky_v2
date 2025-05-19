@@ -45,7 +45,7 @@ public class Controller {
     }
 
     /**
-     * Opretter nyt destillat og tilføjer det til systemets storage.
+     * Opretter nyt destillat, smider det direkte på fad, og tilføjer det til systemets storage.
      * Pre: fad er ikke null; fad er tomt.
      * @param datoForPåfyldning datoen for påfyldning af destillat
      * @param fad fadet det pågældende destillat skal påfyldes i
