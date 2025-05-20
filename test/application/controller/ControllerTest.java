@@ -232,7 +232,7 @@ class ControllerTest {
         Batch b = new Batch("Malt1", "Sort1", "Mark1", 300, 40, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,5,8));
         Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
 
-        BatchMængde bm = Controller.createBatchMængde(100, d, b);
+        Controller.createBatchMængde(100, d, b);
         DestillatMængde dm = Controller.createDestillatMængde(300, w, d);
 
         ArrayList<DestillatMængde> dmList = new ArrayList<>();
@@ -252,8 +252,8 @@ class ControllerTest {
         Batch b1 = new Batch("Malt1", "Sort1", "Mark1", 280, 55, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,5,8));
         Batch b2 = new Batch("Malt2", "Sort2", "Mark2", 100, 71, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,5,8));
 
-        BatchMængde bm1 = Controller.createBatchMængde(280, d, b1);
-        BatchMængde bm2 = Controller.createBatchMængde(100, d, b2);
+        Controller.createBatchMængde(280, d, b1);
+        Controller.createBatchMængde(100, d, b2);
 
         // Opret DestillatMængde for de to batches
         DestillatMængde dm1 = Controller.createDestillatMængde(280, w, d);
@@ -275,7 +275,7 @@ class ControllerTest {
         Batch b = new Batch("Malt1", "Sort1", "Mark1", 50, 95, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,5,8));
         Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
 
-        BatchMængde bm = Controller.createBatchMængde(50, d, b);
+        Controller.createBatchMængde(50, d, b);
         DestillatMængde dm = Controller.createDestillatMængde(50, w, d);
 
         ArrayList<DestillatMængde> dmList = new ArrayList<>();
@@ -294,7 +294,7 @@ class ControllerTest {
         Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
         Batch b = new Batch("Malt1", "Sort1", "Mark1", -4, 50, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,5,8));
 
-        BatchMængde bm = Controller.createBatchMængde(-4, d, b);
+        Controller.createBatchMængde(-4, d, b);
         DestillatMængde dm = Controller.createDestillatMængde(-4, w, d);
 
         ArrayList<DestillatMængde> dmList = new ArrayList<>();
@@ -313,7 +313,7 @@ class ControllerTest {
         Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
         Batch b = new Batch("Malt1", "Sort1", "Mark1", 500, 20, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,5,8));
 
-        BatchMængde bm = Controller.createBatchMængde(500, d, b);
+        Controller.createBatchMængde(500, d, b);
         DestillatMængde dm = Controller.createDestillatMængde(500, w, d);
 
         ArrayList<DestillatMængde> dmList = new ArrayList<>();
@@ -333,8 +333,8 @@ class ControllerTest {
         Batch b1 = new Batch("Malt1", "Sort1", "Mark1", 300, 60, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,5,8));
         Batch b2 = new Batch("Malt2", "Sort2", "Mark2", 200, 10, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,5,8));
 
-        BatchMængde bm1 = Controller.createBatchMængde(300, d, b1);
-        BatchMængde bm2 = Controller.createBatchMængde(200, d, b2);
+        Controller.createBatchMængde(300, d, b1);
+        Controller.createBatchMængde(200, d, b2);
 
         // Opret DestillatMængde for de to batches
         DestillatMængde dm1 = Controller.createDestillatMængde(300, w, d);
@@ -356,7 +356,7 @@ class ControllerTest {
         Whiskyserie w = new Whiskyserie("ws", LocalDate.now());
         Batch b = new Batch("Malt1", "Sort1", "Mark1", 0, 35, "ingen", Rygemateriale.GLØD, LocalDate.of(2018,5,8));
 
-        BatchMængde bm = Controller.createBatchMængde(0, d, b);
+        Controller.createBatchMængde(0, d, b);
         DestillatMængde dm = Controller.createDestillatMængde(0, w, d);
 
         ArrayList<DestillatMængde> dmList = new ArrayList<>();
