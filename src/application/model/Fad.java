@@ -64,7 +64,7 @@ public class Fad implements Serializable {
 
     public String tilføjTilLager(Lager lager) {
         if (lager.getErFyldt()) {
-            throw new IllegalStateException("Lageret er fyldt "); // skal den være i lagers metode?(tilføjFadTilobevaringsplads)
+            throw new IllegalStateException("Lageret er fyldt ");
         }
         String placering;
         setLager(lager);
